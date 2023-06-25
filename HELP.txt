@@ -6,4 +6,5 @@ pip install Django
 pip list
 
 django-admin startproject backend
-
+cd backend
+python manage.py startapp accounting
