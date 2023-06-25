@@ -8,3 +8,5 @@ pip list
 django-admin startproject backend
 cd backend
 python manage.py startapp accounting
+python manage.py makemigrations
+python manage.py migrate
