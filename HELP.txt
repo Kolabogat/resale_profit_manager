@@ -1,0 +1,9 @@
+**************************************
+* FILE WHERE I PRINT ALL MY COMMANDS *
+**************************************
+
+pip install Django
+pip list
+
+django-admin startproject backend
+
