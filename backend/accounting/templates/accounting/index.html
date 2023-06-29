@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+abc
+<div class="news-block" style="margin: 30px; padding: 10px; padding-right: 100px; padding-left: 100px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Bought</th>
+                <th scope="col">Sold</th>
+                <th scope="col">Profit</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        {% for ticket in ticket_item %}
+            <tbody>
+            {% if ticket.profit > 0 %}
+                <tr class="table-success">
+            {% elif ticket.profit < 0 %}
+                <tr class="table-danger">
+            {% endif %}
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.bought }}</td>
+
+                    {% if ticket.sold %}
+                    <td>{{ ticket.sold }}</td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+
+                    {% if ticket.profit %}
+                    <td>{{ ticket.profit }}</td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+
+                    <td>{{ ticket.created_at|date:"d.m.Y"  }}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+    {% endblock %}
+</div>
+
