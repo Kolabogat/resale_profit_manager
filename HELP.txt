@@ -10,3 +10,4 @@ cd backend
 python manage.py startapp accounting
 python manage.py makemigrations
 python manage.py migrate
+python manage.py startapp user
