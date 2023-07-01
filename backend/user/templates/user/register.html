@@ -4,12 +4,73 @@
 
 {% block content %}
 
-<h1>Registration</h1>
+<!--<h1>Registration</h1>-->
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary btn-sm">Register</button>
-</form>
+<!--<form method="post">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form.as_p }}-->
+<!--    <button type="submit" class="btn btn-primary btn-sm">Register</button>-->
+<!--</form>-->
 
+<div style="top: 50%; margin: auto; width: 300px;">
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div style="height: 80px;"></div>
+
+        <h2 class="h3 mb-3 fw-normal" style="text-align: center;">Registration</h2>
+
+        {% if error_message %}
+            <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+        {% endif %}
+
+        <div class="form-floating" style="height: 50px; margin: auto;">
+          <input name="first_name" type="text"  autocomplete="first_name" class="form-control" id="id_first_name" placeholder="First name">
+          <label for="id_first_name">First name</label>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div class="form-floating" style="height: 50px; margin: auto;">
+          <input name="last_name" type="text"  autocomplete="last_name" class="form-control" id="id_last_name" placeholder="Last name">
+          <label for="id_last_name">Last name</label>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div class="form-floating" style="height: 50px; margin: auto;">
+          <input name="username" type="text"  autocomplete="username" class="form-control" id="id_username" placeholder="Username">
+          <label for="id_username">Username</label>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div class="form-floating" style="height: 50px; margin: auto;">
+          <input name="password1" type="password"  autocomplete="new-password" class="form-control" id="id_password1" placeholder="Password">
+          <label for="id_password1">Password</label>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div class="form-floating" style="height: 50px; margin: auto;">
+          <input name="password2" type="password"  autocomplete="new-password" class="form-control" id="id_password2" placeholder="Password">
+          <label for="id_password2">Password</label>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div class="d-grid gap-2">
+          <button name="register" type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+
+        <div style="height: 20px;"></div>
+
+        <div style="text-align: center;">
+        <p>By signing up, you agree to our <a href="#">Terms</a>, <a href="#">Privacy Policy</a> and <a href="#">Cookies Policy</a>.
+        </p>
+        </div>
+
+        <div style="height: 80px;"></div>
+
+    </form>
+</div>
 {% endblock %}
