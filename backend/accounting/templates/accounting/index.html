@@ -7,74 +7,61 @@
 <h2 class="p-4" style="text-align: center;">LIST</h2>
 
 <div style="padding-right: 100px; padding-left: 100px;">
-<div class="p-1 container p-2 border bg-light themed-container row mb-2" style="margin: auto;">
-    <div class="col-4">
-        Title
+    <div class="p-1 container p-2 border bg-light themed-container row mb-2" style="margin: auto;">
+        <div class="col-4">Title</div>
+        <div class="col-2">Bought</div>
+        <div class="col-2">Sold</div>
+        <div class="col-2">Profit</div>
+        <div class="col-2">Date</div>
     </div>
-    <div class="col-2">
-        Bought
-    </div>
-    <div class="col-2">
-        Sold
-    </div>
-    <div class="col-2">
-        Profit
-    </div>
-    <div class="col-2">
-        Date
-    </div>
-</div>
 
-{% for ticket in ticket_item %}
+    {% for ticket in ticket_item %}
 
-    {% if ticket.profit > 0 %}
-        <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #ccf6c8;">
-    {% elif ticket.profit < 0 %}
-        <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #f9c0c0;">
-    {% elif ticket.profit == 0 %}
-        <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #fafcc2;">
-    {% else %}
-        <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #f6d6ad;">
-    {% endif %}
+        {% if ticket.profit > 0 %}
+            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #ccf6c8;">
+        {% elif ticket.profit < 0 %}
+            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #f9c0c0;">
+        {% elif ticket.profit == 0 %}
+            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #fafcc2;">
+        {% else %}
+            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #f6d6ad;">
+        {% endif %}
 
-        <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
-        <div class="col-2">-{{ ticket.bought|floatformat:2 }}</div>
-        <div class="col-2">
-            {% if ticket.sold %}
-            +{{ ticket.sold|floatformat:2 }}
-            {% else %}
-            -
-            {% endif %}
+            <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
+            <div class="col-2">-{{ ticket.bought|floatformat:2 }}</div>
+            <div class="col-2">
+                {% if ticket.sold %}
+                +{{ ticket.sold|floatformat:2 }}
+                {% else %}
+                -
+                {% endif %}
+            </div>
+            <div class="col-2">
+                {% if ticket.profit or ticket.profit == 0 %}
+                {{ ticket.profit|floatformat:2  }}
+                {% else %}
+                -
+                {% endif %}
+            </div>
+            <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
         </div>
-        <div class="col-2">
-            {% if ticket.profit or ticket.profit == 0 %}
-            {{ ticket.profit|floatformat:2  }}
-            {% else %}
-            -
-            {% endif %}
-        </div>
-        <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
-
-    </div>
-
-{% endfor %}
-</div>
+    {% endfor %}
 </div>
 
 <div class="p-4">
     <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" style="color: black;" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" style="color: black;" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" style="color: black;" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" style="color: black;" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" style="color: black;" href="#">Next</a>
-        </li>
-      </ul>
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" style="color: black;" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" style="color: black;" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" style="color: black;" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" style="color: black;" href="#">3</a></li>
+            <li class="page-item">
+            <a class="page-link" style="color: black;" href="#">Next</a>
+            </li>
+        </ul>
     </nav>
-
 </div>
+
 {% endblock %}
 
 
