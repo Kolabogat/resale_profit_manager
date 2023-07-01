@@ -8,6 +8,7 @@ from django.db.models import (
     ForeignKey,
     PROTECT,
     BooleanField,
+    FloatField,
 )
 
 
@@ -20,9 +21,9 @@ CHOICES = [
 class Ticket(Model):
     title = CharField(max_length=150, verbose_name='Title')
     closed = CharField(max_length=100, choices=CHOICES, verbose_name='Closed', default='False')
-    bought = IntegerField(default=0, verbose_name='Bought', help_text='The price is the value divided by 100 (848 = 8,48 $)')
-    sold = IntegerField(blank=True, null=True, verbose_name='Sold', help_text='902 = 9,02 $')
-    profit = IntegerField(blank=True, null=True, verbose_name='Profit', help_text='54 = 0,54 $')
+    bought = FloatField(default=0, verbose_name='Bought')
+    sold = FloatField(blank=True, null=True, verbose_name='Sold')
+    profit = FloatField(blank=True, null=True, verbose_name='Profit')
     category = ForeignKey('Category', on_delete=PROTECT, verbose_name='Category')
     created_at = DateTimeField(auto_now_add=True, verbose_name='Date of creation')
     closed_at = DateTimeField(blank=True, null=True, verbose_name='Closing date')
