@@ -17,3 +17,7 @@ def view_tickets(request):
             'title': 'Tickets',
         }
     return render(request, 'accounting/index.html', context=context)
+
+
+def view_about(request):
+    return render(request, 'accounting/about.html')
