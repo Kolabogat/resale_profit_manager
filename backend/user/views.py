@@ -58,3 +58,8 @@ def password_change(request):
 @login_required
 def account_profile(request):
     return render(request, 'user/account_profile.html')
+
+
+@login_required
+def user_data(request):
+    return render(request, 'user/user_data.html')
