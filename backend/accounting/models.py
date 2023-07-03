@@ -1,5 +1,5 @@
 from django.urls import reverse
-
+from django.conf import settings
 from django.db.models import (
     Model,
     CharField,
@@ -19,17 +19,19 @@ CHOICES = [
 
 
 class Ticket(Model):
+    user = ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='User', on_delete=PROTECT)
+
     title = CharField(max_length=150, verbose_name='Title')
     closed = CharField(max_length=100, choices=CHOICES, verbose_name='Closed', default='False')
     bought = FloatField(default=0, verbose_name='Bought')
     sold = FloatField(blank=True, null=True, verbose_name='Sold')
     profit = FloatField(blank=True, null=True, verbose_name='Profit')
-    category = ForeignKey('Category', on_delete=PROTECT, verbose_name='Category')
+    category = ForeignKey('Category', on_delete=PROTECT, verbose_name='Category', blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True, verbose_name='Date of creation')
-    closed_at = DateTimeField(blank=True, null=True, verbose_name='Closing date')
+    closed_at = DateTimeField(auto_now=True, blank=True, null=True, verbose_name='Closing date')
 
     def get_absolute_url(self):
-        return reverse('view_operations', kwargs={'pk': self.pk})
+        return reverse('update_ticket', kwargs={'id': self.id})
 
     def __str__(self):
         return self.title
