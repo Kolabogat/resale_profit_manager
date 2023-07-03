@@ -10,8 +10,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required
 def view_tickets(request):
     ticket_item = Ticket.objects.filter(user=request.user)
+    tickets_quantity = ticket_item.count()
     page = request.GET.get('page', 1)
-    paginator = Paginator(ticket_item, 5)
+    paginator = Paginator(ticket_item, 10)
 
     try:
         tickets = paginator.page(page)
@@ -22,6 +23,7 @@ def view_tickets(request):
 
     context = {
         'tickets': tickets,
+        'tickets_quantity': tickets_quantity,
         'title': 'Tickets',
     }
     return render(request, 'accounting/index.html', context=context)
