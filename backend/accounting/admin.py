@@ -36,13 +36,14 @@ admin.AdminSite.get_app_list = get_app_list
 class TicketAdmin(ModelAdmin):
     save_as = True
     save_on_top = True
-    list_display = ('id', 'title', 'bought', 'sold', 'profit', 'category', 'created_at', 'closed_at', 'closed')
+    list_display = ('id', 'title', 'user', 'bought', 'sold', 'profit', 'category', 'created_at', 'closed_at', 'closed')
     list_display_links = ('id', 'title',)
-    search_fields = ('id', 'title', 'category')
+    search_fields = ('id', 'title', 'user', 'category')
     fieldsets = (
         ('Ticket', {
             'fields': (
                 ('title', 'category', 'closed'),
+                'user',
                 'bought',
                 'sold',
                 'profit',
@@ -50,7 +51,7 @@ class TicketAdmin(ModelAdmin):
             ),
         }),
     )
-    readonly_fields = ('created_at', )
+    readonly_fields = ('created_at', 'closed_at')
     list_filter = ('closed', )
 
 
