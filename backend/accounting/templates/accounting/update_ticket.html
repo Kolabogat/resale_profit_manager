@@ -1,0 +1,50 @@
+{% extends 'base_extended.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <h2 class="p-2" style="text-align: center;">Update Ticket</h2>
+
+    <div style="height: 20px;"></div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="p-1 container row mb-2" style="margin: auto;">
+            <div class="col-4">
+                <div class="input-group">
+                  <span class="input-group-text" id="id_title">Title</span>
+                  <input type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="id_title" value="{{ form.title.value }}">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                  <span class="input-group-text" id="id_bought">Bought</span>
+                  <input type="float" name="bought" class="form-control" aria-label="Sizing example input" aria-describedby="id_bought" value="{{ form.bought.value }}">
+                </div>
+            </div>
+            <div class="col-3"  style="text-align: right; margin: auto;">
+                <div class="input-group">
+                  <span class="input-group-text" id="id_sold">Sold</span>
+                  <input type="float" name="sold" class="form-control" aria-label="Sizing example input" aria-describedby="id_sold" value="{% if form.sold.value %}{{ form.sold.value }}{% endif %}">
+                </div>
+            </div>
+            <div class="col-2"  style="text-align: right; margin: auto;">
+                <button name="add_ticket" type="submit" class="btn btn-primary btn">Update</button>
+            </div>
+        </div>
+    </form>
+
+    <div style="height: 20px;"></div>
+
+    <div class="p-1 container row mb-2" style="margin: auto;">
+    {% for message in messages %}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
+

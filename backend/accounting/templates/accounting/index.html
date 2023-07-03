@@ -4,20 +4,29 @@
 
 {% block content %}
 
-<h2 class="p-2" style="text-align: center;">LIST</h2>
-
 <div style="padding-right: 100px; padding-left: 100px;">
+    <div class="p-1 container row mb-2" style="margin: auto;">
+        <div class="col-3"></div>
+        <div class="col-6"><h2 class="p-2" style="text-align: center;">LIST</h2></div>
+        <div class="col-3"  style="text-align: right; margin: auto;"><a href="{% url 'add_ticket' %}" class="p-2" style="color: black; text-decoration-line: none;">Add a ticket</a></div>
+    </div>
 
-
-    <div class="p-1 container" style="padding-left: 10px; padding-bottom: 10px;">
+    <div class="p-1 container">
+        <div style="margin: auto;">
         <span class="badge bg-light text-dark">Filters:</span>
         <a href="#"><span class="badge" style="background-color: #f6d6ad; color: black;">Waiting</span></a>
         <a href="#"><span class="badge" style="background-color: #f9c0c0; color: black;">Failure</span></a>
         <a href="#"><span class="badge" style="background-color: #fafcc2; color: black;">Nothing</span></a>
         <a href="#"><span class="badge" style="background-color: #ccf6c8; color: black;">Success</span></a>
-        <span class="badge" style="background-color: #e8f6f4; color: black;">This Month</span>
-        <span class="badge" style="background-color: #b3d5e9; color: black;">This Year</span>
-        <span class="badge" style="background-color: #ababcb; color: black;">All Time</span>
+        <span class="badge" style="background-color: #ffd571; color: black;">Bought Highest</span>
+        <span class="badge" style="background-color: #f4ebc1; color: black;">Bought Lowest</span>
+        <span class="badge" style="background-color: #ffd571; color: black;">Sold Highest</span>
+        <span class="badge" style="background-color: #f4ebc1; color: black;">Sold Lowest</span>
+        <span class="badge" style="background-color: #ffd571; color: black;">Profit Highest</span>
+        <span class="badge" style="background-color: #f4ebc1; color: black;">Profit Lowest</span>
+        <span class="badge" style="background-color: #ff9a76; color: black;">Date First</span>
+        <span class="badge" style="background-color: #ea5455; color: black;">Reset</span>
+        </div>
     </div>
 
 
@@ -31,18 +40,10 @@
         <div class="col-2">Date</div>
     </div>
 
-    {% for ticket in ticket_item %}
+    {% for ticket in tickets %}
+        <a href="{{ ticket.get_absolute_url }}" style="color: black; text-decoration-line: none;">
 
-        {% if ticket.profit > 0 %}
-            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #ccf6c8;">
-        {% elif ticket.profit < 0 %}
-            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #f9c0c0;">
-        {% elif ticket.profit == 0 %}
-            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #fafcc2;">
-        {% else %}
-            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; background-color: #f6d6ad;">
-        {% endif %}
-
+        <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; {% if ticket.profit > 0 %} background-color: #ccf6c8; {% elif ticket.profit < 0 %} background-color: #f9c0c0; {% elif ticket.profit == 0 %} background-color: #fafcc2; {% else %} background-color: #f6d6ad; {% endif %}">
             <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
             <div class="col-2">-{{ ticket.bought|floatformat:2 }}</div>
             <div class="col-2">
@@ -61,23 +62,38 @@
             </div>
             <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
         </div>
+        </a>
     {% endfor %}
 </div>
 
 <div class="p-4">
+    {% if tickets.has_other_pages %}
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
+            {% if tickets.has_previous %}
             <li class="page-item"><a class="page-link" style="color: black;" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" style="color: black;" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" style="color: black;" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" style="color: black;" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" style="color: black;" href="#">Next</a>
-            </li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            {% endif %}
+
+                {% for p in tickets.paginator.page_range %}
+                  {% if tickets.number == p %}
+                    <li class="page-item"><a class="page-link" style="color: black;" href="#">{{ p }}</a></li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link" style="color: black;" href="?page={{ p }}">{{ p }}</a></li>
+                  {% endif %}
+                {% endfor %}
+
+            {% if tickets.has_next %}
+                <li class="page-item"><a class="page-link" style="color: black;" href="#">Next</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+            {% endif %}
         </ul>
     </nav>
+    {% endif %}
 </div>
 
-{% endblock %}
 
+{% endblock %}
 
