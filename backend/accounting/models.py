@@ -29,6 +29,7 @@ class Ticket(Model):
     category = ForeignKey('Category', on_delete=PROTECT, verbose_name='Category', blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True, verbose_name='Date of creation')
     closed_at = DateTimeField(auto_now=True, blank=True, null=True, verbose_name='Closing date')
+    deleted = CharField(max_length=100, choices=CHOICES, verbose_name='Deleted', default='False')
 
     def get_absolute_url(self):
         return reverse('update_ticket', kwargs={'id': self.id})

@@ -7,6 +7,20 @@ from .models import Ticket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
+FILTER_BY = {
+    'waiting': 'waiting',
+    'failure': 'failure',
+    'nothing': 'nothing',
+    'success': 'success',
+    'bought_highest_to_lowest': 'bought_highest_to_lowest',
+    'bought_lowest_to_highest': 'bought_lowest_to_highest',
+    'sold_highest_to_lowest': 'sold_highest_to_lowest',
+    'sold_lowest_to_highest': 'sold_lowest_to_highest',
+    'profit_highest_to_lowest': 'profit_highest_to_lowest',
+    'profit_lowest_to_highest': 'profit_lowest_to_highest',
+    'date_oldest': 'date_oldest',
+}
+
 
 @login_required
 def view_tickets(request):
@@ -25,6 +39,7 @@ def view_tickets(request):
     context = {
         'tickets': tickets,
         'tickets_quantity': tickets_quantity,
+        'filter_by': FILTER_BY,
         'title': 'Tickets',
     }
     return render(request, 'accounting/index.html', context=context)
@@ -81,6 +96,7 @@ def view_filtered_tickets(request, key=None):
     context = {
         'tickets': tickets,
         'tickets_quantity': tickets_quantity,
+        'filter_by': FILTER_BY,
         'title': 'Tickets',
     }
     return render(request, 'accounting/index.html', context=context)
