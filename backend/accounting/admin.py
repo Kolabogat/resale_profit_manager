@@ -42,8 +42,8 @@ class TicketAdmin(ModelAdmin):
     fieldsets = (
         ('Ticket', {
             'fields': (
-                ('title', 'category', 'closed'),
-                'user',
+                ('title', 'category'),
+                ('user', 'deleted', 'closed'),
                 'bought',
                 'sold',
                 'profit',
@@ -52,7 +52,7 @@ class TicketAdmin(ModelAdmin):
         }),
     )
     readonly_fields = ('created_at', 'closed_at')
-    list_filter = ('closed', )
+    list_filter = ('closed', 'closed')
 
 
 @admin.register(Category)
