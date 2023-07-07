@@ -12,41 +12,40 @@
 
     <div class="p-1 container">
         <div style="margin: auto;">
-            <span class="badge bg-light text-dark">Filters:</span>
-            <a href="{% url 'home' %}filter/{{ filter_by.waiting }}" style="text-decoration-line: none;">
-                <span class="badge" style="background-color: #f6d6ad; color: black;">Waiting</span>
+            <a href="{% url 'filter_tickets' filter_by.waiting %}" style="text-decoration-line: none;">
+                <span class="badge" style="background-color: #f6d6ad; color: black;" title="Filter tickets by profit waiting">Profit Waiting</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.failure }}" style="text-decoration-line: none;">
-                <span class="badge" style="background-color: #f9c0c0; color: black;">Failure</span>
+            <a href="{% url 'filter_tickets' filter_by.failure %}" style="text-decoration-line: none;">
+                <span class="badge" style="background-color: #f9c0c0; color: black;" title="Filter tickets by profit failure">Profit Failure</span>
             </a>
-            <a href="{% url 'home' %}filter/{ filter_by.nothing }}" style="text-decoration-line: none;">
-                <span class="badge" style="background-color: #fafcc2; color: black;">Nothing</span>
+            <a href="{% url 'filter_tickets' filter_by.nothing %}" style="text-decoration-line: none;" title="Filter tickets by profit nothing">
+                <span class="badge" style="background-color: #fafcc2; color: black;">Profit Nothing</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.success }}" style="text-decoration-line: none;">
-                <span class="badge" style="background-color: #ccf6c8; color: black;">Success</span>
+            <a href="{% url 'filter_tickets' filter_by.success %}" style="text-decoration-line: none;" title="Filter tickets by profit success">
+                <span class="badge" style="background-color: #ccf6c8; color: black;">Profit Success</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.bought_highest_to_lowest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.bought_hl %}" style="text-decoration-line: none;" title="Filter tickets by bought from highest to lowest">
                 <span class="badge" style="background-color: #ffd571; color: black;">Bought Highest</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.bought_lowest_to_highest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.bought_lh %}" style="text-decoration-line: none;" title="Filter tickets by bought from lowest to highest">
                 <span class="badge" style="background-color: #f4ebc1; color: black;">Bought Lowest</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.sold_highest_to_lowest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.sold_hl %}" style="text-decoration-line: none;" title="Filter tickets by sold from highest to lowest">
                 <span class="badge" style="background-color: #ffd571; color: black;">Sold Highest</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.sold_lowest_to_highest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.sold_lh %}" style="text-decoration-line: none;" title="Filter tickets by sold from lowest to highest">
                 <span class="badge" style="background-color: #f4ebc1; color: black;">Sold Lowest</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.profit_highest_to_lowest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.profit_hl %}" style="text-decoration-line: none;" title="Filter tickets by profit from highest to lowest">
                 <span class="badge" style="background-color: #ffd571; color: black;">Profit Highest</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.profit_lowest_to_highest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.profit_lh %}" style="text-decoration-line: none;" title="Filter tickets by profit from lowest to highest">
                 <span class="badge" style="background-color: #f4ebc1; color: black;">Profit Lowest</span>
             </a>
-            <a href="{% url 'home' %}filter/{{ filter_by.date_oldest }}" style="text-decoration-line: none;">
+            <a href="{% url 'filter_tickets' filter_by.date_oldest %}" style="text-decoration-line: none;" title="Filter tickets by earliest date">
                 <span class="badge" style="background-color: #ff9a76; color: black;">Date Oldest</span>
             </a>
-            <a href="{% url 'home' %}" style="text-decoration-line: none;">
+            <a href="{% url 'home' %}" style="text-decoration-line: none;" title="Reset filter">
                 <span class="badge" style="background-color: #ea5455; color: black;">Reset</span>
             </a>
         </div>
