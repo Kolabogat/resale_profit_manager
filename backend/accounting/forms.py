@@ -15,5 +15,4 @@ from django.forms import (
 class TicketForm(ModelForm):
     class Meta:
         model = Ticket
-        exclude = ['user', 'closed', 'profit', 'category', 'created_at', 'closed_at']
-        fields = "__all__"
+        fields = ['title', 'bought', 'sold']
