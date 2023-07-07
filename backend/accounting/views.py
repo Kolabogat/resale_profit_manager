@@ -22,66 +22,68 @@ FILTER_BY = {
 }
 
 
-@login_required
 def view_tickets(request, key=None):
-    q = Q(user=request.user) & Q(deleted=False)
-    get_query = request.GET.get('find')
+    if request.user.is_authenticated:
+        q = Q(user=request.user) & Q(deleted=False)
+        get_query = request.GET.get('find')
 
-    if get_query:
-        q = q & Q(title__iregex=get_query)
+        if get_query:
+            q = q & Q(title__iregex=get_query)
 
-    if key == 'profit_waiting':
-        q = q & Q(profit=None)
+        if key == 'profit_waiting':
+            q = q & Q(profit=None)
 
-    if key == 'profit_failure':
-        q = q & Q(profit__lt=0)
+        if key == 'profit_failure':
+            q = q & Q(profit__lt=0)
 
-    if key == 'profit_nothing':
-        q = q & Q(profit=0)
+        if key == 'profit_nothing':
+            q = q & Q(profit=0)
 
-    if key == 'profit_success':
-        q = q & Q(profit__gt=0)
+        if key == 'profit_success':
+            q = q & Q(profit__gt=0)
 
-    tickets = Ticket.objects.filter(q)
+        tickets = Ticket.objects.filter(q)
 
-    if key == 'bought_highest_to_lowest':
-        tickets = tickets.order_by('-bought').values()
+        if key == 'bought_highest_to_lowest':
+            tickets = tickets.order_by('-bought').values()
 
-    if key == 'bought_lowest_to_highest':
-        tickets = tickets.order_by('bought').values()
+        if key == 'bought_lowest_to_highest':
+            tickets = tickets.order_by('bought').values()
 
-    if key == 'sold_highest_to_lowest':
-        tickets = tickets.order_by('-sold').values()
+        if key == 'sold_highest_to_lowest':
+            tickets = tickets.order_by('-sold').values()
 
-    if key == 'sold_lowest_to_highest':
-        tickets = tickets.order_by('sold').values()
+        if key == 'sold_lowest_to_highest':
+            tickets = tickets.order_by('sold').values()
 
-    if key == 'profit_highest_to_lowest':
-        tickets = tickets.order_by('-profit').values()
+        if key == 'profit_highest_to_lowest':
+            tickets = tickets.order_by('-profit').values()
 
-    if key == 'profit_lowest_to_highest':
-        tickets = tickets.order_by('profit').values()
+        if key == 'profit_lowest_to_highest':
+            tickets = tickets.order_by('profit').values()
 
-    if key == 'date_oldest':
-        tickets = tickets.order_by('created_at').values()
+        if key == 'date_oldest':
+            tickets = tickets.order_by('created_at').values()
 
-    tickets_quantity = tickets.count()
-    page = request.GET.get('page', 1)
-    paginator = Paginator(tickets, 10)
-    try:
-        tickets = paginator.page(page)
-    except PageNotAnInteger:
-        tickets = paginator.page(1)
-    except EmptyPage:
-        tickets = paginator.page(paginator.num_pages)
+        tickets_quantity = tickets.count()
+        page = request.GET.get('page', 1)
+        paginator = Paginator(tickets, 10)
+        try:
+            tickets = paginator.page(page)
+        except PageNotAnInteger:
+            tickets = paginator.page(1)
+        except EmptyPage:
+            tickets = paginator.page(paginator.num_pages)
 
-    context = {
-        'tickets': tickets,
-        'tickets_quantity': tickets_quantity,
-        'filter_by': FILTER_BY,
-        'title': 'Tickets',
-    }
-    return render(request, 'accounting/index.html', context=context)
+        context = {
+            'tickets': tickets,
+            'tickets_quantity': tickets_quantity,
+            'filter_by': FILTER_BY,
+            'title': 'Tickets',
+        }
+        return render(request, 'accounting/index.html', context=context)
+    else:
+        return redirect('login')
 
 
 @login_required
