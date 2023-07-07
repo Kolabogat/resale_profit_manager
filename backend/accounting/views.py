@@ -84,10 +84,6 @@ def view_tickets(request, key=None):
     return render(request, 'accounting/index.html', context=context)
 
 
-def view_about(request):
-    return render(request, 'accounting/about.html')
-
-
 @login_required
 def add_ticket(request):
     form = TicketForm(request.POST or None)
