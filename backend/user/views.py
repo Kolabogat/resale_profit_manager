@@ -1,9 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginFrom, SetUserPasswordForm
+from django.db.models import Q
+from accounting.models import Ticket
+from django.db.models import Sum, Max, Min
+
+from .models import UserAdditional
 
 
 def register(request):
@@ -56,10 +61,27 @@ def password_change(request):
 
 
 @login_required
-def account_profile(request):
-    return render(request, 'user/account_profile.html')
+def update_user_data(request):
+    q = Q(user=request.user) & Q(deleted=False)
+    tickets = Ticket.objects.filter(q)
+
+    if UserAdditional.objects.filter(user=request.user):
+        user_object = get_object_or_404(UserAdditional, user=request.user)
+    else:
+        user_object = UserAdditional()
+        user_object.user = request.user
+
+    user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
+    user_object.tickets_quantity = tickets.count()
+    user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
+    user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
+    user_object.save()
+
+    user_object = get_object_or_404(UserAdditional, user=request.user)
+    context = {
+        'user_object': user_object,
+    }
+    return render(request, 'user/account_profile.html', context)
 
 
-@login_required
-def user_data(request):
-    return render(request, 'user/user_data.html')
+
