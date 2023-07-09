@@ -71,13 +71,14 @@ def update_user_data(request):
         user_object = UserAdditional()
         user_object.user = request.user
 
-    user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
-    user_object.tickets_quantity = tickets.count()
-    user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
-    user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
-    user_object.save()
+    if tickets:
+        user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
+        user_object.tickets_quantity = tickets.count()
+        user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
+        user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
+        user_object.save()
 
-    user_object = get_object_or_404(UserAdditional, user=request.user)
+        user_object = get_object_or_404(UserAdditional, user=request.user)
     context = {
         'user_object': user_object,
     }
