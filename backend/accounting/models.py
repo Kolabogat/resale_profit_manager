@@ -32,7 +32,7 @@ class Ticket(Model):
     deleted = CharField(max_length=100, choices=CHOICES, verbose_name='Deleted', default='False')
 
     def get_absolute_url(self):
-        return reverse('update_ticket', kwargs={'id': self.id})
+        return reverse('update_ticket', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
@@ -56,4 +56,12 @@ class Category(Model):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
         ordering = ['title']
+
+
+class TicketFilter(Model):
+    title = CharField(max_length=150, verbose_name='Title')
+    query_value = CharField(max_length=150, verbose_name='Query', blank=True)
+    url_value = CharField(max_length=150, verbose_name='URL')
+    annotation = CharField(max_length=150, verbose_name='Annotation')
+    color = CharField(max_length=150, verbose_name='Color')
 

@@ -12,7 +12,7 @@ class UserLoginFrom(AuthenticationForm):
 class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
+        fields = ('email', 'username', 'password1', 'password2')
 
 
 class SetUserPasswordForm(SetPasswordForm):

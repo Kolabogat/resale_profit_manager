@@ -14,19 +14,19 @@
             <div class="col-4">
                 <div class="input-group">
                   <span class="input-group-text" id="id_title">Title</span>
-                  <input type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="id_title">
+                  <input type="text" name="title" maxlength="100" required class="form-control" aria-label="Sizing example input" aria-describedby="id_title">
                 </div>
             </div>
             <div class="col-3">
                 <div class="input-group">
                   <span class="input-group-text" id="id_bought">Bought</span>
-                  <input type="number" step="0.01" name="bought" class="form-control" aria-label="Sizing example input" aria-describedby="id_bought">
+                  <input type="number" step="0.01" min="0.01" name="bought" required class="form-control" aria-label="Sizing example input" aria-describedby="id_bought">
                 </div>
             </div>
             <div class="col-3"  style="text-align: right; margin: auto;">
                 <div class="input-group">
                   <span class="input-group-text" id="id_sold">Sold</span>
-                  <input type="number" step="0.01" name="sold" class="form-control" aria-label="Sizing example input" aria-describedby="id_sold">
+                  <input type="number" step="0.01" min="0.01" name="sold" class="form-control" aria-label="Sizing example input" aria-describedby="id_sold">
                 </div>
             </div>
             <div class="col-2"  style="text-align: right; margin: auto;">
@@ -40,10 +40,17 @@
 
     <div class="p-1 container row mb-2" style="margin: auto;">
     {% for message in messages %}
+        {% if 'success' in message.tags %}
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        {% else %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
     {% endfor %}
     </div>
 
