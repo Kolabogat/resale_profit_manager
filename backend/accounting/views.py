@@ -3,67 +3,46 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from .forms import TicketForm
-from .models import Ticket
+from .models import Ticket, TicketFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
-FILTER_BY = {
-    'waiting': 'profit_waiting',
-    'failure': 'profit_failure',
-    'nothing': 'profit_nothing',
-    'success': 'profit_success',
-    'bought_hl': 'bought_highest_to_lowest',
-    'bought_lh': 'bought_lowest_to_highest',
-    'sold_hl': 'sold_highest_to_lowest',
-    'sold_lh': 'sold_lowest_to_highest',
-    'profit_hl': 'profit_highest_to_lowest',
-    'profit_lh': 'profit_lowest_to_highest',
-    'date_oldest': 'date_oldest',
-}
+
+def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
+    q = Q(user=request.user) & Q(deleted=False)
+
+    if search_filter:
+        q = q & Q(title__iregex=search_filter)
+
+    if filter_by == ticket_filter_query.get(pk=1).url_value:
+        q = q & Q(profit=None)
+
+    if filter_by == ticket_filter_query.get(pk=2).url_value:
+        q = q & Q(profit__lt=0)
+
+    if filter_by == ticket_filter_query.get(pk=3).url_value:
+        q = q & Q(profit=0)
+
+    if filter_by == ticket_filter_query.get(pk=4).url_value:
+        q = q & Q(profit__gt=0)
+
+    tickets = Ticket.objects.filter(q)
+
+    for id_number in range(5, 12):
+        filter_value = ticket_filter_query.get(pk=id_number)
+        if filter_by == filter_value.url_value:
+            tickets = tickets.order_by(filter_value.query_value).values()
+
+    return tickets
 
 
-def view_tickets(request, key=None):
+def view_tickets(request):
     if request.user.is_authenticated:
-        q = Q(user=request.user) & Q(deleted=False)
-        get_query = request.GET.get('find')
+        search_filter = request.GET.get('search')
+        filter_by = request.GET.get('filter_by')
+        ticket_filter_query = TicketFilter.objects.all()
 
-        if get_query:
-            q = q & Q(title__iregex=get_query)
-
-        if key == 'profit_waiting':
-            q = q & Q(profit=None)
-
-        if key == 'profit_failure':
-            q = q & Q(profit__lt=0)
-
-        if key == 'profit_nothing':
-            q = q & Q(profit=0)
-
-        if key == 'profit_success':
-            q = q & Q(profit__gt=0)
-
-        tickets = Ticket.objects.filter(q)
-
-        if key == 'bought_highest_to_lowest':
-            tickets = tickets.order_by('-bought').values()
-
-        if key == 'bought_lowest_to_highest':
-            tickets = tickets.order_by('bought').values()
-
-        if key == 'sold_highest_to_lowest':
-            tickets = tickets.order_by('-sold').values()
-
-        if key == 'sold_lowest_to_highest':
-            tickets = tickets.order_by('sold').values()
-
-        if key == 'profit_highest_to_lowest':
-            tickets = tickets.order_by('-profit').values()
-
-        if key == 'profit_lowest_to_highest':
-            tickets = tickets.order_by('profit').values()
-
-        if key == 'date_oldest':
-            tickets = tickets.order_by('created_at').values()
+        tickets = tickets_filter(request, ticket_filter_query, search_filter, filter_by)
 
         tickets_quantity = tickets.count()
         page = request.GET.get('page', 1)
@@ -78,7 +57,7 @@ def view_tickets(request, key=None):
         context = {
             'tickets': tickets,
             'tickets_quantity': tickets_quantity,
-            'filter_by': FILTER_BY,
+            'ticket_filter_query': ticket_filter_query,
             'title': 'Tickets',
         }
         return render(request, 'accounting/index.html', context=context)
@@ -104,13 +83,14 @@ def add_ticket(request):
 
     context = {
         'form': form,
+        'title': 'Add ticket',
     }
     return render(request, 'accounting/add_ticket.html', context)
 
 
 @login_required
-def update_ticket(request, id=None):
-    obj = get_object_or_404(Ticket, id=id, user=request.user, deleted=False)
+def update_ticket(request, pk=None):
+    obj = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
     form = TicketForm(instance=obj)
     if request.method == "POST":
         form = TicketForm(request.POST or None, instance=obj)
@@ -124,6 +104,7 @@ def update_ticket(request, id=None):
             return redirect('home')
 
     context = {
-        "form": form,
+        'form': form,
+        'title': 'Update ticket',
     }
     return render(request, 'accounting/update_ticket.html', context)

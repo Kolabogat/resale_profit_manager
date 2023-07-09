@@ -3,56 +3,28 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+
+{% load accounting_tags %}
+
 <div style="padding-right: 100px; padding-left: 100px;">
     <div class="p-1 container row mb-2" style="margin: auto;">
         <div class="col-3"></div>
         <div class="col-6"><h2 class="p-2" style="text-align: center;">LIST</h2></div>
-        <div class="col-3"  style="text-align: right; margin: auto;"><a href="{% url 'add_ticket' %}" class="p-2" style="color: black; text-decoration-line: none;">Add a ticket</a></div>
+        <div class="col-3"  style="text-align: right; margin: auto;"><a href="{% url 'add_ticket' %}" class="p-2" style="color: #5067bc; text-decoration-line: none;">Add a ticket</a></div>
     </div>
 
     <div class="p-1 container">
         <div style="margin: auto;">
-            <a href="{% url 'filter_tickets' filter_by.waiting %}" style="text-decoration-line: none;">
-                <span class="badge" style="background-color: #f6d6ad; color: black;" title="Filter tickets by profit waiting">Profit Waiting</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.failure %}" style="text-decoration-line: none;">
-                <span class="badge" style="background-color: #f9c0c0; color: black;" title="Filter tickets by profit failure">Profit Failure</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.nothing %}" style="text-decoration-line: none;" title="Filter tickets by profit nothing">
-                <span class="badge" style="background-color: #fafcc2; color: black;">Profit Nothing</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.success %}" style="text-decoration-line: none;" title="Filter tickets by profit success">
-                <span class="badge" style="background-color: #ccf6c8; color: black;">Profit Success</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.bought_hl %}" style="text-decoration-line: none;" title="Filter tickets by bought from highest to lowest">
-                <span class="badge" style="background-color: #ffd571; color: black;">Bought Highest</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.bought_lh %}" style="text-decoration-line: none;" title="Filter tickets by bought from lowest to highest">
-                <span class="badge" style="background-color: #f4ebc1; color: black;">Bought Lowest</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.sold_hl %}" style="text-decoration-line: none;" title="Filter tickets by sold from highest to lowest">
-                <span class="badge" style="background-color: #ffd571; color: black;">Sold Highest</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.sold_lh %}" style="text-decoration-line: none;" title="Filter tickets by sold from lowest to highest">
-                <span class="badge" style="background-color: #f4ebc1; color: black;">Sold Lowest</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.profit_hl %}" style="text-decoration-line: none;" title="Filter tickets by profit from highest to lowest">
-                <span class="badge" style="background-color: #ffd571; color: black;">Profit Highest</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.profit_lh %}" style="text-decoration-line: none;" title="Filter tickets by profit from lowest to highest">
-                <span class="badge" style="background-color: #f4ebc1; color: black;">Profit Lowest</span>
-            </a>
-            <a href="{% url 'filter_tickets' filter_by.date_oldest %}" style="text-decoration-line: none;" title="Filter tickets by earliest date">
-                <span class="badge" style="background-color: #ff9a76; color: black;">Date Oldest</span>
-            </a>
+            {% for filter in ticket_filter_query %}
+                <a href="{% url 'home' %}?filter_by={{ filter.url_value }}" style="text-decoration-line: none;">
+                    <span class="badge" style="background-color: {{ filter.color }}; color: black;" title="{{ filter.annotation }}">{{ filter.title }}</span>
+                </a>
+            {% endfor %}
             <a href="{% url 'home' %}" style="text-decoration-line: none;" title="Reset filter">
                 <span class="badge" style="background-color: #ea5455; color: black;">Reset</span>
             </a>
         </div>
     </div>
-
-
-
 
     <div class="p-1 container p-2 border bg-light themed-container row mb-2" style="margin: auto;">
         <div class="col-4">Title</div>
@@ -64,40 +36,37 @@
 
     {% for ticket in tickets %}
         <a href="{{ ticket.get_absolute_url }}" style="color: black; text-decoration-line: none;">
-
-        <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; {% if ticket.profit > 0 %} background-color: #ccf6c8; {% elif ticket.profit < 0 %} background-color: #f9c0c0; {% elif ticket.profit == 0 %} background-color: #fafcc2; {% else %} background-color: #f6d6ad; {% endif %}">
-            <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
-            <div class="col-2">-{{ ticket.bought|floatformat:2 }}</div>
-            <div class="col-2">
-                {% if ticket.sold %}
-                +{{ ticket.sold|floatformat:2 }}
-                {% else %}
-                -
-                {% endif %}
+            <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; {% if ticket.profit > 0 %} background-color: #ccf6c8; {% elif ticket.profit < 0 %} background-color: #f9c0c0; {% elif ticket.profit == 0 %} background-color: #fafcc2; {% else %} background-color: #f6d6ad; {% endif %}">
+                <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
+                <div class="col-2">-{{ ticket.bought|floatformat:2 }}</div>
+                <div class="col-2">
+                    {% if ticket.sold %}
+                    +{{ ticket.sold|floatformat:2 }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+                <div class="col-2">
+                    {% if ticket.profit or ticket.profit == 0 %}
+                    {{ ticket.profit|floatformat:2  }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+                <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
             </div>
-            <div class="col-2">
-                {% if ticket.profit or ticket.profit == 0 %}
-                {{ ticket.profit|floatformat:2  }}
-                {% else %}
-                -
-                {% endif %}
-            </div>
-            <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
-        </div>
         </a>
     {% endfor %}
 
-
-
+    <div style="height: 20px;"></div>
     <div class="p-1 container row mb-2" style="margin: auto;">
         <div class="col-3"></div>
-
         <div class="col-6">
             {% if tickets.has_other_pages %}
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     {% if tickets.has_previous %}
-                        <li class="page-item"><a class="page-link" style="color: black;" href="?page={{ tickets.previous_page_number }}">Previous</a></li>
+                        <li class="page-item"><a class="page-link" style="color: black;" href="?{% url_replace request 'page' paginator.next_page_number %}{{ tickets.previous_page_number }}">Previous</a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                     {% endif %}
@@ -106,12 +75,12 @@
                           {% if tickets.number == p %}
                             <li class="page-item disabled"><a class="page-link" style="color: #5067bc;">{{ p }}</a></li>
                           {% elif p > tickets.number|add:-3 and p < tickets.number|add:+3 %}
-                            <li class="page-item"><a class="page-link" style="color: black;" href="?page={{ p }}">{{ p }}</a></li>
+                            <li class="page-item"><a class="page-link" style="color: black;" href="?{% url_replace request 'page' paginator.next_page_number %}{{ p }}">{{ p }}</a></li>
                           {% endif %}
                         {% endfor %}
 
                     {% if tickets.has_next %}
-                        <li class="page-item"><a class="page-link" style="color: black;" href="?page={{ tickets.next_page_number }}">Next</a></li>
+                        <li class="page-item"><a class="page-link" style="color: black;" href="?{% url_replace request 'page' paginator.next_page_number %}{{ tickets.next_page_number }}">Next</a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                     {% endif %}
@@ -123,9 +92,7 @@
         <div class="col-3">
             <p style="text-align: right; color: #858585;">Quantity: {{ tickets_quantity }}</p>
         </div>
-
     </div>
-
 </div>
 {% endblock %}
 
