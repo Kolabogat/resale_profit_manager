@@ -6,7 +6,7 @@ from .forms import TicketForm
 from .models import Ticket, TicketFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-
+from user.models import UserAdditional
 
 def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
     q = Q(user=request.user) & Q(deleted=False)
@@ -41,12 +41,13 @@ def view_tickets(request):
         search_filter = request.GET.get('search')
         filter_by = request.GET.get('filter_by')
         ticket_filter_query = TicketFilter.objects.all()
+        paginate_by = UserAdditional.objects.filter(user=request.user).get().paginate_by
 
         tickets = tickets_filter(request, ticket_filter_query, search_filter, filter_by)
 
         tickets_quantity = tickets.count()
         page = request.GET.get('page', 1)
-        paginator = Paginator(tickets, 10)
+        paginator = Paginator(tickets, paginate_by)
         try:
             tickets = paginator.page(page)
         except PageNotAnInteger:
