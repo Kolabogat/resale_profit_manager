@@ -76,7 +76,7 @@ def add_ticket(request):
             ticket.profit = round(ticket.sold - ticket.bought, 2)
             ticket.closed = 'True'
         ticket.save()
-        messages.success(request, 'Ticket added successfully')
+        messages.success(request, f'Ticket "{ticket.title}"  added successfully')
         return redirect(f'add_ticket')
     else:
         form = TicketForm()
@@ -90,21 +90,35 @@ def add_ticket(request):
 
 @login_required
 def update_ticket(request, pk=None):
-    obj = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
-    form = TicketForm(instance=obj)
-    if request.method == "POST":
-        form = TicketForm(request.POST or None, instance=obj)
+    ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
+    form = TicketForm(instance=ticket)
+    if request.method == 'POST':
+        form = TicketForm(request.POST or None, instance=ticket)
         if form.is_valid():
             ticket = form.save(commit=False)
             if ticket.sold:
                 ticket.profit = round(ticket.sold - ticket.bought, 2)
                 ticket.closed = 'True'
             ticket.save()
-            messages.success(request, 'Ticket successfully changed.')
+            messages.success(request, f'Ticket "{ticket.title}" successfully changed.')
             return redirect('home')
 
     context = {
         'form': form,
         'title': 'Update ticket',
+        'ticket': ticket
     }
     return render(request, 'accounting/update_ticket.html', context)
+
+
+@login_required
+def delete_ticket(request, pk=None):
+    try:
+        ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
+        if ticket:
+            ticket.deleted = True
+            ticket.save()
+            messages.warning(request, f'Ticket "{ticket.title}" successfully deleted.')
+    except Exception:
+        messages.error(request, f'Ticket with ID: "{pk}" not found.')
+    return redirect('home')
