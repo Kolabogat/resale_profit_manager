@@ -6,7 +6,7 @@ from .forms import TicketForm
 from .models import Ticket, TicketFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from user.models import UserAdditional
+from user.models import UserSettings
 
 
 def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
@@ -42,7 +42,7 @@ def view_tickets(request):
         search_filter = request.GET.get('search')
         filter_by = request.GET.get('filter_by')
         ticket_filter_query = TicketFilter.objects.all()
-        user_additional = UserAdditional.objects.filter(user=request.user).get()
+        user_additional = UserSettings.objects.filter(user=request.user).get()
         paginate_by = user_additional.paginate_by
 
         tickets = tickets_filter(request, ticket_filter_query, search_filter, filter_by)
@@ -76,9 +76,9 @@ def add_ticket(request):
     if form.is_valid():
         ticket = form.save(commit=False)
         ticket.user = request.user
-        ticket.sold = round(ticket.sold, 2)
         ticket.bought = round(ticket.bought, 2)
         if ticket.sold:
+            ticket.sold = round(ticket.sold, 2)
             ticket.profit = round(ticket.sold - ticket.bought, 2)
             ticket.closed = 'True'
         ticket.save()
@@ -97,14 +97,16 @@ def add_ticket(request):
 @login_required
 def update_ticket(request, pk=None):
     ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
+    user_settings = UserSettings.objects.filter(user=request.user).get()
+
     form = TicketForm(instance=ticket)
     if request.method == 'POST':
         form = TicketForm(request.POST or None, instance=ticket)
         if form.is_valid():
             ticket = form.save(commit=False)
-            ticket.sold = round(ticket.sold, 2)
             ticket.bought = round(ticket.bought, 2)
             if ticket.sold:
+                ticket.sold = round(ticket.sold, 2)
                 ticket.profit = round(ticket.sold - ticket.bought, 2)
                 ticket.closed = 'True'
             ticket.save()
@@ -114,7 +116,8 @@ def update_ticket(request, pk=None):
     context = {
         'form': form,
         'title': 'Update ticket',
-        'ticket': ticket
+        'ticket': ticket,
+        'user_settings': user_settings,
     }
     return render(request, 'accounting/update_ticket.html', context)
 
