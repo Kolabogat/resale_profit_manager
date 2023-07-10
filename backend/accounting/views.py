@@ -76,6 +76,8 @@ def add_ticket(request):
     if form.is_valid():
         ticket = form.save(commit=False)
         ticket.user = request.user
+        ticket.sold = round(ticket.sold, 2)
+        ticket.bought = round(ticket.bought, 2)
         if ticket.sold:
             ticket.profit = round(ticket.sold - ticket.bought, 2)
             ticket.closed = 'True'
@@ -100,6 +102,8 @@ def update_ticket(request, pk=None):
         form = TicketForm(request.POST or None, instance=ticket)
         if form.is_valid():
             ticket = form.save(commit=False)
+            ticket.sold = round(ticket.sold, 2)
+            ticket.bought = round(ticket.bought, 2)
             if ticket.sold:
                 ticket.profit = round(ticket.sold - ticket.bought, 2)
                 ticket.closed = 'True'
