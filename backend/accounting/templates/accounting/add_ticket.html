@@ -40,17 +40,10 @@
 
     <div class="p-1 container row mb-2" style="margin: auto;">
     {% for message in messages %}
-        {% if 'success' in message.tags %}
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="alert alert-{% if 'error' in message.tags %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        {% else %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endif %}
     {% endfor %}
     </div>
 

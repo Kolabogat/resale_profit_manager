@@ -64,6 +64,7 @@ def password_change(request):
 def update_user_data(request):
     q = Q(user=request.user) & Q(deleted=False)
     tickets = Ticket.objects.filter(q)
+    user_additional = UserAdditional.objects.filter(user=request.user).get()
 
     if UserAdditional.objects.filter(user=request.user):
         user_object = get_object_or_404(UserAdditional, user=request.user)
@@ -81,6 +82,7 @@ def update_user_data(request):
         user_object = get_object_or_404(UserAdditional, user=request.user)
     context = {
         'user_object': user_object,
+        'user_additional': user_additional,
     }
     return render(request, 'user/account_profile.html', context)
 

@@ -15,19 +15,21 @@ from django.db.models import (
 
 
 CURRENCY = (
-    ('USD', '$'),
-    ('EUR', '€'),
-    ('RUB', '₽'),
-    ('UAH', '₴'),
-    ('MDL', 'L'),
+    ('$', '$'),
+    ('€', '€'),
+    ('₽', '₽'),
+    ('₴', '₴'),
+    ('L', 'L'),
 )
 
 PAGINATION = (
+    ('5', '5'),
     ('10', '10'),
     ('15', '15'),
     ('25', '25'),
     ('50', '50'),
     ('100', '100'),
+    ('200', '200'),
 )
 
 
@@ -40,6 +42,8 @@ class UserAdditional(Model):
     user = ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='User', on_delete=PROTECT, related_name='user_additional')
 
     paginate_by = CharField(verbose_name='Pagination', max_length=50, choices=PAGINATION, default='10')
+    currency = CharField(verbose_name='Currency', max_length=50, choices=CURRENCY, default='$')
+    display_symbol = BooleanField(verbose_name='Display symbol', default=False)
 
     all_time_profit = FloatField(verbose_name='Profit', default=0)
     tickets_quantity = IntegerField(verbose_name='Quantity', default=0)
@@ -50,4 +54,4 @@ class UserAdditional(Model):
         return reverse('account_profile', kwargs={'id': self.id})
 
     def __str__(self):
-        return self.user
+        return str(self.user)

@@ -10,16 +10,37 @@
         <div class="col-6"><h2 class="p-2" style="text-align: center;">Profile Data</h2></div>
         <div class="col-3"  style="margin: auto;"></div>
     </div>
-
-
-
-<p>All time profit: {{ user_object.all_time_profit }}</p>
-<p>Tickets quantity: {{ user_object.tickets_quantity }}</p>
-<!--<h3>First ticket: {{ user_object.all_time_profit }}</h3>-->
-<p>Highest profit: {{ user_object.highest_profit }}</p>
-<p>Highest loss: {{ user_object.highest_loss }}</p>
-
-
-<div style="height: 300px;"></div>
+    <div class="p-1 container row mb-2" style="margin: auto;">
+        <div class="col-12">
+            <h2>
+                All time profit
+                <span class="badge bg-secondary">
+                    {{ user_object.all_time_profit }}
+                    {{ user_additional.currency }}
+                </span>
+            </h2>
+            <h3>
+                Tickets quantity
+                <span class="badge bg-secondary">
+                    {{ user_object.tickets_quantity }}
+                </span>
+            </h3>
+            <h4>
+                Highest profit
+                <span class="badge bg-secondary">
+                    {{ user_object.highest_profit }}
+                    {{ user_additional.currency }}
+                </span>
+            </h4>
+            <h4>
+                Highest loss
+                <span class="badge bg-secondary">
+                    {{ user_object.highest_loss }}
+                    {{ user_additional.currency }}
+                </span>
+            </h4>
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
 </div>
 {% endblock %}

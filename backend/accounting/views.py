@@ -6,6 +6,7 @@ from .forms import TicketForm
 from .models import Ticket, TicketFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from user.models import UserSettings
 
 
 def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
@@ -41,12 +42,14 @@ def view_tickets(request):
         search_filter = request.GET.get('search')
         filter_by = request.GET.get('filter_by')
         ticket_filter_query = TicketFilter.objects.all()
+        user_additional = UserSettings.objects.filter(user=request.user).get()
+        paginate_by = user_additional.paginate_by
 
         tickets = tickets_filter(request, ticket_filter_query, search_filter, filter_by)
 
         tickets_quantity = tickets.count()
         page = request.GET.get('page', 1)
-        paginator = Paginator(tickets, 10)
+        paginator = Paginator(tickets, paginate_by)
         try:
             tickets = paginator.page(page)
         except PageNotAnInteger:
@@ -58,6 +61,7 @@ def view_tickets(request):
             'tickets': tickets,
             'tickets_quantity': tickets_quantity,
             'ticket_filter_query': ticket_filter_query,
+            'user_additional': user_additional,
             'title': 'Tickets',
         }
         return render(request, 'accounting/index.html', context=context)
@@ -72,11 +76,13 @@ def add_ticket(request):
     if form.is_valid():
         ticket = form.save(commit=False)
         ticket.user = request.user
+        ticket.bought = round(ticket.bought, 2)
         if ticket.sold:
+            ticket.sold = round(ticket.sold, 2)
             ticket.profit = round(ticket.sold - ticket.bought, 2)
             ticket.closed = 'True'
         ticket.save()
-        messages.success(request, 'Ticket added successfully')
+        messages.success(request, f'Ticket "{ticket.title}"  added successfully')
         return redirect(f'add_ticket')
     else:
         form = TicketForm()
@@ -90,21 +96,40 @@ def add_ticket(request):
 
 @login_required
 def update_ticket(request, pk=None):
-    obj = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
-    form = TicketForm(instance=obj)
-    if request.method == "POST":
-        form = TicketForm(request.POST or None, instance=obj)
+    ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
+    user_settings = UserSettings.objects.filter(user=request.user).get()
+
+    form = TicketForm(instance=ticket)
+    if request.method == 'POST':
+        form = TicketForm(request.POST or None, instance=ticket)
         if form.is_valid():
             ticket = form.save(commit=False)
+            ticket.bought = round(ticket.bought, 2)
             if ticket.sold:
+                ticket.sold = round(ticket.sold, 2)
                 ticket.profit = round(ticket.sold - ticket.bought, 2)
                 ticket.closed = 'True'
             ticket.save()
-            messages.success(request, 'Ticket successfully changed.')
+            messages.success(request, f'Ticket "{ticket.title}" successfully changed.')
             return redirect('home')
 
     context = {
         'form': form,
         'title': 'Update ticket',
+        'ticket': ticket,
+        'user_settings': user_settings,
     }
     return render(request, 'accounting/update_ticket.html', context)
+
+
+@login_required
+def delete_ticket(request, pk=None):
+    try:
+        ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
+        if ticket:
+            ticket.deleted = True
+            ticket.save()
+            messages.warning(request, f'Ticket "{ticket.title}" successfully deleted.')
+    except Exception:
+        messages.error(request, f'Ticket with ID: "{pk}" not found.')
+    return redirect('home')

@@ -9,6 +9,8 @@ ADMIN_ORDERING = {
 
     'Users': 1,
     'Groups': 2,
+
+    'Additional User Settings': 1,
 }
 
 
