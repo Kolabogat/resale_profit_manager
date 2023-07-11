@@ -9,7 +9,11 @@
         <div class="col-6"><h2 class="p-2" style="text-align: center;">Update Ticket</h2></div>
         <div class="col-3"  style="text-align: right; margin: auto;">
             <!-- Button trigger modal -->
+            {% if user_settings.delete_confirmation %}
             <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="p-2" style="color: #ea5455; text-decoration-line: none;">Delete</a>
+            {% else %}
+            <a href="{{ ticket.get_delete_url }}" class="p-2" style="color: #ea5455; text-decoration-line: none;">Delete</a>
+            {% endif %}
         </div>
     </div>
 

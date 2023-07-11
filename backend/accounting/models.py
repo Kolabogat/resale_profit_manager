@@ -31,8 +31,11 @@ class Ticket(Model):
     closed_at = DateTimeField(auto_now=True, blank=True, null=True, verbose_name='Closing date')
     deleted = CharField(max_length=100, choices=CHOICES, verbose_name='Deleted', default='False')
 
-    def get_absolute_url(self):
+    def get_update_url(self):
         return reverse('update_ticket', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('delete_ticket', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
