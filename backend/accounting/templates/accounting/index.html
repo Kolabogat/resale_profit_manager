@@ -61,6 +61,8 @@
                 <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
             </div>
         </a>
+    {% empty %}
+
     {% endfor %}
 
     <div style="height: 20px;"></div>
