@@ -14,22 +14,21 @@
             <p class="bg-danger p-d ml-b">{{ error_message }}</p>
         {% endif %}
 
-
         <div class="form-floating" style="height: 50px; margin: auto;">
-            <input name="username" type="text"  autocomplete="username" class="form-control" id="id_username" placeholder="Username">
+            <input name="{{ form.username.name }}" type="text" autocomplete="{{ form.username.name }}" class="form-control" id="id_username" placeholder="Username">
             <label for="id_username">Username</label>
         </div>
         <div style="height: 20px;"></div>
 
         <div class="form-floating" style="height: 50px; margin: auto;">
-            <input name="password1" type="password"  autocomplete="new-password" class="form-control" id="id_password1" placeholder="Password">
+            <input name="{{ form.password1.name }}" type="password"  autocomplete="new-password" class="form-control" id="id_password1" placeholder="Password">
             <label for="id_password1">Password</label>
         </div>
         <div style="height: 20px;"></div>
 
         <div class="form-floating" style="height: 50px; margin: auto;">
-            <input name="password2" type="password"  autocomplete="new-password" class="form-control" id="id_password2" placeholder="Password">
-            <label for="id_password2">Password</label>
+            <input name="{{ form.password2.name }}" type="password"  autocomplete="new-password" class="form-control" id="id_password2" placeholder="Password">
+            <label for="id_password2">Repeat password</label>
         </div>
         <div style="height: 20px;"></div>
 

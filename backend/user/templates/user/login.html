@@ -15,13 +15,13 @@
         {% endif %}
 
         <div class="form-floating" style="height: 50px; margin: auto;">
-          <input name="username" type="text"  autocomplete="username" class="form-control" id="id_username" placeholder="Username">
+          <input name="{{ form.username.name }}" type="text"  autocomplete="{{ form.username.user }}" class="form-control" id="id_username" placeholder="Username">
           <label for="id_username">Username</label>
         </div>
         <div style="height: 20px;"></div>
 
         <div class="form-floating" style="height: 50px; margin: auto;">
-          <input name="password" type="password"  autocomplete="password" class="form-control" id="id_password" placeholder="Password">
+          <input name="{{ form.password.name }}" type="password"  autocomplete="{{ form.password.name }}" class="form-control" id="id_password" placeholder="Password">
           <label for="id_password">Password</label>
         </div>
         <div style="height: 20px;"></div>
