@@ -7,8 +7,7 @@ from .forms import UserRegisterForm, UserLoginFrom, SetUserPasswordForm
 from django.db.models import Q
 from accounting.models import Ticket
 from django.db.models import Sum, Max, Min
-
-from .models import UserAdditional
+from .models import UserProfile, UserSettings
 
 
 def register(request):
@@ -17,6 +16,15 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+
+            user_settings = UserSettings()
+            user_settings.user = request.user
+            user_settings.save()
+
+            user_profile = UserProfile()
+            user_profile.user = request.user
+            user_profile.save()
+
             messages.success(request, 'You successfully registered')
             return redirect('home')
         else:
@@ -61,16 +69,24 @@ def password_change(request):
 
 
 @login_required
+def view_user_data(request):
+    user_profile = UserProfile.objects.filter(user=request.user).get()
+    user_settings = UserSettings.objects.filter(user=request.user).get()
+    user_object = get_object_or_404(UserProfile, user=request.user)
+
+    context = {
+        'user_object': user_object,
+        'user_profile': user_profile,
+        'user_settings': user_settings,
+    }
+    return render(request, 'user/account_profile.html', context)
+
+
+@login_required
 def update_user_data(request):
     q = Q(user=request.user) & Q(deleted=False)
     tickets = Ticket.objects.filter(q)
-    user_additional = UserAdditional.objects.filter(user=request.user).get()
-
-    if UserAdditional.objects.filter(user=request.user):
-        user_object = get_object_or_404(UserAdditional, user=request.user)
-    else:
-        user_object = UserAdditional()
-        user_object.user = request.user
+    user_object = get_object_or_404(UserProfile, user=request.user)
 
     if tickets:
         user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
@@ -78,13 +94,7 @@ def update_user_data(request):
         user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
         user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
         user_object.save()
-
-        user_object = get_object_or_404(UserAdditional, user=request.user)
-    context = {
-        'user_object': user_object,
-        'user_additional': user_additional,
-    }
-    return render(request, 'user/account_profile.html', context)
+    return redirect('account_profile')
 
 
 

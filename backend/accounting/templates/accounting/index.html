@@ -35,7 +35,7 @@
     </div>
 
     {% for ticket in tickets %}
-        <a href="{{ ticket.get_absolute_url }}" style="color: black; text-decoration-line: none;">
+        <a href="{{ ticket.get_update_url }}" style="color: black; text-decoration-line: none;">
             <div class="p-1 container themed-container p-2 border row mb-2" style="margin: auto; {% if ticket.profit > 0 %} background-color: #ccf6c8; {% elif ticket.profit < 0 %} background-color: #f9c0c0; {% elif ticket.profit == 0 %} background-color: #fafcc2; {% else %} background-color: #f6d6ad; {% endif %}">
                 <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
                 <div class="col-2">
@@ -61,6 +61,8 @@
                 <div class="col-2">{{ ticket.created_at|date:"d.m.Y"}}</div>
             </div>
         </a>
+    {% empty %}
+
     {% endfor %}
 
     <div style="height: 20px;"></div>
