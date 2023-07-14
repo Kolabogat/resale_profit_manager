@@ -3,11 +3,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginFrom, SetUserPasswordForm
+from .forms import UserRegisterForm, UserLoginFrom, SetUserPasswordForm, UserSettingsForm
 from django.db.models import Q
 from accounting.models import Ticket
 from django.db.models import Sum, Max, Min
-from .models import UserProfile, UserSettings
+from .models import UserProfile, UserSettings, CommandPagination, CommandCurrency
 
 
 def register(request):
@@ -78,6 +78,7 @@ def view_user_data(request):
         'user_object': user_object,
         'user_profile': user_profile,
         'user_settings': user_settings,
+        'title': 'User profile'
     }
     return render(request, 'user/account_profile.html', context)
 
@@ -96,5 +97,30 @@ def update_user_data(request):
         user_object.save()
     return redirect('account_profile')
 
+
+@login_required
+def user_settings(request):
+    user_settings = get_object_or_404(UserSettings, user=request.user)
+
+    form = UserSettingsForm(instance=user_settings)
+
+    command_pagination = CommandPagination.objects.filter().only('paginate_by')
+    command_currency = CommandCurrency.objects.all()
+
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST or None, instance=user_settings)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.save()
+            return redirect('user_settings')
+
+    context = {
+        'form': form,
+        'command_pagination': command_pagination,
+        'command_currency': command_currency,
+        'user_settings': user_settings,
+        'title': 'User settings',
+    }
+    return render(request, 'user/user_settings.html', context)
 
 
