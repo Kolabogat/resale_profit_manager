@@ -1,0 +1,11 @@
+<div style="height: 10px;"></div>
+<div class="p-1 container row mb-2" style="margin: auto;">
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{% if 'error' in message.tags %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
