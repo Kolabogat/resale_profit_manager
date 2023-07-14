@@ -9,10 +9,10 @@
 6. You can edit ticket by clicking on it
 7. Profit calculated after `Sold` field filled
 ## Commands
-Commands for committing into models constants for tickets filters and user settings
+Commands for committing into models constants for tickets filters and user settings.
 
-```cd backend```
+```cd backend``` - Enter to project directory.
 
-```python manage.py command_filter_query```
+```python manage.py command_filter_query``` - Check or create fields for tickets filters.
 
-```python manage.py command_settings_query```
+```python manage.py command_settings_query``` - Check or create fields for user settings.
