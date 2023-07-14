@@ -17,13 +17,13 @@ def register(request):
             user = form.save()
             login(request, user)
 
-            user_settings = UserSettings()
-            user_settings.user = request.user
-            user_settings.save()
+            settings_user = UserSettings()
+            settings_user.user = request.user
+            settings_user.save()
 
-            user_profile = UserProfile()
-            user_profile.user = request.user
-            user_profile.save()
+            profile_user = UserProfile()
+            profile_user.user = request.user
+            profile_user.save()
 
             messages.success(request, 'You successfully registered')
             return redirect('home')
@@ -100,15 +100,15 @@ def update_user_data(request):
 
 @login_required
 def user_settings(request):
-    user_settings = get_object_or_404(UserSettings, user=request.user)
+    settings_user = get_object_or_404(UserSettings, user=request.user)
 
-    form = UserSettingsForm(instance=user_settings)
+    form = UserSettingsForm(instance=settings_user)
 
     command_pagination = CommandPagination.objects.filter().only('paginate_by')
     command_currency = CommandCurrency.objects.all()
 
     if request.method == 'POST':
-        form = UserSettingsForm(request.POST or None, instance=user_settings)
+        form = UserSettingsForm(request.POST or None, instance=settings_user)
         if form.is_valid():
             form = form.save(commit=False)
             form.save()
@@ -118,7 +118,6 @@ def user_settings(request):
         'form': form,
         'command_pagination': command_pagination,
         'command_currency': command_currency,
-        'user_settings': user_settings,
         'title': 'User settings',
     }
     return render(request, 'user/user_settings.html', context)
