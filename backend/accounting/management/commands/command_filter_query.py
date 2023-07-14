@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 
 from ...models import TicketFilter
-from time import sleep
 
 FILTER_TICKETS = (
     {

@@ -43,22 +43,19 @@ def view_tickets(request):
         filter_by = request.GET.get('filter_by')
         ticket_filter_query = TicketFilter.objects.all()
         user_additional = UserSettings.objects.filter(user=request.user).get()
-        paginate_by = user_additional.paginate_by
+        paginate_by = str(user_additional.paginate_by)
 
         tickets = tickets_filter(request, ticket_filter_query, search_filter, filter_by)
+
+        tickets_quantity = tickets.count()
+        page = request.GET.get('page', 1)
+        paginator = Paginator(tickets, paginate_by)
         try:
-            tickets_quantity = tickets.count()
-            page = request.GET.get('page', 1)
-            paginator = Paginator(tickets, paginate_by)
-            try:
-                tickets = paginator.page(page)
-            except PageNotAnInteger:
-                tickets = paginator.page(1)
-            except EmptyPage:
-                tickets = paginator.page(paginator.num_pages)
-        except:
-            tickets_quantity = 0
-            tickets = ''
+            tickets = paginator.page(page)
+        except PageNotAnInteger:
+            tickets = paginator.page(1)
+        except EmptyPage:
+            tickets = paginator.page(paginator.num_pages)
 
         context = {
             'tickets': tickets,
