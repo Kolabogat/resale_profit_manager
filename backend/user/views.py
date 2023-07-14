@@ -11,6 +11,12 @@ from .models import UserProfile, UserSettings, CommandPagination, CommandCurrenc
 
 
 def register(request):
+    """
+    Shows 'register' template with 'UserRegisterForm' from
+    that allow user to register.
+    Also creates additional user models ('UserSettings' and
+    'UserProfile') for individual user settings and data.
+    """
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -35,6 +41,10 @@ def register(request):
 
 
 def user_login(request):
+    """
+    Shows 'login' template with 'UserLoginFrom' form
+    that allow user to login.
+    """
     if request.method == 'POST':
         form = UserLoginFrom(data=request.POST)
         if form.is_valid():
@@ -57,6 +67,10 @@ def user_logout(request):
 
 @login_required
 def password_change(request):
+    """
+    Shows 'password_change' template with 'SetUserPasswordForm' form
+    that allow to update user password.
+    """
     user = request.user
     if request.method == 'POST':
         form = SetUserPasswordForm(user, request.POST)
@@ -74,6 +88,10 @@ def password_change(request):
 
 @login_required
 def view_user_data(request):
+    """
+    Shows 'account_profile' template with a user data: profit for
+    all time, tickets quantity, highest profit, highest loss.
+    """
     settings_user = UserSettings.objects.filter(user=request.user).get()
     user_object = get_object_or_404(UserProfile, user=request.user)
 
@@ -87,6 +105,10 @@ def view_user_data(request):
 
 @login_required
 def update_user_data(request):
+    """
+    Updates 'UserProfile' data: profit for all time, tickets quantity,
+    highest profit, highest loss.
+    """
     q = Q(user=request.user) & Q(deleted=False)
     tickets = Ticket.objects.filter(q)
     user_object = get_object_or_404(UserProfile, user=request.user)
@@ -103,6 +125,13 @@ def update_user_data(request):
 
 @login_required
 def user_settings(request):
+    """
+    Shows 'user_settings' template with 'UserSettingsForm' form.
+    User can change value that is used for pagination and
+    currency symbol.
+    Allow or disallow displaying currency symbol and ticket
+    deletion confirmation.
+    """
     settings_user = get_object_or_404(UserSettings, user=request.user)
 
     form = UserSettingsForm(instance=settings_user)

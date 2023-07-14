@@ -10,6 +10,14 @@ from user.models import UserSettings
 
 
 def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
+    """
+    Accepts values: request, ticket_query, search_filter, filter_by.
+    Where ticket_filter_query - all filters from DB,
+    search_filter - search word, filter_by - specific filter world.
+
+    Function at first checks if 'search_filter' exists
+    and then checks if there is a 'filter_by' filter exist in database.
+    """
     q = Q(user=request.user) & Q(deleted=False)
 
     if search_filter:
@@ -38,6 +46,17 @@ def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
 
 
 def view_tickets(request):
+    """
+    Function that allow user to add waiting or completed ticket.
+
+    Pagination value is taken from individual 'UserSettings' settings.
+
+    Show tickets without any filters. If 'filter_by' filters or
+    'search_filter' searches are received then check
+    the filters in the 'tickets_filter' function.
+
+    Show 'login' template if user not authenticated.
+    """
     if request.user.is_authenticated:
         search_filter = request.GET.get('search')
         filter_by = request.GET.get('filter_by')
@@ -71,6 +90,11 @@ def view_tickets(request):
 
 @login_required
 def add_ticket(request):
+    """
+    Function that allow user to add waiting or completed ticket.
+
+    Shows 'add_ticket' template with 'TicketForm' form.
+    """
     form = TicketForm(request.POST or None)
 
     if form.is_valid():
@@ -96,6 +120,11 @@ def add_ticket(request):
 
 @login_required
 def update_ticket(request, pk=None):
+    """
+    Function that allow user to update and complete specific ticket.
+
+    Shows 'update_ticket' template with 'TicketForm' form.
+    """
     ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
     user_settings = UserSettings.objects.filter(user=request.user).get()
 
@@ -124,6 +153,9 @@ def update_ticket(request, pk=None):
 
 @login_required
 def delete_ticket(request, pk=None):
+    """
+    Function that allow user to delete specific ticket.
+    """
     try:
         ticket = get_object_or_404(Ticket, pk=pk, user=request.user, deleted=False)
         if ticket:
