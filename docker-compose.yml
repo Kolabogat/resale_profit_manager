@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/django_app
+    ports:
+      - "8000:8000"
+    container_name: django_app_container
+    depends_on:
+      - db
+    env_file:
+      - ./backend/.env
+    command: bash -c "python manage.py migrate &&
+      python manage.py command_filter_query &&
+      python manage.py command_settings_query &&
+      python manage.py runserver 0.0.0.0:8000"
+
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres_db
+      - POSTGRES_PORT=5432
