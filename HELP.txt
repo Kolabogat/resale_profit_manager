@@ -21,3 +21,4 @@ sudo docker build --tag python-django .
 sudo docker run --publish 8000:8000 python-django
 sudo docker-compose build
 sudo docker-compose up
+sudo docker-compose up --build
