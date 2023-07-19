@@ -10,12 +10,29 @@ from django.db.models import Sum, Max, Min
 from .models import UserProfile, UserSettings, CommandPagination, CommandCurrency
 
 
+def user_additional_models(request):
+    """
+    Creates additional user models ('UserSettings' and
+    'UserProfile') for individual user settings and data.
+    """
+    settings_user = UserSettings.objects.filter(user=request.user).exists()
+    profile_user = UserProfile.objects.filter(user=request.user).exists()
+    if not settings_user:
+        settings_user = UserSettings()
+        settings_user.user = request.user
+        settings_user.save()
+
+    if not profile_user:
+        profile_user = UserProfile()
+        profile_user.user = request.user
+        profile_user.save()
+    return
+
+
 def register(request):
     """
     Shows 'register' template with 'UserRegisterForm' from
     that allow user to register.
-    Also creates additional user models ('UserSettings' and
-    'UserProfile') for individual user settings and data.
     """
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -23,13 +40,7 @@ def register(request):
             user = form.save()
             login(request, user)
 
-            settings_user = UserSettings()
-            settings_user.user = request.user
-            settings_user.save()
-
-            profile_user = UserProfile()
-            profile_user.user = request.user
-            profile_user.save()
+            user_additional_models(request)
 
             messages.success(request, 'You successfully registered!')
             return redirect('home')
@@ -50,6 +61,9 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+
+            user_additional_models(request)
+
             messages.success(request, f'Welcome back {str(request.user.username).title()}. You successfully logged in!')
             return redirect('home')
         else:
@@ -109,17 +123,20 @@ def update_user_data(request):
     Updates 'UserProfile' data: profit for all time, tickets quantity,
     highest profit, highest loss.
     """
-    q = Q(user=request.user) & Q(deleted=False)
-    tickets = Ticket.objects.filter(q)
-    user_object = get_object_or_404(UserProfile, user=request.user)
+    try:
+        q = Q(user=request.user) & Q(deleted=False)
+        tickets = Ticket.objects.filter(q)
+        user_object = get_object_or_404(UserProfile, user=request.user)
 
-    if tickets:
-        user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
-        user_object.tickets_quantity = tickets.count()
-        user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
-        user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
-        user_object.save()
-        messages.success(request, 'You successfully updated your data.')
+        if tickets:
+            user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
+            user_object.tickets_quantity = tickets.count()
+            user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
+            user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
+            user_object.save()
+            messages.success(request, 'You successfully updated your data.')
+    except Exception:
+        messages.error(request, 'You don\'t have any tickets.')
     return redirect('account_profile')
 
 

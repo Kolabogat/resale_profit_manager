@@ -1,6 +1,6 @@
-**************************************
-* FILE WHERE I PRINT ALL MY COMMANDS *
-**************************************
+**********
+* Django *
+**********
 
 pip install Django
 pip list
@@ -10,4 +10,15 @@ cd backend
 python manage.py startapp accounting
 python manage.py makemigrations
 python manage.py migrate
+python manage.py createsuperuser
 python manage.py startapp user
+
+**********
+* Docker *
+**********
+
+sudo docker build --tag python-django .
+sudo docker run --publish 8000:8000 python-django
+sudo docker-compose build
+sudo docker-compose up
+sudo docker-compose up --build
