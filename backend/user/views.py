@@ -123,17 +123,20 @@ def update_user_data(request):
     Updates 'UserProfile' data: profit for all time, tickets quantity,
     highest profit, highest loss.
     """
-    q = Q(user=request.user) & Q(deleted=False)
-    tickets = Ticket.objects.filter(q)
-    user_object = get_object_or_404(UserProfile, user=request.user)
+    try:
+        q = Q(user=request.user) & Q(deleted=False)
+        tickets = Ticket.objects.filter(q)
+        user_object = get_object_or_404(UserProfile, user=request.user)
 
-    if tickets:
-        user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
-        user_object.tickets_quantity = tickets.count()
-        user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
-        user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
-        user_object.save()
-        messages.success(request, 'You successfully updated your data.')
+        if tickets:
+            user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
+            user_object.tickets_quantity = tickets.count()
+            user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
+            user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
+            user_object.save()
+            messages.success(request, 'You successfully updated your data.')
+    except Exception:
+        messages.error(request, 'You don\'t have any tickets.')
     return redirect('account_profile')
 
 
