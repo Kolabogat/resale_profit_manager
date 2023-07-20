@@ -10,7 +10,7 @@ Operating system: Ubuntu 22.04.2
 5. If `Sold` field not filled then your ticket will be in `Waiting` filter
 6. You can edit ticket by clicking on it
 7. Profit calculated after `Sold` field filled
-## Example of .env file (not safe)
+## Example of .env file (not secure data)
 ```env
 POSTGRES_HOST=postgres_db
 POSTGRES_PORT=5432
@@ -26,7 +26,7 @@ SECRET_KEY=5n(=rwpd^wp4dpv#j@l828nifgqacow%94_!xzof&adzf05cw&
 
 DEBUG=False
 ```
-## PostgreSQL example (not safe)
+## PostgreSQL example (not secure data)
 Check if users and databases are in PostgreSQL database:
 ```bash
 sudo -i -u postgres psql
