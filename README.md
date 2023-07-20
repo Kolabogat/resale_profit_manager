@@ -43,7 +43,7 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ```
 sudo lsof -t -i tcp:5432 -s tcp:listen | sudo xargs kill
 ```
-## Commands
+## Commands Info
 When you up the server the following commands are executed in `entrypoint.sh` file:
 
 Migrations for database:
