@@ -27,21 +27,22 @@ SECRET_KEY=5n(=rwpd^wp4dpv#j@l828nifgqacow%94_!xzof&adzf05cw&
 DEBUG=False
 ```
 ## PostgreSQL example (not safe)
-If your .env file looks like in example check PostgreSQL users and databases in Terminal:
+Check if users and databases are in PostgreSQL database:
 ```bash
-sudo -i -u postgres
-\du
-q
-\l
+sudo -i -u postgres psql
+\du  #List of roles
+q  #Exit from list
+\l  #List of databases
+q  #Exit from list
 ```
-If you don't have superuser `postgres`:
+If you don't have role `postgres` with superuser permissions:
 ```bash
-sudo -i -u postgres
+sudo -i -u postgres psql
 ALTER USER postgres WITH PASSWORD 'postgres';
 ```
 If you don't have database `postgres`:
 ```bash
-sudo -i -u postgres
+sudo -i -u postgres psql
 CREATE DATABASE postgres WITH OWNER postgres;
 ```
 ## Docker-compose
