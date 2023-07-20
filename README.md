@@ -10,40 +10,56 @@ Operating system: Ubuntu 22.04.2
 5. If `Sold` field not filled then your ticket will be in `Waiting` filter
 6. You can edit ticket by clicking on it
 7. Profit calculated after `Sold` field filled
-## PostgreSQL
-Check PostgreSQL users and databases in Terminal:
+## Example of .env file (not safe)
+```env
+POSTGRES_HOST=postgres_db
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=postgres
+
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_PASSWORD=admin
+DJANGO_SUPERUSER_EMAIL=amdin@admin.com
+
+SECRET_KEY=5n(=rwpd^wp4dpv#j@l828nifgqacow%94_!xzof&adzf05cw&
+
+DEBUG=False
 ```
+## PostgreSQL example (not safe)
+If your .env file looks like in example check PostgreSQL users and databases in Terminal:
+```bash
 sudo -i -u postgres
 \du
 q
 \l
 ```
 If you don't have superuser `postgres`:
-```
+```bash
 sudo -i -u postgres
 ALTER USER postgres WITH PASSWORD 'postgres';
 ```
 If you don't have database `postgres`:
-```
+```bash
 sudo -i -u postgres
 CREATE DATABASE postgres WITH OWNER postgres;
 ```
 ## Docker-compose
 Open Terminal in app directory and execute these commands:
-```
+```bash
 sudo docker-compose build
 ```
-```
+```bash
 sudo docker-compose up
 ```
 If ports 5432 and 80 are busy:
-```
+```bash
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ```
-```
+```bash
 sudo lsof -t -i tcp:5432 -s tcp:listen | sudo xargs kill
 ```
-## Commands Info
+## Commands info
 When you up the server the following commands are executed in `entrypoint.sh` file:
 
 Migrations for database:
