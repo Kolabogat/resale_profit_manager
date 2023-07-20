@@ -10,18 +10,21 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **options):
-        user = User.objects.filter(username='admin').get()
-        for number in range(200):
-            title = f'Ticket {number}'
-            bought = random.randrange(1, 50)
-            sold = random.choice([False, random.randrange(1, 70)])
+        try:
+            user = User.objects.filter(id=1).get()
+            for number in range(200):
+                title = f'Ticket {number}'
+                bought = random.randrange(1, 50)
+                sold = random.choice([False, random.randrange(1, 70)])
 
-            ticket = Ticket(
-                user=user,
-                title=title,
-                bought=bought,
-                sold=sold,
-                profit=(round(sold - bought, 2) if sold else None),
-            )
-            ticket.save()
-        return self.stdout.write(f'Tickets created.')
+                ticket = Ticket(
+                    user=user,
+                    title=title,
+                    bought=bought,
+                    sold=sold,
+                    profit=(round(sold - bought, 2) if sold else None),
+                )
+                ticket.save()
+            return self.stdout.write(f'Tickets created.')
+        except Exception:
+            return self.stdout.write(f'TICKETS CREATION ERROR.')
