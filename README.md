@@ -13,19 +13,19 @@ Operating system: Ubuntu 22.04.2
 ## PostgreSQL
 Check users and databases in Terminal:
 ```
-sudo -u postgres psql postgres
+sudo -i -u postgres
 \du
 q
 \l
 ```
 If you don't have superuser `postgres`:
 ```
-sudo -u postgres psql postgres
+sudo -i -u postgres
 ALTER USER postgres WITH PASSWORD 'postgres';
 ```
 If you don't have database `postgres`:
 ```
-sudo -u postgres psql postgres
+sudo -i -u postgres
 CREATE DATABASE postgres WITH OWNER postgres;
 ```
 ## Docker-compose
