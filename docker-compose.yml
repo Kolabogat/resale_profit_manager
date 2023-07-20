@@ -3,6 +3,7 @@ version: "3.8"
 services:
 
   django_gunicorn:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,13 +18,13 @@ services:
       - .env
 
   db:
+    restart: always
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    container_name: postgres_db
-    restart: always
     ports:
       - "5432:5432"
+    container_name: postgres_db
     env_file:
       - .env
     environment:
@@ -34,14 +35,15 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
 
   nginx:
+    restart: always
     build: ./nginx
     volumes:
       - static:/static
     ports:
       - "80:8000"
+    container_name: nginx_container
     depends_on:
       - django_gunicorn
-    container_name: nginx_container
 
 volumes:
   static:
