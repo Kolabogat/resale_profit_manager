@@ -11,7 +11,7 @@ Operating system: Ubuntu 22.04.2
 6. You can edit ticket by clicking on it
 7. Profit calculated after `Sold` field filled
 ## PostgreSQL
-Check users and databases in Terminal:
+Check PostgreSQL users and databases in Terminal:
 ```
 sudo -i -u postgres
 \du
@@ -46,49 +46,50 @@ sudo lsof -t -i tcp:5432 -s tcp:listen | sudo xargs kill
 ## Commands
 When you up the server the following commands are executed in `entrypoint.sh` file:
 
+Migrations for database:
 ```
 python manage.py migrate
 ```
-Migrations for database.
 
 ---
 
+Collects all static files:
 ```
 python manage.py collectstatic
 ```
-Collects all static files.
 
 ---
 
+
+Execute custom command that creates tickets filters in database
 ```
 python manage.py command_filter_query
 ```
-Execute custom command that creates tickets filters in database
 
 ---
 
+Execute custom command that creates choices settings for currency and pagination fields:
 ```
 python manage.py command_settings_query
 ```
-Execute custom command that creates choices settings for currency and pagination fields.
 
 ---
 
+Creating a superuser with username, password and email initialized in the .env file:
 ```
 DJANGO_SUPERUSER_USERNAME=$DJANGO_SUPERUSER_USERNAME DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD python manage.py createsuperuser --noinput --email $DJANGO_SUPERUSER_EMAIL
 ```
-Creating a superuser with username, password and email initialized in the .env file.
 
 ---
 
+An optional command that creates 200 tickets using a custom command. Only one user should be in database:
 ```
 python manage.py test_command_create_tickets
 ```
-An optional command that creates 200 tickets using a custom command. Only one user should be in database.
 
 ---
 
+Starts the server with `gunicorn`:
 ```
 gunicorn backend.wsgi:application --bind 0.0.0.0:8000
 ```
-Starts the server with `gunicorn`.
