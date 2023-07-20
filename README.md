@@ -51,43 +51,30 @@ Migrations for database:
 python manage.py migrate
 ```
 
----
-
 Collects all static files:
 ```
 python manage.py collectstatic
 ```
 
----
-
-
-Execute custom command that creates tickets filters in database
+Execute custom command that creates tickets filters in database:
 ```
 python manage.py command_filter_query
 ```
-
----
 
 Execute custom command that creates choices settings for currency and pagination fields:
 ```
 python manage.py command_settings_query
 ```
 
----
-
 Creating a superuser with username, password and email initialized in the .env file:
 ```
 DJANGO_SUPERUSER_USERNAME=$DJANGO_SUPERUSER_USERNAME DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD python manage.py createsuperuser --noinput --email $DJANGO_SUPERUSER_EMAIL
 ```
 
----
-
 An optional command that creates 200 tickets using a custom command. Only one user should be in database:
 ```
 python manage.py test_command_create_tickets
 ```
-
----
 
 Starts the server with `gunicorn`:
 ```
