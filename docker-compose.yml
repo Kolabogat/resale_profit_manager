@@ -12,6 +12,8 @@ services:
     ports:
       - "8000:8000"
     container_name: django_app_container
+    links:
+      - db
     depends_on:
       - db
     env_file:
