@@ -39,6 +39,7 @@ If you don't have role `postgres` with superuser permissions:
 ```bash
 sudo -i -u postgres psql
 ALTER USER postgres WITH PASSWORD 'postgres';
+ALTER USER postgres WITH SUPERUSER;
 ```
 If you don't have database `postgres`:
 ```bash
