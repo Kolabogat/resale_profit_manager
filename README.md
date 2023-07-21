@@ -53,13 +53,6 @@ sudo docker-compose build
 ```bash
 sudo docker-compose up
 ```
-If ports 5432 and 80 are busy:
-```bash
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
-```
-```bash
-sudo lsof -t -i tcp:5432 -s tcp:listen | sudo xargs kill
-```
 ## Commands info
 When you up the server the following commands are executed in `entrypoint.sh` file:
 
