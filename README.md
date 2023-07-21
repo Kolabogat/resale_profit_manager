@@ -46,7 +46,7 @@ sudo -i -u postgres psql
 CREATE DATABASE postgres WITH OWNER postgres;
 ```
 ## Docker-compose
-Change ports in [docker-compose.yml](https://github.com/Koljisae/resale_profit_manager/blob/main/docker-compose.yml) file on free:
+Change ports in [docker-compose.yml](https://github.com/Koljisae/resale_profit_manager/blob/main/docker-compose.yml) file on free ports:
 ```dockerfile
   ...
   db:
