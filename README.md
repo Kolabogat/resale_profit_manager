@@ -71,20 +71,20 @@ Collects all static files:
 
 ```python manage.py collectstatic```
 
-Execute custom command that creates tickets filters in database:
+Execute custom [command](https://github.com/Koljisae/resale_profit_manager/blob/main/backend/accounting/management/commands/command_filter_query.py) that creates tickets filters in database:
 
 ```python manage.py command_filter_query```
 
-Execute custom command that creates choices settings for currency and pagination fields:
+Execute custom [command](https://github.com/Koljisae/resale_profit_manager/blob/main/backend/user/management/commands/command_settings_query.py) that creates choices settings for currency and pagination fields:
 
 ```python manage.py command_settings_query```
 
-Creating a superuser with username, password and email initialized in the .env file:
+Creating a superuser with username, password and email initialized in the [.env](https://github.com/Koljisae/resale_profit_manager/blob/main/.env) file:
 ```
 DJANGO_SUPERUSER_USERNAME=$DJANGO_SUPERUSER_USERNAME DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD python manage.py createsuperuser --noinput --email $DJANGO_SUPERUSER_EMAIL
 ```
 
-An optional command that creates 200 tickets using a custom command. Tickets creates for first user with `id=1`:
+An optional [command](https://github.com/Koljisae/resale_profit_manager/blob/main/backend/user/management/commands/test_command_create_tickets.py) that creates 200 tickets using a custom command. Tickets creates for first user with `id=1`:
 
 ```python manage.py test_command_create_tickets```
 
