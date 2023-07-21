@@ -46,6 +46,17 @@ sudo -i -u postgres psql
 CREATE DATABASE postgres WITH OWNER postgres;
 ```
 ## Docker-compose
+Change ports in [docker-compose.yml](https://github.com/Koljisae/resale_profit_manager/blob/main/docker-compose.yml) file on free:
+```dockerfile
+  ...
+  db:
+    ports:
+      - "5433:5432" -> "5555:5432"
+  nginx:
+    ports:
+      - "81:8000" -> "88:8000"
+  ...
+```
 Open Terminal in app directory and execute these commands:
 ```bash
 sudo docker-compose build
