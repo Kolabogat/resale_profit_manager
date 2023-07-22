@@ -53,6 +53,7 @@ Change ports in [docker-compose.yml](https://github.com/Koljisae/resale_profit_m
   db:
     ports:
       - "5433:5432" -> "5555:5432"
+  ...
   nginx:
     ports:
       - "81:8000" -> "88:8000"
