@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginFrom, SetUserPasswordForm, UserSettingsForm
@@ -8,6 +7,7 @@ from django.db.models import Q
 from accounting.models import Ticket
 from django.db.models import Sum, Max, Min
 from .models import UserProfile, UserSettings, CommandPagination, CommandCurrency
+from django.template import RequestContext
 
 
 def user_additional_models(request):
@@ -173,3 +173,25 @@ def user_settings(request):
     return render(request, 'user/user_settings.html', context)
 
 
+def custom_bad_request_view(request, exception=None):
+    response = render(request, 'errors/400.html', {'title': 'Error 400'},)
+    response.status_code = 400
+    return response
+
+
+def custom_permission_denied_view(request, exception=None):
+    response = render(request, 'errors/403.html', {'title': 'Error 403'},)
+    response.status_code = 403
+    return response
+
+
+def custom_page_not_found_view(request, exception=None):
+    response = render(request, 'errors/404.html', {'title': 'Error 404'},)
+    response.status_code = 404
+    return response
+
+
+def custom_error_view(request, exception=None):
+    response = render(request, 'errors/500.html', {'title': 'Error 500'},)
+    response.status_code = 500
+    return response
