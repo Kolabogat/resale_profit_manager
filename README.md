@@ -34,6 +34,7 @@ sudo -i -u postgres psql
 q  #Exit from list
 \l  #List of databases
 q  #Exit from list
+exit  #Exit from psql
 ```
 If you don't have role `postgres` with superuser permissions:
 ```bash
