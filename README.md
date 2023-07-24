@@ -1,6 +1,8 @@
 # resale_profit_manager
 Operating system: Ubuntu 22.04.2
 
+Technologies: Python, Django, Nginx, Gunicorn, PostgreSQL
+
 **resale_profit_manager** - it's an application that allows you to account your resales, for example: digital goods, stocks, bonds, other goods.
 ## How does this work?
 1. Login or Register
