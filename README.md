@@ -98,3 +98,9 @@ An optional [command](https://github.com/Koljisae/resale_profit_manager/blob/mai
 Starts the server with `gunicorn`:
 
 ```gunicorn backend.wsgi:application --bind 0.0.0.0:8000```
+
+## Screenshots
+
+<p align="center">
+  <img src="https://github.com/Koljisae/resale_profit_manager/assets/86200410/b9183210-bbcf-4b38-8003-a5fe18421707" alt="drawing" width="700"/>
+</p>
