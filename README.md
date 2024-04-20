@@ -91,9 +91,9 @@ Creating a superuser with username, password and email initialized in the [.env]
 DJANGO_SUPERUSER_USERNAME=$DJANGO_SUPERUSER_USERNAME DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD python manage.py createsuperuser --noinput --email $DJANGO_SUPERUSER_EMAIL
 ```
 
-An optional [command](https://github.com/Koljisae/resale_profit_manager/blob/main/backend/user/management/commands/test_command_create_tickets.py) that creates 200 tickets using a custom command. Tickets creates for first user with `id=1`:
+An optional [command](https://github.com/Koljisae/resale_profit_manager/blob/main/backend/user/management/commands/optional_command_create_tickets.py) that creates 200 tickets using a custom command. Tickets creates for first user with `id=1`:
 
-```python manage.py test_command_create_tickets```
+```python manage.py optional_command_create_tickets```
 
 Starts the server with `gunicorn`:
 
