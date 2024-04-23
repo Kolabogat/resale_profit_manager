@@ -1,19 +1,25 @@
-from django.contrib.auth.models import User
 import pytest
 
-from accounting.management.commands.command_filter_query import FILTER_TICKETS
-from accounting.models import Ticket, TicketFilter
-from user.models import UserSettings, UserProfile
 from datetime import datetime
 from selenium import webdriver
+from django.contrib.auth.models import User
+
+from user.models import UserSettings, UserProfile
+from accounting.management.commands.command_filter_query import FILTER_TICKETS
+from accounting.models import Ticket, TicketFilter
+
+
+TEST_USERNAME = 'user'
+TEST_PASSWORD = 'a9Jd2o9gLe2axs'
+TEST_EMAIL = 'user@user.com'
 
 
 @pytest.fixture
 def user():
     user = User.objects.create_user(
-        username='user',
-        email='user@user.com',
-        password='a9Jd2o9gLe2axs',
+        username=TEST_USERNAME,
+        email=TEST_EMAIL,
+        password=TEST_PASSWORD,
     )
     UserSettings.objects.create(user=user)
     UserProfile.objects.create(user=user)

@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from django.test import LiveServerTestCase
 
 from accounting.management.commands.command_filter_query import FILTER_TICKETS
+from tests.conftest import TEST_USERNAME, TEST_PASSWORD, TEST_EMAIL
 
 
 @pytest.mark.usefixtures('driver_init', 'add_ticket_filter', 'user')
@@ -15,8 +16,8 @@ class TestURLChrome(LiveServerTestCase):
     def test_log_in(self):
         self.driver.get(('%s%s' % (self.live_server_url, '/user/login/')))
 
-        self.driver.find_element(By.NAME, 'username').send_keys('user')
-        self.driver.find_element(By.NAME, 'password').send_keys('a9Jd2o9gLe2axs')
+        self.driver.find_element(By.NAME, 'username').send_keys(TEST_USERNAME)
+        self.driver.find_element(By.NAME, 'password').send_keys(TEST_PASSWORD)
         self.driver.find_element(By.NAME, 'login').click()
 
         assert 'Tickets' == self.driver.title
