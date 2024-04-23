@@ -1,4 +1,4 @@
-from settings import *
+from backend.settings import *
 
 SECRET_KEY = 'sadfuheqwekrm'
 
