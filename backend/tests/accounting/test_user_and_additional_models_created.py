@@ -22,8 +22,11 @@ def test_user_and_additional_models_created(user):
     profile_users = UserProfile.objects.all()
 
     assert user_object in user_objects
+    assert not user_object.is_superuser  # False
+
     assert settings_user.paginate_by.paginate_by == 10
     assert settings_user.currency.currency == '$'
     assert not settings_user.display_symbol  # False
     assert settings_user.delete_confirmation  # True
+
     assert profile_user in profile_users
