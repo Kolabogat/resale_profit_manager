@@ -33,21 +33,24 @@ def register(request):
     Shows 'register' template with 'UserRegisterForm' from
     that allow user to register.
     """
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-
-            user_additional_models(request)
-
-            messages.success(request, 'You successfully registered!')
-            return redirect('home')
-        else:
-            messages.error(request, 'Registration error.')
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
-        form = UserRegisterForm()
-    return render(request, 'user/register.html', {'form': form})
+        if request.method == 'POST':
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                login(request, user)
+
+                user_additional_models(request)
+
+                messages.success(request, 'You successfully registered!')
+                return redirect('home')
+            else:
+                messages.error(request, 'Registration error.')
+        else:
+            form = UserRegisterForm()
+        return render(request, 'user/register.html', {'form': form})
 
 
 def user_login(request):
@@ -55,22 +58,25 @@ def user_login(request):
     Shows 'login' template with 'UserLoginFrom' form
     that allow user to login.
     """
-    if request.method == 'POST':
-        form = UserLoginFrom(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-
-            user_additional_models(request)
-
-            messages.success(request, f'Welcome back {str(request.user.username).title()}. You successfully logged in!')
-            return redirect('home')
-        else:
-            for error in list(form.errors.values()):
-                messages.error(request, error)
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
-        form = UserLoginFrom()
-    return render(request, 'user/login.html', {'form': form})
+        if request.method == 'POST':
+            form = UserLoginFrom(data=request.POST)
+            if form.is_valid():
+                user = form.get_user()
+                login(request, user)
+
+                user_additional_models(request)
+
+                messages.success(request, f'Welcome back {str(request.user.username).title()}. You successfully logged in!')
+                return redirect('home')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+        else:
+            form = UserLoginFrom()
+        return render(request, 'user/login.html', {'form': form})
 
 
 def user_logout(request):
@@ -130,8 +136,12 @@ def update_user_data(request):
         if tickets:
             user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
             user_object.tickets_quantity = tickets.count()
-            user_object.highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
-            user_object.highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
+            highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
+            if highest_profit >= 0:
+                user_object.highest_profit = highest_profit
+            highest_loss = round(tickets.aggregate(Min('profit')).get('profit__min'), 2)
+            if highest_loss <= 0:
+                user_object.highest_loss = highest_loss
             user_object.save()
             messages.success(request, 'You successfully updated your data.')
     except Exception:
