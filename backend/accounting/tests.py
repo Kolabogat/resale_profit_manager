@@ -62,4 +62,18 @@ class TestTicketModels(TestCase):
         print('SUCCESS | TestAccountingModels | test_str_method')
 
 
+class TestTicketFilterModel(TestCase):
+    def setUp(self):
+        for filter_dict in FILTER_TICKETS:
+            filter_model = TicketFilter(**filter_dict)
+            filter_model.save()
 
+    def test_ticket_filter(self):
+        for filter_dict in FILTER_TICKETS:
+            ticket_filter = TicketFilter.objects.filter(**filter_dict).first()
+            self.assertEqual(ticket_filter.pk, filter_dict.get('pk'))
+            self.assertEqual(ticket_filter.title, filter_dict.get('title'))
+            self.assertEqual(ticket_filter.url_value, filter_dict.get('url_value'))
+            self.assertEqual(ticket_filter.annotation, filter_dict.get('annotation'))
+            self.assertEqual(ticket_filter.color, filter_dict.get('color'))
+        print('SUCCESS | TestTicketFilterModel | test_ticket_filter')
