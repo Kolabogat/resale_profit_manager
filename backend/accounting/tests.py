@@ -1,9 +1,12 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
+import random
 from accounting.management.commands.command_filter_query import FILTER_TICKETS
 from accounting.models import Ticket, TicketFilter
 from datetime import datetime
+from django.urls import reverse
+from user.models import UserProfile, UserSettings
 
 
 class TestTicketModels(TestCase):
@@ -69,3 +72,96 @@ class TestTicketFilterModel(TestCase):
             self.assertEqual(ticket_filter.url_value, filter_dict.get('url_value'))
             self.assertEqual(ticket_filter.annotation, filter_dict.get('annotation'))
             self.assertEqual(ticket_filter.color, filter_dict.get('color'))
+
+
+class TestTicketViews(TestCase):
+    def setUp(self):
+        for filter_dict in FILTER_TICKETS:
+            filter_model = TicketFilter(**filter_dict)
+            filter_model.save()
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='test_user',
+            password='password',
+        )
+        self.user_profile = UserProfile.objects.create(
+            user=self.user,
+        )
+        self.user_settings = UserSettings.objects.create(
+            user=self.user,
+        )
+        for number in range(1, 12):
+            bought = random.randrange(1, 50)
+            sold = random.randrange(10, 60)
+            profit = sold - bought
+            Ticket.objects.create(
+                user=self.user,
+                title=f'Ticket {number}',
+                bought=bought,
+                sold=sold,
+                profit=profit,
+            )
+        self.uncompleted_ticket = Ticket.objects.create(
+            user=self.user,
+            title='Uncompleted ticket',
+            bought=3.68,
+        )
+        self.client.login(username='test_user', password='password')
+
+        self.home = reverse('home')
+        self.add_ticket = reverse('add_ticket')
+        self.update_ticket = reverse('update_ticket', args={self.uncompleted_ticket.pk})
+
+    def test_view_tickets_GET(self):
+        response = self.client.get(self.home)
+        self.assertEqual(response.status_code, 200)
+        # self.assertTemplateUsed('accounting/index.html')
+        self.assertContains(response, 'Ticket 11')
+
+    def test_add_ticket_uncompleted_POST(self):
+        response = self.client.post(self.add_ticket, data={
+            'title': 'Ticket 12',
+            'bought': 3.68,
+        })
+        new_ticket = Ticket.objects.filter(
+            title='Ticket 12',
+            bought=3.68,
+            sold=None,
+            profit=None,
+        ).first()
+        self.assertIsNotNone(new_ticket)
+        self.assertEqual(response.status_code, 302)
+        # self.assertTemplateUsed(response, 'accounting/add_ticket.html')
+
+    def test_add_ticket_completed_POST(self):
+        response = self.client.post(self.add_ticket, data={
+            'title': 'Ticket 12',
+            'bought': 3.68,
+            'sold': 4.23,
+        })
+        new_ticket = Ticket.objects.filter(
+            title='Ticket 12',
+            bought=3.68,
+            sold=4.23,
+            profit=0.55,
+        ).first()
+        self.assertIsNotNone(new_ticket)
+        self.assertEqual(response.status_code, 302)
+        # self.assertTemplateUsed(response, 'accounting/add_ticket.html')
+
+    def test_update_ticket_POST(self):
+        response = self.client.post(self.update_ticket, data={
+            'title': 'Updated ticket',
+            'bought': 3.68,
+            'sold': 7.12,
+        })
+        updated_ticket = Ticket.objects.filter(
+            title='Updated ticket',
+            bought=3.68,
+            sold=7.12,
+            profit=3.44,
+        ).first()
+        self.assertIsNotNone(updated_ticket)
+        self.assertEqual(response.status_code, 302)
+        # self.assertTemplateUsed('accounting/add_ticket.html')
+
