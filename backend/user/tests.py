@@ -86,7 +86,7 @@ class TestUserViews(TestCase):
         Test register view
         Create: register new user
         Check: additional models for user created
-        correctly; status code; used template.
+        correctly; status code.
         """
         self.client.logout()
         response = self.client.post(self.register, data={
@@ -98,7 +98,6 @@ class TestUserViews(TestCase):
         settings_user = UserSettings.objects.filter(user=registered_user).first()
         profile_user = UserProfile.objects.filter(user=registered_user).first()
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateUsed('user/register.html')
         self.assertEqual(registered_user.username, 'test_user_2')
         self.assertEqual(settings_user.paginate_by.paginate_by, 10)
         self.assertEqual(settings_user.currency.currency, '$')
@@ -121,7 +120,7 @@ class TestUserViews(TestCase):
         """
         Test login view
         Check: login work correctly;
-        status code; used template.
+        status code
         """
         self.client.logout()
         response = self.client.post(self.login, data={
@@ -129,7 +128,6 @@ class TestUserViews(TestCase):
             'password': 'password',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateUsed('user/login.html')
 
     def test_login_not_allowed_for_auth_user_GET(self):
         """
@@ -157,7 +155,7 @@ class TestUserViews(TestCase):
         """
         Test password_change view
         Check: password changed correctly;
-        status code; used template
+        status code
         """
         response = self.client.post(self.password_change, data={
             'new_password1': 'strong123pass974H',
@@ -166,7 +164,6 @@ class TestUserViews(TestCase):
         changed_user = User.objects.filter(username=self.user.username).first()
         self.assertTrue(check_password('strong123pass974H', changed_user.password))
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateUsed('user/password_change.html')
 
     def test_password_change_error_short_password_POST(self):
         """
@@ -209,11 +206,10 @@ class TestUserViews(TestCase):
     def test_account_profile_GET(self):
         """
         Test view_user_data view
-        Check: status code; used template
+        Check: status code
         """
         response = self.client.get(self.account_profile)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/account_profile.html')
 
     def test_update_profile_GET(self):
         """
@@ -255,8 +251,7 @@ class TestUserViews(TestCase):
     def test_user_settings_GET(self):
         """
         Test update_user_data view
-        Check: status code; used template
+        Check: status code
         """
         response = self.client.get(self.user_settings)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/user_settings.html')

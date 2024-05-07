@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
@@ -90,7 +91,7 @@ class TestTicketViews(TestCase):
         self.user_settings = UserSettings.objects.create(
             user=self.user,
         )
-        for number in range(1, 12):
+        for number in range(1, 6):
             bought = random.randrange(1, 50)
             sold = random.randrange(10, 60)
             profit = sold - bought
@@ -106,17 +107,18 @@ class TestTicketViews(TestCase):
             title='Uncompleted ticket',
             bought=3.68,
         )
+        self.q = Q(user=self.user) & Q(deleted=False)
         self.client.login(username='test_user', password='password')
 
         self.home = reverse('home')
         self.add_ticket = reverse('add_ticket')
-        self.update_ticket = reverse('update_ticket', args={self.uncompleted_ticket.pk})
+        self.update_ticket = reverse('update_ticket', args=[self.uncompleted_ticket.pk])
+        self.delete_ticket = reverse('delete_ticket', args=[self.uncompleted_ticket.pk])
 
     def test_view_tickets_GET(self):
         response = self.client.get(self.home)
         self.assertEqual(response.status_code, 200)
-        # self.assertTemplateUsed('accounting/index.html')
-        self.assertContains(response, 'Ticket 11')
+        self.assertContains(response, 'Ticket 1')
 
     def test_add_ticket_uncompleted_POST(self):
         response = self.client.post(self.add_ticket, data={
@@ -131,7 +133,6 @@ class TestTicketViews(TestCase):
         ).first()
         self.assertIsNotNone(new_ticket)
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'accounting/add_ticket.html')
 
     def test_add_ticket_completed_POST(self):
         response = self.client.post(self.add_ticket, data={
@@ -147,9 +148,8 @@ class TestTicketViews(TestCase):
         ).first()
         self.assertIsNotNone(new_ticket)
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'accounting/add_ticket.html')
 
-    def test_update_ticket_POST(self):
+    def test_update_ticket_profit_plus_POST(self):
         response = self.client.post(self.update_ticket, data={
             'title': 'Updated ticket',
             'bought': 3.68,
@@ -163,5 +163,76 @@ class TestTicketViews(TestCase):
         ).first()
         self.assertIsNotNone(updated_ticket)
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed('accounting/add_ticket.html')
 
+    def test_update_ticket_profit_minus_POST(self):
+        response = self.client.post(self.update_ticket, data={
+            'title': 'Updated ticket',
+            'bought': 3.68,
+            'sold': 2.12,
+        })
+        updated_ticket = Ticket.objects.filter(
+            title='Updated ticket',
+            bought=3.68,
+            sold=2.12,
+            profit=-1.56,
+        ).first()
+        self.assertIsNotNone(updated_ticket)
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_ticket_DELETE(self):
+        response = self.client.delete(self.delete_ticket)
+        deleted_ticket = Ticket.objects.filter(
+            title=self.uncompleted_ticket.title,
+            bought=self.uncompleted_ticket.bought,
+            deleted=True,
+        )
+        self.assertIsNotNone(deleted_ticket)
+        self.assertEqual(response.status_code, 302)
+
+    def test_filter_profit_waiting_GET(self):
+        response = self.client.get('?filter_by=profit_waiting', follow=True)
+        q = self.q & Q(profit=None)
+        profit_waiting = Ticket.objects.filter(q)
+        other_tickets = Ticket.objects.filter(~q)
+
+        for ticket in profit_waiting:
+            self.assertContains(response, ticket.title)
+        for ticket in other_tickets:
+            self.assertNotContains(response, ticket.title)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_profit_failure_GET(self):
+        response = self.client.get('?filter_by=profit_failure', follow=True)
+        q = self.q & Q(profit__lt=0)
+        profit_failure = Ticket.objects.filter(q)
+        other_tickets = Ticket.objects.filter(~q)
+
+        for ticket in profit_failure:
+            self.assertContains(response, ticket.title)
+        for ticket in other_tickets:
+            self.assertNotContains(response, ticket.title)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_profit_nothing_GET(self):
+        response = self.client.get('?filter_by=profit_nothing', follow=True)
+        q = self.q & Q(profit=0)
+        profit_nothing = Ticket.objects.filter(q)
+        other_tickets = Ticket.objects.filter(~q)
+
+        for ticket in profit_nothing:
+            self.assertContains(response, ticket.title)
+        for ticket in other_tickets:
+            self.assertNotContains(response, ticket.title)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_profit_success_GET(self):
+        response = self.client.get('?filter_by=profit_success', follow=True)
+        q = self.q & Q(profit__gt=0)
+        profit_success = Ticket.objects.filter(q)
+        other_tickets = Ticket.objects.filter(~q)
+
+        for ticket in profit_success:
+            self.assertContains(response, ticket.title)
+        for ticket in other_tickets:
+            self.assertNotContains(response, ticket.title)
+        self.assertEqual(response.status_code, 200)

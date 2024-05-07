@@ -40,6 +40,8 @@ def tickets_filter(request, ticket_filter_query, search_filter, filter_by):
     for id_number in range(5, 12):
         filter_value = ticket_filter_query.get(pk=id_number)
         if filter_by == filter_value.url_value:
+            if filter_value.title != 'Date':
+                tickets = tickets.filter(~Q(profit=None))
             tickets = tickets.order_by(filter_value.query_value).values()
 
     return tickets
