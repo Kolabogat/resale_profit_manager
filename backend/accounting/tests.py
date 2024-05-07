@@ -111,11 +111,11 @@ class TestTicketViews(TestCase):
         self.home = reverse('home')
         self.add_ticket = reverse('add_ticket')
         self.update_ticket = reverse('update_ticket', args={self.uncompleted_ticket.pk})
+        self.delete_ticket = reverse('delete_ticket', args={self.uncompleted_ticket.pk})
 
     def test_view_tickets_GET(self):
         response = self.client.get(self.home)
         self.assertEqual(response.status_code, 200)
-        # self.assertTemplateUsed('accounting/index.html')
         self.assertContains(response, 'Ticket 11')
 
     def test_add_ticket_uncompleted_POST(self):
@@ -131,7 +131,6 @@ class TestTicketViews(TestCase):
         ).first()
         self.assertIsNotNone(new_ticket)
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'accounting/add_ticket.html')
 
     def test_add_ticket_completed_POST(self):
         response = self.client.post(self.add_ticket, data={
@@ -147,9 +146,8 @@ class TestTicketViews(TestCase):
         ).first()
         self.assertIsNotNone(new_ticket)
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'accounting/add_ticket.html')
 
-    def test_update_ticket_POST(self):
+    def test_update_ticket_profit_plus_POST(self):
         response = self.client.post(self.update_ticket, data={
             'title': 'Updated ticket',
             'bought': 3.68,
@@ -163,5 +161,31 @@ class TestTicketViews(TestCase):
         ).first()
         self.assertIsNotNone(updated_ticket)
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed('accounting/add_ticket.html')
+
+    def test_update_ticket_profit_minus_POST(self):
+        response = self.client.post(self.update_ticket, data={
+            'title': 'Updated ticket',
+            'bought': 3.68,
+            'sold': 2.12,
+        })
+        updated_ticket = Ticket.objects.filter(
+            title='Updated ticket',
+            bought=3.68,
+            sold=2.12,
+            profit=-1.56,
+        ).first()
+        self.assertIsNotNone(updated_ticket)
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_ticket_DELETE(self):
+        response = self.client.delete(self.delete_ticket)
+        deleted_ticket = Ticket.objects.filter(
+            title=self.uncompleted_ticket.title,
+            bought=self.uncompleted_ticket.bought,
+            deleted=True,
+        )
+        print(deleted_ticket.filter(title__iregex='Ticket', bought__gt=0, deleted=True))
+        self.assertIsNotNone(deleted_ticket)
+        self.assertEqual(response.status_code, 302)
+
 
