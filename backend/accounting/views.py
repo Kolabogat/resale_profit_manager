@@ -140,9 +140,9 @@ def update_ticket(request, pk=None):
                 ticket.sold = round(ticket.sold, 2)
                 ticket.profit = round(ticket.sold - ticket.bought, 2)
                 ticket.closed = 'True'
-            ticket.save()
-            messages.success(request, f'Ticket "{ticket.title}" successfully changed.')
-            return redirect('home')
+        ticket.save()
+        messages.success(request, f'Ticket "{ticket.title}" successfully changed.')
+        return redirect('home')
 
     context = {
         'form': form,
