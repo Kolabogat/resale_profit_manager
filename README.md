@@ -101,6 +101,7 @@ Starts the server with `gunicorn`:
 
 ## Screenshots
 
+
 <p align="center">
-  <img src="https://github.com/Koljisae/resale_profit_manager/assets/86200410/fc9a50dc-5958-44c8-846f-b783b143ceeb" alt="drawing" width="900"/>
+  <img src="https://github.com/Koljisae/resale_profit_manager/assets/86200410/a574d9d0-6182-48f7-ab3b-ed74451632a9" alt="drawing" width="1200"/>
 </p>
