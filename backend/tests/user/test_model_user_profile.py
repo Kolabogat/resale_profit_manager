@@ -1,9 +1,7 @@
 import pytest
-from tests.conftest import user, add_ticket_filter
-from django.contrib.auth.models import User
-from django.test import Client
-from user.models import UserSettings, UserProfile, CommandPagination
-from tests.conftest import TEST_USERNAME, TEST_PASSWORD
+
+from tests.conftest import user
+from user.models import UserProfile
 
 
 @pytest.mark.django_db

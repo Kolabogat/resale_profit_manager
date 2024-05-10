@@ -1,5 +1,4 @@
 import pytest
-from datetime import datetime
 
 from accounting.models import Ticket
 from tests.conftest import ticket, user
