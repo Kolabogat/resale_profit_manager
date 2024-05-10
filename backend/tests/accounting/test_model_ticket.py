@@ -16,7 +16,6 @@ def test_ticket_created(user, ticket):
         profit=ticket.profit,
         deleted=False,
     ).first()
-    print(datetime.now().date())
     ticket_objects = Ticket.objects.all()
     assert ticket_object in ticket_objects
 
