@@ -78,9 +78,6 @@ class UserProfile(Model):
     highest_profit = FloatField(verbose_name='Highest profit', default=0)
     highest_loss = FloatField(verbose_name='Highest loss', default=0)
 
-    def get_absolute_url(self):
-        return reverse('account_profile', kwargs={'pk': self.pk})
-
     def __str__(self):
         return str(self.user)
 
