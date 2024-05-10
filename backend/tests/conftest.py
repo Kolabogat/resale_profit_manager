@@ -1,4 +1,5 @@
 import pytest
+import random
 
 from django.test import Client
 from django.contrib.auth.models import User
@@ -53,6 +54,21 @@ def ticket(created_user):
 
 
 @pytest.fixture
+def add_ten_tickets(created_user):
+    for value in range(1, 11):
+        bought = random.randrange(1, 50)
+        sold = random.randrange(10, 60)
+        profit = sold - bought
+        Ticket.objects.create(
+            user=created_user,
+            title=f'Ticket number {value}',
+            bought=bought,
+            sold=sold,
+            profit=profit,
+        )
+
+
+@pytest.fixture
 def ticket_success(created_user):
     ticket_success = Ticket.objects.create(
         user=created_user,
@@ -91,28 +107,19 @@ def ticket_without_profit(created_user):
 @pytest.fixture
 def add_ticket_filter():
     for filter_dict in FILTER_TICKETS:
-        if not TicketFilter.objects.filter(pk=filter_dict.get('pk')):
-            filter_model = TicketFilter(**filter_dict)
-            filter_model.save()
+        filter_model = TicketFilter(**filter_dict)
+        filter_model.save()
 
 
 @pytest.fixture
 def add_currency_symbols():
     for currency_dict in CURRENCY:
-        if not CommandCurrency.objects.filter(
-                pk=currency_dict.get('pk'),
-                currency=currency_dict.get('currency')
-        ):
-            currency_model = CommandCurrency(**currency_dict)
-            currency_model.save()
+        currency_model = CommandCurrency(**currency_dict)
+        currency_model.save()
 
 
 @pytest.fixture
 def add_pagination_values():
     for pagination_dict in PAGINATION:
-        if not CommandPagination.objects.filter(
-                pk=pagination_dict.get('pk'),
-                paginate_by=pagination_dict.get('paginate_by')
-        ):
-            paginate_by_model = CommandPagination(**pagination_dict)
-            paginate_by_model.save()
+        paginate_by_model = CommandPagination(**pagination_dict)
+        paginate_by_model.save()
