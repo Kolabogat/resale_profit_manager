@@ -58,9 +58,6 @@ class UserSettings(Model):
     display_symbol = BooleanField(verbose_name='Display symbol', default=False)
     delete_confirmation = BooleanField(verbose_name='Delete confirmation', default=True)
 
-    def get_absolute_url(self):
-        return reverse('account_profile', kwargs={'pk': self.pk})
-
     def __str__(self):
         return str(self.user)
 
@@ -77,9 +74,6 @@ class UserProfile(Model):
     tickets_quantity = IntegerField(verbose_name='Quantity', default=0)
     highest_profit = FloatField(verbose_name='Highest profit', default=0)
     highest_loss = FloatField(verbose_name='Highest loss', default=0)
-
-    def get_absolute_url(self):
-        return reverse('account_profile', kwargs={'pk': self.pk})
 
     def __str__(self):
         return str(self.user)
