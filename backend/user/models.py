@@ -24,8 +24,8 @@ class CommandPagination(Model):
     @classmethod
     def get_default_pk(cls):
         paginate_by, created = cls.objects.get_or_create(
-            pk=2,
-            defaults=dict(pk=2, paginate_by=10),
+            pk=1,
+            defaults=dict(pk=1, paginate_by=5),
         )
         return paginate_by.pk
 
