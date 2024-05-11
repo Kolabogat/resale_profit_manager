@@ -4,10 +4,10 @@ import random
 from django.test import Client
 from django.contrib.auth.models import User
 
-from user.management.commands.command_settings_query import CURRENCY, PAGINATION
+from backend.settings import CURRENCY, PAGINATION
 from user.models import UserSettings, UserProfile, CommandCurrency, CommandPagination
 from accounting.models import Ticket, TicketFilter
-from accounting.management.commands.command_filter_query import FILTER_TICKETS
+from backend.settings import FILTER_TICKETS
 
 
 TEST_USERNAME = 'user'

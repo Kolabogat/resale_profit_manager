@@ -2,7 +2,7 @@ import pytest
 
 from django.urls import reverse
 
-from accounting.management.commands.command_filter_query import FILTER_TICKETS
+from backend.settings import FILTER_TICKETS
 from accounting.models import Ticket
 from tests.accounting.get_max_page import get_max_page
 from tests.conftest import created_user, client

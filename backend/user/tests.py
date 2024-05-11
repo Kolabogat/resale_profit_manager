@@ -1,7 +1,7 @@
 # from django.test import TestCase, Client
 # from django.contrib.auth.models import User
 #
-# from accounting.management.commands.command_filter_query import FILTER_TICKETS
+# from backend.settings import FILTER_TICKETS
 # from accounting.models import TicketFilter, Ticket
 # from user.models import UserSettings, UserProfile
 # from django.urls import reverse

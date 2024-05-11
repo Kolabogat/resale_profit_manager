@@ -154,3 +154,151 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Constants for TicketFilter model
+FILTER_TICKETS = (
+    {
+        'pk': 1,
+        'title': 'Profit Waiting',
+        'query_value': '',
+        'url_value': 'profit_waiting',
+        'annotation': 'Filter tickets by profit none',
+        'color': '#f6d6ad'
+    },
+    {
+        'pk': 2,
+        'title': 'Profit Failure',
+        'query_value': '',
+        'url_value': 'profit_failure',
+        'annotation': 'Filter tickets by profit failure',
+        'color': '#f9c0c0'
+    },
+    {
+        'pk': 3,
+        'title': 'Profit Nothing',
+        'query_value': '',
+        'url_value': 'profit_nothing',
+        'annotation': 'Filter tickets without profit',
+        'color': '#fafcc2'
+    },
+    {
+        'pk': 4,
+        'title': 'Profit Success',
+        'query_value': '',
+        'url_value': 'profit_success',
+        'annotation': 'Filter tickets by profit success',
+        'color': '#ccf6c8'
+    },
+    {
+        'pk': 5,
+        'title': 'Ascending Bought',
+        'query_value': 'bought',
+        'url_value': 'bought_asc',
+        'annotation': 'Filter tickets by bought from lowest to highest',
+        'color': '#ffd571'
+    },
+    {
+        'pk': 6,
+        'title': 'Descending Bought',
+        'query_value': '-bought',
+        'url_value': 'bought_desc',
+        'annotation': 'Filter tickets by bought from highest to lowest',
+        'color': '#f4ebc1'
+    },
+    {
+        'pk': 7,
+        'title': 'Ascending Sold',
+        'query_value': 'sold',
+        'url_value': 'sold_asc',
+        'annotation': 'Filter tickets by sold from lowest to highest',
+        'color': '#ffd571'
+    },
+    {
+        'pk': 8,
+        'title': 'Descending Sold',
+        'query_value': '-sold',
+        'url_value': 'sold_desc',
+        'annotation': 'Filter tickets by sold from highest to lowest',
+        'color': '#f4ebc1'
+    },
+
+    {
+        'pk': 9,
+        'title': 'Ascending Profit',
+        'query_value': 'profit',
+        'url_value': 'profit_asc',
+        'annotation': 'Filter tickets by profit from lowest to highest',
+        'color': '#ffd571'
+    },
+    {
+        'pk': 10,
+        'title': 'Descending Profit',
+        'query_value': '-profit',
+        'url_value': 'profit_desc',
+        'annotation': 'Filter tickets by profit from highest to lowest',
+        'color': '#f4ebc1'
+    },
+    {
+        'pk': 11,
+        'title': 'Date',
+        'query_value': 'created_at',
+        'url_value': 'date',
+        'annotation': 'Filter tickets by earliest date',
+        'color': '#ff9a76'
+    },
+)
+
+# Constants for UserSettings model
+CURRENCY = (
+    {
+        'pk': 1,
+        'currency': '$',
+    },
+    {
+        'pk': 2,
+        'currency': '€',
+    },
+    {
+        'pk': 3,
+        'currency': '₽',
+    },
+    {
+        'pk': 4,
+        'currency': '₴',
+    },
+    {
+        'pk': 5,
+        'currency': 'L',
+    },
+)
+# Constants for UserSettings model
+PAGINATION = (
+    {
+        'pk': 1,
+        'paginate_by': 5,
+    },
+    {
+        'pk': 2,
+        'paginate_by': 10,
+    },
+    {
+        'pk': 3,
+        'paginate_by': 15,
+    },
+    {
+        'pk': 4,
+        'paginate_by': 25,
+    },
+    {
+        'pk': 5,
+        'paginate_by': 50,
+    },
+    {
+        'pk': 6,
+        'paginate_by': 100,
+    },
+    {
+        'pk': 7,
+        'paginate_by': 200,
+    },
+)

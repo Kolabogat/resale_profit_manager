@@ -3,7 +3,7 @@
 # from django.contrib.auth.models import User
 #
 # import random
-# from accounting.management.commands.command_filter_query import FILTER_TICKETS
+# from backend.settings import FILTER_TICKETS
 # from accounting.models import Ticket, TicketFilter
 # from datetime import datetime
 # from django.urls import reverse
