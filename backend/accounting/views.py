@@ -108,7 +108,7 @@ def add_ticket(request):
             ticket.profit = round(ticket.sold - ticket.bought, 2)
             ticket.closed = 'True'
         ticket.save()
-        messages.success(request, f'Ticket "{ticket.title}"  added successfully')
+        messages.success(request, f'Ticket "{ticket.title}" added successfully')
         return redirect(f'add_ticket')
     else:
         form = TicketForm()
