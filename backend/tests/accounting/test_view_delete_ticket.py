@@ -8,7 +8,7 @@ from tests.conftest import created_user, client
 
 
 @pytest.mark.django_db
-def test_delete_ticket(created_user, register_user, client, ticket):
+def test_delete_ticket(created_user, login_user, client, ticket):
     delete_ticket_endpoint = reverse('delete_ticket', args=[ticket.pk])
     response = client.get(delete_ticket_endpoint)
     deleted_ticket_exists = Ticket.objects.filter(
@@ -26,7 +26,7 @@ def test_delete_ticket(created_user, register_user, client, ticket):
 
 
 @pytest.mark.django_db
-def test_delete_ticket_not(created_user, register_user, client):
+def test_delete_ticket_not(created_user, login_user, client):
     ticket_pk = 2345756
     delete_ticket_endpoint = reverse('delete_ticket', args=[ticket_pk])
     response = client.get(delete_ticket_endpoint)

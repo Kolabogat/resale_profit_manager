@@ -9,7 +9,7 @@ from user.models import UserProfile
 
 
 @pytest.mark.django_db
-def test_update_user_data_with_ticket(created_user, register_user, client, ticket, ticket_success, ticket_failure):
+def test_update_user_data_with_ticket(created_user, login_user, client, ticket, ticket_success, ticket_failure):
     update_user_data_endpoint = reverse('update_profile')
     response = client.get(update_user_data_endpoint)
     alert_message = 'You successfully updated your data.'
@@ -33,7 +33,7 @@ def test_update_user_data_with_ticket(created_user, register_user, client, ticke
 
 
 @pytest.mark.django_db
-def test_update_user_data_without_ticket(created_user, register_user, client):
+def test_update_user_data_without_ticket(created_user, login_user, client):
     update_user_data_endpoint = reverse('update_profile')
     response = client.get(update_user_data_endpoint)
     alert_message = 'You don\'t have any tickets.'

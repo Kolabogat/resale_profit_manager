@@ -6,7 +6,7 @@ from tests.user.get_updated_user_profile import get_updated_user_profile
 
 
 @pytest.mark.django_db
-def test_view_user_data(created_user, register_user, client):
+def test_view_user_data(created_user, login_user, client):
     view_user_data_endpoint = reverse('account_profile')
     response = client.get(view_user_data_endpoint)
     user_profile = response.context.get('user_object')
@@ -19,7 +19,7 @@ def test_view_user_data(created_user, register_user, client):
 
 
 @pytest.mark.django_db
-def test_view_user_data_updated(created_user, register_user, client, ticket, ticket_success, ticket_failure):
+def test_view_user_data_updated(created_user, login_user, client, ticket, ticket_success, ticket_failure):
     update_user_data_endpoint = reverse('update_profile')
     client.get(update_user_data_endpoint)
 
@@ -36,7 +36,7 @@ def test_view_user_data_updated(created_user, register_user, client, ticket, tic
 
 
 @pytest.mark.django_db
-def test_view_user_data_used_template(created_user, register_user, client):
+def test_view_user_data_used_template(created_user, login_user, client):
     view_user_data_endpoint = reverse('account_profile')
     response = client.get(view_user_data_endpoint)
 

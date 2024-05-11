@@ -40,7 +40,7 @@ def test_user_login_error(created_user, client):
 
 
 @pytest.mark.django_db
-def test_user_login_auth_user_redirected(created_user, register_user, client):
+def test_user_login_auth_user_redirected(created_user, login_user, client):
     user_login_endpoint = reverse('login')
     response = client.get(user_login_endpoint)
 

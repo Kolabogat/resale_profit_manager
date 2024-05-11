@@ -11,7 +11,7 @@ from tests.conftest import created_user, client
 @pytest.mark.django_db
 def test_view_tickets_check_tickets(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -33,7 +33,7 @@ def test_view_tickets_check_tickets(
 @pytest.mark.django_db
 def test_view_tickets_check_quantity(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -48,7 +48,7 @@ def test_view_tickets_check_quantity(
 @pytest.mark.django_db
 def test_view_tickets_check_ticket_filters(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
 ):
@@ -76,7 +76,7 @@ def test_view_tickets_not_auth_user_redirected(client):
 
 
 @pytest.mark.django_db
-def test_view_tickets_used_template(created_user, register_user, client, add_ticket_filter):
+def test_view_tickets_used_template(created_user, login_user, client, add_ticket_filter):
     view_tickets_endpoint = reverse('home')
     response = client.get(view_tickets_endpoint)
 
@@ -86,7 +86,7 @@ def test_view_tickets_used_template(created_user, register_user, client, add_tic
 @pytest.mark.django_db
 def test_view_tickets_pagination_not_integer(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ten_tickets,
         ticket,
@@ -107,7 +107,7 @@ def test_view_tickets_pagination_not_integer(
 @pytest.mark.django_db
 def test_view_tickets_pagination_empty_page(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ten_tickets,
         ticket,

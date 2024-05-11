@@ -61,7 +61,7 @@ def test_register_incorrect_data(client):
 
 
 @pytest.mark.django_db
-def test_register_auth_user_redirected(created_user, register_user, client):
+def test_register_auth_user_redirected(created_user, login_user, client):
     register_endpoint = reverse('register')
     response = client.get(register_endpoint)
 

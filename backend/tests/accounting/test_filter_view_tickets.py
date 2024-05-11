@@ -10,7 +10,7 @@ from tests.conftest import created_user, client
 @pytest.mark.django_db
 def test_view_tickets_filter_profit_waiting(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         add_ten_tickets,
@@ -36,7 +36,7 @@ def test_view_tickets_filter_profit_waiting(
 @pytest.mark.django_db
 def test_view_tickets_filter_profit_failure(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         add_ten_tickets,
@@ -62,7 +62,7 @@ def test_view_tickets_filter_profit_failure(
 @pytest.mark.django_db
 def test_view_tickets_filter_profit_nothing(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         add_ten_tickets,
@@ -88,7 +88,7 @@ def test_view_tickets_filter_profit_nothing(
 @pytest.mark.django_db
 def test_view_tickets_filter_profit_success(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         add_ten_tickets,

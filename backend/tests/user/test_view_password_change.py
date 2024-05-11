@@ -9,7 +9,7 @@ from tests.conftest import created_user, client
 
 
 @pytest.mark.django_db
-def test_password_change_correct_data(created_user, register_user, client):
+def test_password_change_correct_data(created_user, login_user, client):
     new_password = 'strong123pass974H'
     password_change_endpoint = reverse('password_change')
     response = client.post(
@@ -28,7 +28,7 @@ def test_password_change_correct_data(created_user, register_user, client):
 
 
 @pytest.mark.django_db
-def test_password_change_incorrect_data(created_user, register_user, client):
+def test_password_change_incorrect_data(created_user, login_user, client):
     new_password = 'strong123pass974H'
     password_change_endpoint = reverse('password_change')
     response = client.post(
@@ -45,7 +45,7 @@ def test_password_change_incorrect_data(created_user, register_user, client):
 
 
 @pytest.mark.django_db
-def test_password_change_used_template(created_user, register_user, client):
+def test_password_change_used_template(created_user, login_user, client):
     password_change_endpoint = reverse('password_change')
     response = client.get(password_change_endpoint)
 

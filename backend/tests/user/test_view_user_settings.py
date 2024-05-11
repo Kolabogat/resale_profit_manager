@@ -7,7 +7,7 @@ from user.models import UserSettings
 
 
 @pytest.mark.django_db
-def test_user_settings(created_user, register_user, client, ticket):
+def test_user_settings(created_user, login_user, client, ticket):
     user_settings_endpoint = reverse('user_settings')
     response = client.get(user_settings_endpoint)
 
@@ -17,7 +17,7 @@ def test_user_settings(created_user, register_user, client, ticket):
 
 
 @pytest.mark.django_db
-def test_user_settings_update(created_user, register_user, client, ticket, add_currency_symbols, add_pagination_values):
+def test_user_settings_update(created_user, login_user, client, ticket, add_currency_symbols, add_pagination_values):
     user_settings_endpoint = reverse('user_settings')
     response = client.post(
         user_settings_endpoint,
@@ -46,7 +46,7 @@ def test_user_settings_update(created_user, register_user, client, ticket, add_c
 
 
 @pytest.mark.django_db
-def test_user_settings_used_template(created_user, register_user, client):
+def test_user_settings_used_template(created_user, login_user, client):
     user_settings_endpoint = reverse('user_settings')
     response = client.get(user_settings_endpoint)
 

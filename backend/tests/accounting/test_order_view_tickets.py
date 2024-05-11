@@ -12,7 +12,7 @@ from tests.conftest import created_user, client
 @pytest.mark.django_db
 def test_view_tickets_filter_asc_bought(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -39,7 +39,7 @@ def test_view_tickets_filter_asc_bought(
 @pytest.mark.django_db
 def test_view_tickets_filter_desc_bought(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -66,7 +66,7 @@ def test_view_tickets_filter_desc_bought(
 @pytest.mark.django_db
 def test_view_tickets_filter_asc_sold(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -93,7 +93,7 @@ def test_view_tickets_filter_asc_sold(
 @pytest.mark.django_db
 def test_view_tickets_filter_desc_sold(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -120,7 +120,7 @@ def test_view_tickets_filter_desc_sold(
 @pytest.mark.django_db
 def test_view_tickets_filter_asc_profit(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -147,7 +147,7 @@ def test_view_tickets_filter_asc_profit(
 @pytest.mark.django_db
 def test_view_tickets_filter_desc_profit(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,
@@ -174,7 +174,7 @@ def test_view_tickets_filter_desc_profit(
 @pytest.mark.django_db
 def test_view_tickets_filter_date(
         created_user,
-        register_user,
+        login_user,
         client,
         add_ticket_filter,
         ticket,

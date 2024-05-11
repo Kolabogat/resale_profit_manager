@@ -6,7 +6,7 @@ from tests.conftest import created_user, client
 
 
 @pytest.mark.django_db
-def test_user_logout(created_user, register_user, client):
+def test_user_logout(created_user, login_user, client):
     user_logout_endpoint = reverse('logout')
     response = client.get(user_logout_endpoint)
 

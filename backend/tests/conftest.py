@@ -34,7 +34,7 @@ def created_user():
 
 
 @pytest.fixture
-def register_user(client):
+def login_user(client):
     client.login(
         username=TEST_USERNAME,
         password=TEST_PASSWORD,
