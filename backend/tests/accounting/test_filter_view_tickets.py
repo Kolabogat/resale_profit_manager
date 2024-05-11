@@ -29,8 +29,8 @@ def test_view_tickets_filter_profit_waiting(
         Q(profit=None)
     )
     assert response.status_code == 200
-    for ticket in tickets:
-        assert ticket in tickets_query
+    for ticket_object in tickets:
+        assert ticket_object in tickets_query
 
 
 @pytest.mark.django_db
@@ -55,8 +55,8 @@ def test_view_tickets_filter_profit_failure(
         Q(profit__lt=0)
     )
     assert response.status_code == 200
-    for ticket in tickets:
-        assert ticket in tickets_query
+    for ticket_object in tickets:
+        assert ticket_object in tickets_query
 
 
 @pytest.mark.django_db
@@ -81,8 +81,8 @@ def test_view_tickets_filter_profit_nothing(
         Q(profit=0)
     )
     assert response.status_code == 200
-    for ticket in tickets:
-        assert ticket in tickets_query
+    for ticket_object in tickets:
+        assert ticket_object in tickets_query
 
 
 @pytest.mark.django_db
@@ -107,8 +107,8 @@ def test_view_tickets_filter_profit_success(
         Q(profit__gt=0)
     )
     assert response.status_code == 200
-    for ticket in tickets:
-        assert ticket in tickets_query
+    for ticket_object in tickets:
+        assert ticket_object in tickets_query
 
 
 
