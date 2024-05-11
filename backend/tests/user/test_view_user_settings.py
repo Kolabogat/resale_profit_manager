@@ -13,7 +13,7 @@ def test_user_settings(created_user, register_user, client, ticket):
 
     assert response.status_code == 200
     assert response.context.get('command_currency').first().currency == '$'
-    assert response.context.get('command_pagination').first().paginate_by == 10
+    assert response.context.get('command_pagination').first().paginate_by == 5
 
 
 @pytest.mark.django_db

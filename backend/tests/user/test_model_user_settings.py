@@ -12,16 +12,16 @@ def test_model_command_currency_str_method(created_user):
 
 @pytest.mark.django_db
 def test_model_command_pagination_str_method(created_user):
-    pagination_object = CommandPagination.objects.filter(pk=2).first()
+    pagination_object = CommandPagination.objects.filter(pk=1).first()
 
-    assert pagination_object.paginate_by == 10
+    assert pagination_object.paginate_by == 5
 
 
 @pytest.mark.django_db
 def test_model_user_settings_fields(created_user):
     user_settings_exists = UserSettings.objects.filter(
         user=created_user,
-        paginate_by=2,
+        paginate_by=1,
         currency=1,
         display_symbol=False,
         delete_confirmation=True,
@@ -34,7 +34,7 @@ def test_model_user_settings_fields(created_user):
 def test_model_user_profile_str_method(created_user):
     user_settings = UserSettings.objects.filter(
         user=created_user,
-        paginate_by=2,
+        paginate_by=1,
         currency=1,
         display_symbol=False,
         delete_confirmation=True,

@@ -21,7 +21,7 @@ def test_register_correct_data(client):
     new_user = User.objects.filter(username='test_user_2').first()
     user_settings_exists = UserSettings.objects.filter(
         user=new_user,
-        paginate_by__paginate_by=10,
+        paginate_by__paginate_by=5,
         currency__currency='$',
         display_symbol=False,
         delete_confirmation=True,

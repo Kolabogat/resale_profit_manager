@@ -24,8 +24,8 @@ class CommandPagination(Model):
     @classmethod
     def get_default_pk(cls):
         paginate_by, created = cls.objects.get_or_create(
-            pk=2,
-            defaults=dict(pk=2, paginate_by=10),
+            pk=1,
+            defaults=dict(pk=1, paginate_by=5),
         )
         return paginate_by.pk
 
@@ -57,9 +57,6 @@ class UserSettings(Model):
     currency = ForeignKey(to='CommandCurrency', verbose_name='Currency', on_delete=CASCADE, default=CommandCurrency.get_default_pk)
     display_symbol = BooleanField(verbose_name='Display symbol', default=False)
     delete_confirmation = BooleanField(verbose_name='Delete confirmation', default=True)
-
-    def get_absolute_url(self):
-        return reverse('account_profile', kwargs={'pk': self.pk})
 
     def __str__(self):
         return str(self.user)
