@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.messages import get_messages
 
 from tests.conftest import created_user, client
-from tests.user.get_updated_user_profile import get_updated_user_profile
+from tests.user.conftest import get_updated_user_profile
 from user.models import UserProfile
 
 
