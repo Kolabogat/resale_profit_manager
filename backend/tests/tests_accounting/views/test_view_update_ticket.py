@@ -13,6 +13,13 @@ def test_update_ticket(
         client,
         ticket,
 ):
+    """
+    HTTP METHOD: POST
+    VIEW TESTED: update_ticket
+    DESCRIPTION: status code is 302;
+    ticket changed and exists; redirect to 'home';
+    check alert message.
+    """
     update_ticket_endpoint = reverse('update_ticket', args=[ticket.pk])
     ticket_title = 'Updated Ticket'
     response = client.post(
@@ -43,6 +50,11 @@ def test_update_ticket_used_template(
         client,
         ticket,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: update_ticket
+    DESCRIPTION: template 'accounting/update_ticket.html' is used.
+    """
     update_ticket_endpoint = reverse('update_ticket', args=[ticket.pk])
     response = client.get(update_ticket_endpoint)
 

@@ -2,7 +2,6 @@ import pytest
 
 from django.urls import reverse
 from django.contrib.messages import get_messages
-from tests.conftest import logged_user, client, add_currency_and_pagination_values, ticket
 from user.models import UserSettings
 
 

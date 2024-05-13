@@ -2,8 +2,6 @@ import pytest
 
 from django.urls import reverse
 
-from tests.conftest import logged_user, client
-
 
 @pytest.mark.django_db
 def test_user_logout(

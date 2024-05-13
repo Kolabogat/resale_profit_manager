@@ -1,8 +1,6 @@
 import pytest
 
 from django.urls import reverse
-from tests.conftest import logged_user, client, add_all_tickets
-from tests.user.conftest import get_updated_user_profile
 
 
 @pytest.mark.django_db

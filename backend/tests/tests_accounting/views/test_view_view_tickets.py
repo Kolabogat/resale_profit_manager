@@ -4,7 +4,6 @@ from django.urls import reverse
 
 from backend.settings import FILTER_TICKETS
 from accounting.models import Ticket
-from tests.accounting.conftest import get_max_page
 from tests.conftest import logged_user, client, add_all_tickets, add_ten_tickets, ticket
 
 
@@ -14,6 +13,12 @@ def test_view_tickets_check_tickets(
         client,
         add_all_tickets,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: status code is 200; all tickets that
+    should be displayed are on the main page.
+    """
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
     tickets = response.context.get('tickets')
@@ -31,6 +36,12 @@ def test_view_tickets_check_quantity(
         client,
         add_all_tickets,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: quantity of tickets on the main page
+    is equal to the quantity of tickets in database.
+    """
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
     tickets_quantity = response.context.get('tickets_quantity')
@@ -43,6 +54,11 @@ def test_view_tickets_check_ticket_filters(
         logged_user,
         client,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: checks that all filters are on the main page.
+    """
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
     ticket_filters = response.context.get('ticket_filter_query')
@@ -61,6 +77,12 @@ def test_view_tickets_check_ticket_filters(
 def test_view_tickets_not_auth_user_redirected(
         client,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: status code is 200; redirect
+    unauthorized user to login page.
+    """
     view_tickets_endpoint = reverse('home')
     response = client.get(view_tickets_endpoint)
 
@@ -73,6 +95,11 @@ def test_view_tickets_used_template(
         logged_user,
         client,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: template 'accounting/index.html' is used.
+    """
     view_tickets_endpoint = reverse('home')
     response = client.get(view_tickets_endpoint)
 
@@ -86,6 +113,12 @@ def test_view_tickets_pagination_not_integer(
         add_ten_tickets,
         ticket,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: status code is 200;
+    if value is not a number, first page is displayed.
+    """
     view_tickets_bad_endpoint = reverse('home') + '/?page=trigger_not_integer'
     view_tickets_good_endpoint_as = reverse('home') + '/?page=1'
     bad_response = client.get(view_tickets_bad_endpoint)
@@ -106,6 +139,12 @@ def test_view_tickets_pagination_empty_page(
         ticket,
         get_max_page,
 ):
+    """
+    HTTP METHOD: GET
+    VIEW TESTED: view_tickets
+    DESCRIPTION: status code is 200;
+    if value is a non-existent page, the first page is displayed.
+    """
     view_tickets_bad_endpoint = reverse('home') + '/?page=807583145'
     view_tickets_good_endpoint = reverse('home') + f'/?page={get_max_page}'
     bad_response = client.get(view_tickets_bad_endpoint)
