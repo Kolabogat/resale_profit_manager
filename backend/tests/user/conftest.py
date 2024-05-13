@@ -1,9 +1,13 @@
+import pytest
 from django.db.models import Q
 from accounting.models import Ticket
 from django.db.models import Sum, Max, Min
 
 
-def get_updated_user_profile(created_user):
+@pytest.fixture
+def get_updated_user_profile(
+        created_user
+):
     q = Q(user=created_user) & Q(deleted=False)
     tickets = Ticket.objects.filter(q)
 

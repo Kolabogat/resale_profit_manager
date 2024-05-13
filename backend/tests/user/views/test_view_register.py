@@ -4,12 +4,14 @@ from django.urls import reverse
 from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
 
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client
 from user.models import UserProfile, UserSettings
 
 
 @pytest.mark.django_db
-def test_register_correct_data(client):
+def test_register_correct_data(
+        client
+):
     register_endpoint = reverse('register')
     response = client.post(
         register_endpoint,
@@ -44,7 +46,9 @@ def test_register_correct_data(client):
 
 
 @pytest.mark.django_db
-def test_register_incorrect_data(client):
+def test_register_incorrect_data(
+        client
+):
     register_endpoint = reverse('register')
     response = client.post(
         register_endpoint,
@@ -61,7 +65,10 @@ def test_register_incorrect_data(client):
 
 
 @pytest.mark.django_db
-def test_register_auth_user_redirected(created_user, login_user, client):
+def test_register_auth_user_redirected(
+        logged_user,
+        client,
+):
     register_endpoint = reverse('register')
     response = client.get(register_endpoint)
 
@@ -69,7 +76,9 @@ def test_register_auth_user_redirected(created_user, login_user, client):
     assert response.url == reverse('home')
 
 
-def test_register_used_template(client):
+def test_register_used_template(
+        client,
+):
     register_endpoint = reverse('register')
     response = client.get(register_endpoint)
 

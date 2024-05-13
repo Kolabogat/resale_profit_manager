@@ -16,13 +16,20 @@ TEST_EMAIL = 'user@user.com'
 
 
 @pytest.fixture
+def add_ticket_filters():
+    for filter_dict in FILTER_TICKETS:
+        filter_model = TicketFilter(**filter_dict)
+        filter_model.save()
+
+
+@pytest.fixture
 def client():
     client = Client()
     return client
 
 
 @pytest.fixture
-def created_user():
+def created_user(add_ticket_filters):
     user = User.objects.create_user(
         username=TEST_USERNAME,
         email=TEST_EMAIL,
@@ -34,11 +41,12 @@ def created_user():
 
 
 @pytest.fixture
-def login_user(client):
+def logged_user(created_user, client):
     client.login(
         username=TEST_USERNAME,
         password=TEST_PASSWORD,
     )
+    return created_user
 
 
 @pytest.fixture
@@ -105,21 +113,27 @@ def ticket_without_profit(created_user):
 
 
 @pytest.fixture
-def add_ticket_filter():
-    for filter_dict in FILTER_TICKETS:
-        filter_model = TicketFilter(**filter_dict)
-        filter_model.save()
+def add_all_tickets(
+        ticket,
+        ticket_success,
+        ticket_failure,
+        ticket_without_profit
+):
+    return {
+        'ticket': ticket,
+        'ticket_success': ticket_success,
+        'ticket_failure': ticket_failure,
+        'ticket_without_profit': ticket_without_profit
+    }
 
 
 @pytest.fixture
-def add_currency_symbols():
+def add_currency_and_pagination_values():
     for currency_dict in CURRENCY:
         currency_model = CommandCurrency(**currency_dict)
         currency_model.save()
-
-
-@pytest.fixture
-def add_pagination_values():
     for pagination_dict in PAGINATION:
         paginate_by_model = CommandPagination(**pagination_dict)
         paginate_by_model.save()
+
+

@@ -4,11 +4,14 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 from accounting.models import Ticket
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client
 
 
 @pytest.mark.django_db
-def test_add_ticket_of_waiting(created_user, login_user, client):
+def test_add_ticket_of_waiting(
+        logged_user,
+        client,
+):
     add_ticket_endpoint = reverse('add_ticket')
     ticket_title = 'Test Ticket of Waiting'
     response = client.post(
@@ -33,7 +36,10 @@ def test_add_ticket_of_waiting(created_user, login_user, client):
 
 
 @pytest.mark.django_db
-def test_add_ticket_of_success(created_user, login_user, client):
+def test_add_ticket_of_success(
+        logged_user,
+        client,
+):
     add_ticket_endpoint = reverse('add_ticket')
     ticket_title = 'Test Ticket of Success'
     response = client.post(
@@ -59,7 +65,10 @@ def test_add_ticket_of_success(created_user, login_user, client):
 
 
 @pytest.mark.django_db
-def test_add_ticket_of_failure(created_user, login_user, client):
+def test_add_ticket_of_failure(
+        logged_user,
+        client,
+):
     add_ticket_endpoint = reverse('add_ticket')
     ticket_title = 'Test Ticket of Failure'
     response = client.post(
@@ -85,7 +94,10 @@ def test_add_ticket_of_failure(created_user, login_user, client):
 
 
 @pytest.mark.django_db
-def test_add_ticket_of_nothing(created_user, login_user, client):
+def test_add_ticket_of_nothing(
+        logged_user,
+        client,
+):
     add_ticket_endpoint = reverse('add_ticket')
     ticket_title = 'Test Ticket of Nothing'
     response = client.post(
@@ -111,7 +123,10 @@ def test_add_ticket_of_nothing(created_user, login_user, client):
 
 
 @pytest.mark.django_db
-def test_add_ticket_used_template(created_user, login_user, client):
+def test_add_ticket_used_template(
+        logged_user,
+        client,
+):
     add_ticket_endpoint = reverse('add_ticket')
     response = client.get(add_ticket_endpoint)
 

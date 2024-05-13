@@ -5,19 +5,14 @@ from django.urls import reverse
 
 
 from accounting.models import Ticket
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client, add_all_tickets, add_ten_tickets
 
 
 @pytest.mark.django_db
 def test_view_tickets_search_one_word(
-        created_user,
-        login_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        logged_user,
+        add_all_tickets,
         add_ten_tickets,
 ):
     search_filter = 'wait'
@@ -26,7 +21,7 @@ def test_view_tickets_search_one_word(
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         Q(title__iregex=search_filter)
     )
@@ -38,14 +33,9 @@ def test_view_tickets_search_one_word(
 
 @pytest.mark.django_db
 def test_view_tickets_search_two_words(
-        created_user,
-        login_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        logged_user,
+        add_all_tickets,
         add_ten_tickets,
 ):
     search_filter = 'Ticket of'
@@ -54,7 +44,7 @@ def test_view_tickets_search_two_words(
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         Q(title__iregex=search_filter)
     )
@@ -66,14 +56,9 @@ def test_view_tickets_search_two_words(
 
 @pytest.mark.django_db
 def test_view_tickets_search_number(
-        created_user,
-        login_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        logged_user,
+        add_all_tickets,
         add_ten_tickets,
 ):
     search_filter = '5'
@@ -82,7 +67,7 @@ def test_view_tickets_search_number(
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         Q(title__iregex=search_filter)
     )
@@ -94,10 +79,9 @@ def test_view_tickets_search_number(
 
 @pytest.mark.django_db
 def test_view_tickets_search_not_existing(
-        created_user,
-        login_user,
         client,
-        add_ticket_filter,
+        logged_user,
+        add_ten_tickets,
 ):
     search_filter = 'not_existing_ticket_01'
     view_tickets_filter_endpoint = reverse('home') + f'/?search={search_filter}'
@@ -105,7 +89,7 @@ def test_view_tickets_search_not_existing(
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         Q(title__iregex=search_filter)
     )

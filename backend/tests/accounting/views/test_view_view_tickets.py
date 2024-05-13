@@ -5,38 +5,31 @@ from django.urls import reverse
 from backend.settings import FILTER_TICKETS
 from accounting.models import Ticket
 from tests.accounting.conftest import get_max_page
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client, add_all_tickets, add_ten_tickets, ticket
 
 
 @pytest.mark.django_db
 def test_view_tickets_check_tickets(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
     tickets = response.context.get('tickets')
 
     assert response.status_code == 200
-    assert ticket in tickets
-    assert ticket_success in tickets
-    assert ticket_failure in tickets
-    assert ticket_without_profit in tickets
+    assert add_all_tickets.get('ticket') in tickets
+    assert add_all_tickets.get('ticket_success') in tickets
+    assert add_all_tickets.get('ticket_failure') in tickets
+    assert add_all_tickets.get('ticket_without_profit') in tickets
 
 
 @pytest.mark.django_db
 def test_view_tickets_check_quantity(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
+        add_all_tickets,
 ):
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
@@ -47,10 +40,8 @@ def test_view_tickets_check_quantity(
 
 @pytest.mark.django_db
 def test_view_tickets_check_ticket_filters(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
 ):
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
@@ -67,7 +58,9 @@ def test_view_tickets_check_ticket_filters(
         )
 
 
-def test_view_tickets_not_auth_user_redirected(client):
+def test_view_tickets_not_auth_user_redirected(
+        client,
+):
     view_tickets_endpoint = reverse('home')
     response = client.get(view_tickets_endpoint)
 
@@ -76,7 +69,10 @@ def test_view_tickets_not_auth_user_redirected(client):
 
 
 @pytest.mark.django_db
-def test_view_tickets_used_template(created_user, login_user, client, add_ticket_filter):
+def test_view_tickets_used_template(
+        logged_user,
+        client,
+):
     view_tickets_endpoint = reverse('home')
     response = client.get(view_tickets_endpoint)
 
@@ -85,12 +81,10 @@ def test_view_tickets_used_template(created_user, login_user, client, add_ticket
 
 @pytest.mark.django_db
 def test_view_tickets_pagination_not_integer(
-        created_user,
-        login_user,
+        logged_user,
         client,
         add_ten_tickets,
         ticket,
-        add_ticket_filter
 ):
     view_tickets_bad_endpoint = reverse('home') + '/?page=trigger_not_integer'
     view_tickets_good_endpoint_as = reverse('home') + '/?page=1'
@@ -106,15 +100,14 @@ def test_view_tickets_pagination_not_integer(
 
 @pytest.mark.django_db
 def test_view_tickets_pagination_empty_page(
-        created_user,
-        login_user,
+        logged_user,
         client,
         add_ten_tickets,
         ticket,
-        add_ticket_filter,
+        get_max_page,
 ):
     view_tickets_bad_endpoint = reverse('home') + '/?page=807583145'
-    view_tickets_good_endpoint = reverse('home') + f'/?page={get_max_page(created_user)}'
+    view_tickets_good_endpoint = reverse('home') + f'/?page={get_max_page}'
     bad_response = client.get(view_tickets_bad_endpoint)
     good_response = client.get(view_tickets_good_endpoint)
     tickets_bad = bad_response.context.get('tickets')

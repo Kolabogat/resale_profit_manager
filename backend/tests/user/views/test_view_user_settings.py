@@ -2,12 +2,16 @@ import pytest
 
 from django.urls import reverse
 from django.contrib.messages import get_messages
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client, add_currency_and_pagination_values, ticket
 from user.models import UserSettings
 
 
 @pytest.mark.django_db
-def test_user_settings(created_user, login_user, client, ticket):
+def test_user_settings(
+        logged_user,
+        client,
+        ticket,
+):
     user_settings_endpoint = reverse('user_settings')
     response = client.get(user_settings_endpoint)
 
@@ -17,7 +21,11 @@ def test_user_settings(created_user, login_user, client, ticket):
 
 
 @pytest.mark.django_db
-def test_user_settings_update(created_user, login_user, client, ticket, add_currency_symbols, add_pagination_values):
+def test_user_settings_update(
+        logged_user,
+        client,
+        add_currency_and_pagination_values,
+):
     user_settings_endpoint = reverse('user_settings')
     response = client.post(
         user_settings_endpoint,
@@ -35,7 +43,7 @@ def test_user_settings_update(created_user, login_user, client, ticket, add_curr
     assert alert_message in response_message
 
     updated_user_settings_exists = UserSettings.objects.filter(
-        user=created_user,
+        user=logged_user,
         paginate_by=3,
         currency=2,
         display_symbol=True,
@@ -46,7 +54,10 @@ def test_user_settings_update(created_user, login_user, client, ticket, add_curr
 
 
 @pytest.mark.django_db
-def test_user_settings_used_template(created_user, login_user, client):
+def test_user_settings_used_template(
+        logged_user,
+        client,
+):
     user_settings_endpoint = reverse('user_settings')
     response = client.get(user_settings_endpoint)
 

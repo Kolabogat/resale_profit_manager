@@ -4,11 +4,15 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 from accounting.models import Ticket
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client, ticket
 
 
 @pytest.mark.django_db
-def test_delete_ticket(created_user, login_user, client, ticket):
+def test_delete_ticket(
+        logged_user,
+        client,
+        ticket,
+):
     delete_ticket_endpoint = reverse('delete_ticket', args=[ticket.pk])
     response = client.get(delete_ticket_endpoint)
     deleted_ticket_exists = Ticket.objects.filter(
@@ -26,7 +30,10 @@ def test_delete_ticket(created_user, login_user, client, ticket):
 
 
 @pytest.mark.django_db
-def test_delete_ticket_not(created_user, login_user, client):
+def test_delete_ticket_not(
+        logged_user,
+        client,
+):
     ticket_pk = 2345756
     delete_ticket_endpoint = reverse('delete_ticket', args=[ticket_pk])
     response = client.get(delete_ticket_endpoint)

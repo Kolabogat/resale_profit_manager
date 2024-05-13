@@ -5,7 +5,9 @@ from user.models import UserProfile
 
 
 @pytest.mark.django_db
-def test_model_user_profile_fields(created_user):
+def test_model_user_profile_fields(
+        created_user
+):
     user_profile_exists = UserProfile.objects.filter(
         user=created_user,
         all_time_profit=0,
@@ -18,7 +20,9 @@ def test_model_user_profile_fields(created_user):
 
 
 @pytest.mark.django_db
-def test_model_user_profile_str_method(created_user):
+def test_model_user_profile_str_method(
+        created_user
+):
     user_profile = UserProfile.objects.filter(
         user=created_user,
         all_time_profit=0,

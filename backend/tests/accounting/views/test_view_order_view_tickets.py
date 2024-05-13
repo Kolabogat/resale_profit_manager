@@ -4,26 +4,21 @@ from django.db.models import Q
 from django.urls import reverse
 
 from accounting.models import Ticket
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client, add_all_tickets
 
 
 @pytest.mark.django_db
 def test_view_tickets_filter_asc_bought(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=bought_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         ~Q(profit=None)
     ).order_by('bought')
@@ -36,21 +31,16 @@ def test_view_tickets_filter_asc_bought(
 
 @pytest.mark.django_db
 def test_view_tickets_filter_desc_bought(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=bought_desc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         ~Q(profit=None)
     ).order_by('-bought')
@@ -63,21 +53,16 @@ def test_view_tickets_filter_desc_bought(
 
 @pytest.mark.django_db
 def test_view_tickets_filter_asc_sold(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=sold_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         ~Q(profit=None)
     ).order_by('sold')
@@ -90,21 +75,16 @@ def test_view_tickets_filter_asc_sold(
 
 @pytest.mark.django_db
 def test_view_tickets_filter_desc_sold(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=sold_desc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         ~Q(profit=None)
     ).order_by('-sold')
@@ -117,21 +97,16 @@ def test_view_tickets_filter_desc_sold(
 
 @pytest.mark.django_db
 def test_view_tickets_filter_asc_profit(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=profit_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         ~Q(profit=None)
     ).order_by('profit')
@@ -144,21 +119,16 @@ def test_view_tickets_filter_asc_profit(
 
 @pytest.mark.django_db
 def test_view_tickets_filter_desc_profit(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=profit_desc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False) &
         ~Q(profit=None)
     ).order_by('-profit')
@@ -171,21 +141,16 @@ def test_view_tickets_filter_desc_profit(
 
 @pytest.mark.django_db
 def test_view_tickets_filter_date(
-        created_user,
-        login_user,
+        logged_user,
         client,
-        add_ticket_filter,
-        ticket,
-        ticket_success,
-        ticket_failure,
-        ticket_without_profit,
+        add_all_tickets,
 ):
     view_tickets_filter_endpoint = reverse('home') + '/?filter_by=date'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
     tickets_query = Ticket.objects.filter(
-        Q(user=created_user) &
+        Q(user=logged_user) &
         Q(deleted=False)
     ).order_by('created_at')
     tickets_quantity = tickets_query.count()

@@ -4,11 +4,15 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 from accounting.models import Ticket
-from tests.conftest import created_user, client
+from tests.conftest import logged_user, client, ticket
 
 
 @pytest.mark.django_db
-def test_update_ticket(created_user, login_user, client, ticket):
+def test_update_ticket(
+        logged_user,
+        client,
+        ticket,
+):
     update_ticket_endpoint = reverse('update_ticket', args=[ticket.pk])
     ticket_title = 'Updated Ticket'
     response = client.post(
@@ -34,7 +38,11 @@ def test_update_ticket(created_user, login_user, client, ticket):
 
 
 @pytest.mark.django_db
-def test_update_ticket_used_template(created_user, login_user, client, ticket):
+def test_update_ticket_used_template(
+        logged_user,
+        client,
+        ticket,
+):
     update_ticket_endpoint = reverse('update_ticket', args=[ticket.pk])
     response = client.get(update_ticket_endpoint)
 

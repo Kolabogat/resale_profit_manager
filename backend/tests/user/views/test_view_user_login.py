@@ -3,11 +3,14 @@ import pytest
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
-from tests.conftest import created_user, client, TEST_USERNAME, TEST_PASSWORD
+from tests.conftest import created_user, client, logged_user, TEST_USERNAME, TEST_PASSWORD
 
 
 @pytest.mark.django_db
-def test_user_login_success(created_user, client):
+def test_user_login_success(
+        created_user,
+        client,
+):
     user_login_endpoint = reverse('login')
     response = client.post(
         user_login_endpoint,
@@ -24,7 +27,10 @@ def test_user_login_success(created_user, client):
 
 
 @pytest.mark.django_db
-def test_user_login_error(created_user, client):
+def test_user_login_error(
+        created_user,
+        client,
+):
     user_login_endpoint = reverse('login')
     response = client.post(
         user_login_endpoint,
@@ -40,7 +46,10 @@ def test_user_login_error(created_user, client):
 
 
 @pytest.mark.django_db
-def test_user_login_auth_user_redirected(created_user, login_user, client):
+def test_user_login_auth_user_redirected(
+        logged_user,
+        client,
+):
     user_login_endpoint = reverse('login')
     response = client.get(user_login_endpoint)
 
@@ -48,7 +57,9 @@ def test_user_login_auth_user_redirected(created_user, login_user, client):
     assert response.url == reverse('home')
 
 
-def test_user_login_used_template(client):
+def test_user_login_used_template(
+        client,
+):
     user_login_endpoint = reverse('login')
     response = client.get(user_login_endpoint)
 
