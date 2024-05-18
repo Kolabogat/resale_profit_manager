@@ -2,6 +2,8 @@ import pytest
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
+from tests.conftest import TEST_USERNAME, TEST_PASSWORD
+
 
 @pytest.mark.django_db
 def test_user_login_success(
