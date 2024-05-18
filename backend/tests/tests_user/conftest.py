@@ -1,7 +1,8 @@
 import pytest
 from django.db.models import Q
-from accounting.models import Ticket
 from django.db.models import Sum, Max, Min
+
+from accounting.models import Ticket
 
 
 @pytest.fixture

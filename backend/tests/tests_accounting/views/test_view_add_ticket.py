@@ -1,10 +1,8 @@
 import pytest
-
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
 from accounting.models import Ticket
-from tests.conftest import logged_user, client
 
 
 @pytest.mark.django_db

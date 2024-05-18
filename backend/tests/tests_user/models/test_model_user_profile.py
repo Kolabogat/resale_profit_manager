@@ -1,6 +1,5 @@
 import pytest
 
-from tests.conftest import created_user
 from user.models import UserProfile
 
 

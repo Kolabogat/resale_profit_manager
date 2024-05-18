@@ -1,10 +1,8 @@
 import pytest
-
 from django.urls import reverse
 
 from backend.settings import FILTER_TICKETS
 from accounting.models import Ticket
-from tests.conftest import logged_user, client, add_all_tickets, add_ten_tickets, ticket
 
 
 @pytest.mark.django_db

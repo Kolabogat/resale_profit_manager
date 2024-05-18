@@ -1,9 +1,6 @@
 import pytest
-
 from django.contrib.messages import get_messages
 from django.urls import reverse
-
-from tests.conftest import created_user, client, logged_user, TEST_USERNAME, TEST_PASSWORD
 
 
 @pytest.mark.django_db

@@ -1,11 +1,8 @@
 import pytest
 from django.db.models import Q
-
 from django.urls import reverse
 
-
 from accounting.models import Ticket
-from tests.conftest import logged_user, client, add_all_tickets, add_ten_tickets
 
 
 @pytest.mark.django_db

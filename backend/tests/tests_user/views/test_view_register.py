@@ -1,10 +1,8 @@
 import pytest
-
 from django.urls import reverse
 from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
 
-from tests.conftest import logged_user, client
 from user.models import UserProfile, UserSettings
 
 

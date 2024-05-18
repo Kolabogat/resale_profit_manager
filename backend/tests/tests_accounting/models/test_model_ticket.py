@@ -1,7 +1,6 @@
 import pytest
 
 from accounting.models import Ticket
-from tests.conftest import ticket, created_user
 
 
 @pytest.mark.django_db
