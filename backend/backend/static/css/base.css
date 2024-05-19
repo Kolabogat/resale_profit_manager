@@ -1,0 +1,50 @@
+.form-user-div-style {
+    transform: translateY(10%);
+    margin: auto;
+    width: 300px;
+}
+
+.form-user-div-height {
+    height: 50px;
+    margin: auto;
+}
+
+.text-h2-center {
+    text-align: center;
+    margin: auto;
+}
+
+.text-quantity {
+    text-align: right;
+    color: #858585;
+}
+
+.text-link-div {
+    text-align: right;
+    margin: auto;
+}
+
+.delete-button {
+    color: #ea5455;
+    text-decoration-line: none;
+}
+.delete-button:hover {
+    color: red;
+}
+
+.no-decoration-line {
+    text-decoration-line: none;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.link-black-color {
+    color: black
+}
+.link-black-color:hover {
+    color: #292f46
+}
+
+
