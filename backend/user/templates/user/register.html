@@ -4,29 +4,29 @@
 
 {% block content %}
 
-<div style="top: 50%; margin: auto; width: 300px;">
+<div class="form-user-div-style">
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        <div style="height: 80px;"></div>
+        <div style="height: 40px;"></div>
 
-        <h2 class="h3 mb-3 fw-normal" style="text-align: center;">Registration</h2>
+        <h2 class="h3 mb-3 fw-normal text-h2-center">Registration</h2>
         {% if error_message %}
             <p class="bg-danger p-d ml-b">{{ error_message }}</p>
         {% endif %}
 
-        <div class="form-floating" style="height: 50px; margin: auto;">
+        <div class="form-floating form-user-div-height">
             <input name="{{ form.username.name }}" type="text" autocomplete="{{ form.username.name }}" class="form-control" id="id_username" placeholder="Username">
             <label for="id_username">Username</label>
         </div>
         <div style="height: 20px;"></div>
 
-        <div class="form-floating" style="height: 50px; margin: auto;">
+        <div class="form-floating form-user-div-height">
             <input name="{{ form.password1.name }}" type="password"  autocomplete="new-password" class="form-control" id="id_password1" placeholder="Password">
             <label for="id_password1">Password</label>
         </div>
         <div style="height: 20px;"></div>
 
-        <div class="form-floating" style="height: 50px; margin: auto;">
+        <div class="form-floating form-user-div-height">
             <input name="{{ form.password2.name }}" type="password"  autocomplete="new-password" class="form-control" id="id_password2" placeholder="Password">
             <label for="id_password2">Repeat password</label>
         </div>
@@ -37,10 +37,10 @@
         </div>
         <div style="height: 20px;"></div>
 
-        <div style="text-align: center;">
+        <div class="text-h2-center">
             <p>By signing up, you agree to our <a href="#" class="text-decoration-none">Terms</a>, <a href="#" class="text-decoration-none">Privacy Policy</a> and <a href="#" class="text-decoration-none">Cookies Policy</a>.</p>
         </div>
-        <div style="height: 80px;"></div>
+        <div style="height: 50px;"></div>
     </form>
 </div>
 {% endblock %}

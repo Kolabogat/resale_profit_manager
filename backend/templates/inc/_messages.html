@@ -1,5 +1,5 @@
 <div style="height: 10px;"></div>
-<div class="p-1 container row mb-2" style="margin: auto;">
+<div class="p-1 container row mb-2">
 {% if messages %}
     {% for message in messages %}
         <div class="alert alert-{% if 'error' in message.tags %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">

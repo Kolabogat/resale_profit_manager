@@ -4,13 +4,13 @@
 
 {% block content %}
 
-    <h2 class="p-2" style="text-align: center;">Add a Ticket</h2>
+    <h2 class="p-2 text-h2-center">Add a Ticket</h2>
 
     <div style="height: 20px;"></div>
 
     <form action="{% url 'add_ticket' %}" method="post">
         {% csrf_token %}
-        <div class="p-1 container row mb-2" style="margin: auto;">
+        <div class="p-1 container row mb-2">
             <div class="col-4">
                 <div class="input-group">
                   <span class="input-group-text" id="id_title">Title</span>
@@ -23,13 +23,13 @@
                   <input type="number" step="0.01" min="0.01" name="bought" required class="form-control" aria-label="Sizing example input" aria-describedby="id_bought">
                 </div>
             </div>
-            <div class="col-3"  style="text-align: right; margin: auto;">
+            <div class="col-3">
                 <div class="input-group">
                   <span class="input-group-text" id="id_sold">Sold</span>
                   <input type="number" step="0.01" min="0.01" name="sold" class="form-control" aria-label="Sizing example input" aria-describedby="id_sold">
                 </div>
             </div>
-            <div class="col-2"  style="text-align: right; margin: auto;">
+            <div class="col-2">
                 <button name="add_ticket" type="submit" class="btn btn-primary btn">Add ticket</button>
             </div>
 
@@ -37,8 +37,6 @@
     </form>
 
     <div style="height: 20px;"></div>
-
-
 
 {% endblock %}
 
