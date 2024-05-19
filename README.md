@@ -86,7 +86,7 @@ Execute custom [command](https://github.com/Kolabogat/resale_profit_manager/blob
 
 ```python manage.py command_settings_query```
 
-Creating a superuser with username, password and email initialized in the [.env](https://github.com/Koljisae/resale_profit_manager/blob/main/.env) file:
+Creating a superuser with username, password and email initialized in the [.env](https://github.com/Kolabogat/resale_profit_manager/blob/main/.env) file:
 ```
 DJANGO_SUPERUSER_USERNAME=$DJANGO_SUPERUSER_USERNAME DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD python manage.py createsuperuser --noinput --email $DJANGO_SUPERUSER_EMAIL
 ```
