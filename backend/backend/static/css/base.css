@@ -32,12 +32,20 @@
     margin: auto;
 }
 
+.link-dark-gray-color {
+    color: #212529;
+}
+
+.link-dark-gray-color:hover {
+    color: black;
+}
+
 .link-black-color {
     color: black;
 }
 
 .link-black-color:hover {
-    color: #292f46;
+    color: #595959;
 }
 
 .link-grey-color {
@@ -60,17 +68,18 @@
 }
 
 .bg-green {
-    background-color: #c0ffba;
+    background-color: #ccf6c8;
 }
 
 .bg-red {
-    background-color: #c0ffba;
+    background-color: #f9c0c0;
 }
 
 .bg-yellow {
-    background-color: #ffbaba;
+    background-color: #fafcc2;
 }
 
 .bg-orange {
-    background-color: #ffe1ba;
+    background-color: #f6d6ad;
 }
+

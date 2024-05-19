@@ -37,9 +37,9 @@
         container themed-container p-2 border row mb-2 margin-auto
         {% if ticket.profit > 0 %}
         bg-green
-        {% elif ticket.profit > 0 %}
-        bg-red
         {% elif ticket.profit < 0 %}
+        bg-red
+        {% elif ticket.profit == 0 %}
         bg-yellow
         {% else %}
         bg-orange
