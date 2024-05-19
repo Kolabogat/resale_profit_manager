@@ -2,20 +2,23 @@
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
             {% if request.user.is_authenticated %}
-            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="{% url 'user_settings' %}" class="nav-link link-dark px-2 active" aria-current="page">Settings</a></li>
+            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link link-dark px-2 active link-black-color" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="{% url 'user_settings' %}" class="nav-link link-dark px-2 active link-black-color" aria-current="page">Settings</a></li>
             {% else %}
-            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link link-dark px-2 active" aria-current="page">Management</a></li>
+            <li class="nav-item"><a href="{% url 'home' %}" class="nav-link link-dark px-2 active link-black-color" aria-current="page">Management</a></li>
             {% endif %}
         </ul>
         <ul class="nav">
             {% if request.user.is_authenticated %}
-            <li class="nav-item"><a href="{% url 'account_profile' %}" class="nav-link link-dark px-2">Profile</a></li>
+            <li class="nav-item"><a href="{% url 'account_profile' %}" class="nav-link link-dark px-2 link-black-color">Profile</a></li>
+            <div style="width: 5px;"></div>
             <div class="vr"></div>
-            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link link-dark px-2">Logout</a></li>
+            <div style="width: 5px;"></div>
+
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link link-dark px-2 link-red-color">Logout</a></li>
             {% else %}
-            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link link-dark px-2">Login</a></li>
-            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link link-dark px-2">Sign up</a></li>
+            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link link-dark px-2 link-black-color">Login</a></li>
+            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link link-dark px-2 link-black-color">Sign up</a></li>
             {% endif %}
         </ul>
     </div>

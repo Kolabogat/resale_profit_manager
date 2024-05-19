@@ -10,9 +10,9 @@
         <div class="col-3 text-link-div">
             {% if user_settings.delete_confirmation %}
             <!-- Button trigger modal -->
-            <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="p-2 delete-button">Delete</a>
+            <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="p-2 link-red-color">Delete</a>
             {% else %}
-            <a href="{{ ticket.get_delete_url }}" class="p-2 delete-button">Delete</a>
+            <a href="{{ ticket.get_delete_url }}" class="p-2 link-red-color">Delete</a>
             {% endif %}
         </div>
     </div>

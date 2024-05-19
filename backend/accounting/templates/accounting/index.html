@@ -23,7 +23,7 @@
     </a>
 </div>
 
-<div class="container p-2 border bg-light themed-container row mb-2" style="margin: auto;">
+<div class="container p-2 border bg-light themed-container row mb-2 margin-auto">
     <div class="col-4">Title</div>
     <div class="col-2">Bought</div>
     <div class="col-2">Sold</div>
@@ -33,7 +33,17 @@
 
 {% for ticket in tickets %}
     <a href="{{ ticket.get_update_url }}" class="no-decoration-line link-black-color">
-        <div class="container themed-container p-2 border row mb-2" style="margin: auto; {% if ticket.profit > 0 %} background-color: #ccf6c8; {% elif ticket.profit < 0 %} background-color: #f9c0c0; {% elif ticket.profit == 0 %} background-color: #fafcc2; {% else %} background-color: #f6d6ad; {% endif %}">
+        <div class="
+        container themed-container p-2 border row mb-2 margin-auto
+        {% if ticket.profit > 0 %}
+        bg-green
+        {% elif ticket.profit > 0 %}
+        bg-red
+        {% elif ticket.profit < 0 %}
+        bg-yellow
+        {% else %}
+        bg-orange
+        {% endif %}">
             <div class="col-4">{{ ticket.title|truncatechars:43 }}</div>
             <div class="col-2">
                 -{{ ticket.bought|floatformat:2 }}
@@ -70,7 +80,7 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 {% if tickets.has_previous %}
-                    <li class="page-item"><a class="page-link" style="color: black;" href="?{% url_replace request 'page' paginator.next_page_number %}{{ tickets.previous_page_number }}">Previous</a></li>
+                    <li class="page-item"><a class="page-link link-black-color" href="?{% url_replace request 'page' paginator.next_page_number %}{{ tickets.previous_page_number }}">Previous</a></li>
                 {% else %}
                     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                 {% endif %}
@@ -79,12 +89,12 @@
                       {% if tickets.number == p %}
                         <li class="page-item disabled"><a class="page-link">{{ p }}</a></li>
                       {% elif p > tickets.number|add:-3 and p < tickets.number|add:+3 %}
-                        <li class="page-item "><a class="page-link" style="color: black;" href="?{% url_replace request 'page' paginator.next_page_number %}{{ p }}">{{ p }}</a></li>
+                        <li class="page-item "><a class="page-link link-black-color" href="?{% url_replace request 'page' paginator.next_page_number %}{{ p }}">{{ p }}</a></li>
                       {% endif %}
                     {% endfor %}
 
                 {% if tickets.has_next %}
-                    <li class="page-item"><a class="page-link" style="color: black;" href="?{% url_replace request 'page' paginator.next_page_number %}{{ tickets.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link link-black-color" href="?{% url_replace request 'page' paginator.next_page_number %}{{ tickets.next_page_number }}">Next</a></li>
                 {% else %}
                     <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                 {% endif %}

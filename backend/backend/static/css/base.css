@@ -24,14 +24,6 @@
     margin: auto;
 }
 
-.delete-button {
-    color: #ea5455;
-    text-decoration-line: none;
-}
-.delete-button:hover {
-    color: red;
-}
-
 .no-decoration-line {
     text-decoration-line: none;
 }
@@ -41,10 +33,44 @@
 }
 
 .link-black-color {
-    color: black
+    color: black;
 }
+
 .link-black-color:hover {
-    color: #292f46
+    color: #292f46;
 }
 
+.link-grey-color {
+    text-align: right;
+    color: #858585;
+}
 
+.link-grey-color:hover {
+    text-align: right;
+    color: #292f46;
+}
+
+.link-red-color {
+    color: #ea5455;
+    text-decoration-line: none;
+}
+
+.link-red-color:hover {
+    color: red;
+}
+
+.bg-green {
+    background-color: #c0ffba;
+}
+
+.bg-red {
+    background-color: #c0ffba;
+}
+
+.bg-yellow {
+    background-color: #ffbaba;
+}
+
+.bg-orange {
+    background-color: #ffe1ba;
+}
