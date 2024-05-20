@@ -80,10 +80,6 @@ Collects all static files:
 
 Execute custom [command](https://github.com/Kolabogat/resale_profit_manager/blob/main/backend/accounting/management/commands/command_filter_query.py) that creates tickets filters in database:
 
-```python manage.py command_filter_query```
-
-Execute custom [command](https://github.com/Kolabogat/resale_profit_manager/blob/main/backend/user/management/commands/command_settings_query.py) that creates choices settings for currency and pagination fields:
-
 ```python manage.py command_settings_query```
 
 Creating a superuser with username, password and email initialized in the [.env](https://github.com/Kolabogat/resale_profit_manager/blob/main/.env) file:
@@ -100,7 +96,6 @@ Starts the server with `gunicorn`:
 ```gunicorn backend.wsgi:application --bind 0.0.0.0:8000```
 
 ## Screenshots
-
 
 <p align="center">
   <img src="https://github.com/Kolabogat/resale_profit_manager/assets/86200410/a574d9d0-6182-48f7-ab3b-ed74451632a9" alt="drawing" width="1200"/>
