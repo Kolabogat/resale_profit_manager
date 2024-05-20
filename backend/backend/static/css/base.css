@@ -9,6 +9,10 @@
     margin: auto;
 }
 
+.font-size-14 {
+    font-size: 14px;
+}
+
 .text-h2-center {
     text-align: center;
     margin: auto;
@@ -22,6 +26,10 @@
 .text-link-div {
     text-align: right;
     margin: auto;
+}
+
+.text-black {
+    color: black
 }
 
 .no-decoration-line {
@@ -68,18 +76,42 @@
 }
 
 .bg-green {
-    background-color: #ccf6c8;
+    background-color: #c3fcc2;
+}
+
+.bg-green:hover {
+    background-color: #dffcde;
 }
 
 .bg-red {
-    background-color: #f9c0c0;
+    background-color: #fcc2c2;
+}
+
+.bg-red:hover {
+    background-color: #fcdede;
 }
 
 .bg-yellow {
     background-color: #fafcc2;
 }
 
+.bg-yellow:hover {
+    background-color: #fcfcde;
+}
+
 .bg-orange {
-    background-color: #f6d6ad;
+    background-color: #fce4c2;
+}
+
+.bg-orange:hover {
+    background-color: #fcf0de;
+}
+
+.bg-blue {
+    background-color: #c2e0fc;
+}
+
+.bg-blue:hover {
+    background-color: #deeefc;
 }
 
