@@ -12,27 +12,72 @@
     <div class="col-3 text-link-div"><a href="{% url 'add_ticket' %}" class="p-2 text-decoration-none">Add a ticket</a></div>
 </div>
 
-<div class="p-1 container">
-    {% for filter in ticket_filter_query %}
-        <a href="{% url 'home' %}?filter_by={{ filter.url_value }}" class="no-decoration-line">
-            <span class="badge" style="background-color: {{ filter.color }}; color: black;" title="{{ filter.annotation }}">{{ filter.title }}</span>
+<div style="height: 20px;"></div>
+<div style="text-align: center;">
+    <span class="badge text-black bg-light font-size-14 ">Filter By:</span>
+    {% for filter in state_filters %}
+        <a href="{% url 'home' %}?filter_by={{ filter.url_value }}" class="no-decoration-line ">
+            <span class="badge text-black {{ filter.css_style }} font-size-14" title="{{ filter.annotation }}">{{ filter.title }}</span>
         </a>
     {% endfor %}
     <a href="{% url 'home' %}" class="no-decoration-line" title="Reset filter">
-        <span class="badge" style="background-color: #ea5455; color: black;">Reset</span>
+        <span class="badge text-black bg-blue font-size-14">Reset</span>
     </a>
 </div>
+<div style="height: 10px;"></div>
 
 <div class="container p-2 border bg-light themed-container row mb-2 margin-auto">
-    <div class="col-4">Title</div>
-    <div class="col-2">Bought</div>
-    <div class="col-2">Sold</div>
-    <div class="col-2">Profit</div>
-    <div class="col-2">Date</div>
+    <div class="col-4">
+        {% if filter_by == 'title_asc' %}
+        <a href="{% url 'home' %}?filter_by=title_desc" class="no-decoration-line link-black-color">Title ↑</a>
+        {% elif filter_by == 'title_desc' %}
+        <a href="{% url 'home' %}?filter_by=title_asc" class="no-decoration-line link-black-color">Title ↓</a>
+        {% else %}
+        <a href="{% url 'home' %}?filter_by=title_asc" class="no-decoration-line link-black-color">Title ⇵</a>
+        {% endif %}
+    </div>
+    <div class="col-2">
+        {% if filter_by == 'bought_asc' %}
+        <a href="{% url 'home' %}?filter_by=bought_desc" class="no-decoration-line link-black-color">Bought ↑</a>
+        {% elif filter_by == 'bought_desc' %}
+        <a href="{% url 'home' %}?filter_by=bought_asc" class="no-decoration-line link-black-color">Bought ↓</a>
+        {% else %}
+        <a href="{% url 'home' %}?filter_by=bought_asc" class="no-decoration-line link-black-color">Bought ⇵</a>
+        {% endif %}
+    </div>
+
+    <div class="col-2">
+        {% if filter_by == 'sold_asc' %}
+        <a href="{% url 'home' %}?filter_by=sold_desc" class="no-decoration-line link-black-color">Sold ↑</a>
+        {% elif filter_by == 'sold_desc' %}
+        <a href="{% url 'home' %}?filter_by=sold_asc" class="no-decoration-line link-black-color">Sold ↓</a>
+        {% else %}
+        <a href="{% url 'home' %}?filter_by=sold_asc" class="no-decoration-line link-black-color">Sold ⇵</a>
+        {% endif %}
+    </div>
+
+    <div class="col-2">
+        {% if filter_by == 'profit_asc' %}
+        <a href="{% url 'home' %}?filter_by=profit_desc" class="no-decoration-line link-black-color">Profit ↑</a>
+        {% elif filter_by == 'profit_desc' %}
+        <a href="{% url 'home' %}?filter_by=profit_asc" class="no-decoration-line link-black-color">Profit ↓</a>
+        {% else %}
+        <a href="{% url 'home' %}?filter_by=profit_asc" class="no-decoration-line link-black-color">Profit ⇵</a>
+        {% endif %}
+    </div>
+    <div class="col-2">
+        {% if filter_by == 'date_asc' %}
+        <a href="{% url 'home' %}?filter_by=date_desc" class="no-decoration-line link-black-color">Date ↑</a>
+        {% elif filter_by == 'date_desc' %}
+        <a href="{% url 'home' %}?filter_by=date_asc" class="no-decoration-line link-black-color">Date ↓</a>
+        {% else %}
+        <a href="{% url 'home' %}?filter_by=date_asc" class="no-decoration-line link-black-color">Date ⇵</a>
+        {% endif %}
+    </div>
 </div>
 
 {% for ticket in tickets %}
-    <a href="{{ ticket.get_update_url }}" class="no-decoration-line link-black-color">
+    <a href="{{ ticket.get_update_url }}" class="no-decoration-line text-black">
         <div class="
         container themed-container p-2 border row mb-2 margin-auto
         {% if ticket.profit > 0 %}
