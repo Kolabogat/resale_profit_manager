@@ -61,10 +61,3 @@ class Category(Model):
         ordering = ['title']
 
 
-class TicketFilter(Model):
-    title = CharField(max_length=150, verbose_name='Title')
-    query_value = CharField(max_length=150, verbose_name='Query', blank=True)
-    url_value = CharField(max_length=150, verbose_name='URL')
-    annotation = CharField(max_length=150, verbose_name='Annotation')
-    color = CharField(max_length=150, verbose_name='Color')
-
