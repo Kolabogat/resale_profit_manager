@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from backend.const import TICKETS_FILTER_STATE
 from .forms import TicketForm
-from .models import Ticket, TicketFilter
+from .models import Ticket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from user.models import UserSettings
 from .utils import tickets_filter
@@ -23,11 +25,10 @@ def view_tickets(request):
     if request.user.is_authenticated:
         search_filter = request.GET.get('search')
         filter_by = request.GET.get('filter_by')
-        ticket_filter_query = TicketFilter.objects.all()
         user_additional = UserSettings.objects.filter(user=request.user).get()
         paginate_by = str(user_additional.paginate_by)
 
-        tickets = tickets_filter(request, ticket_filter_query, search_filter, filter_by)
+        tickets = tickets_filter(request, search_filter, filter_by)
 
         tickets_quantity = tickets.count()
         page = request.GET.get('page', 1)
@@ -42,10 +43,12 @@ def view_tickets(request):
         context = {
             'tickets': tickets,
             'tickets_quantity': tickets_quantity,
-            'ticket_filter_query': ticket_filter_query,
+            'state_filters': TICKETS_FILTER_STATE,
             'user_additional': user_additional,
             'title': 'Tickets',
         }
+        if filter_by:
+            context['filter_by'] = filter_by
         return render(request, 'accounting/index.html', context=context)
     else:
         return redirect('login')
