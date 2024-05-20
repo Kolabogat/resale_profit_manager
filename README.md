@@ -78,7 +78,7 @@ Collects all static files:
 
 ```python manage.py collectstatic```
 
-Execute custom [command](https://github.com/Kolabogat/resale_profit_manager/blob/main/backend/accounting/management/commands/command_filter_query.py) that creates tickets filters in database:
+Execute custom [command](https://github.com/Kolabogat/resale_profit_manager/blob/main/backend/user/management/commands/command_settings_query.py) that creates choices settings for currency and pagination fields:
 
 ```python manage.py command_settings_query```
 
