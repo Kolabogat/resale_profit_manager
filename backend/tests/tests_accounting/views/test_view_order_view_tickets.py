@@ -17,8 +17,7 @@ def test_view_tickets_filter_asc_bought(
 
     tickets_query = Ticket.objects.filter(
         Q(user=logged_user) &
-        Q(deleted=False) &
-        ~Q(profit=None)
+        Q(deleted=False)
     ).order_by('bought')
     tickets_quantity = tickets_query.count()
 
@@ -143,7 +142,7 @@ def test_view_tickets_filter_date(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=date'
+    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=date_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 

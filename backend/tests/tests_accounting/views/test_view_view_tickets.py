@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
 
-from backend.settings import FILTER_TICKETS
 from accounting.models import Ticket
+from backend.const import TICKETS_FILTER_STATE
 
 
 @pytest.mark.django_db
@@ -59,17 +59,10 @@ def test_view_tickets_check_ticket_filters(
     """
     view_ticket_endpoint = reverse('home')
     response = client.get(view_ticket_endpoint)
-    ticket_filters = response.context.get('ticket_filter_query')
+    ticket_filters = response.context.get('state_filters')
 
-    for ticket_filter in FILTER_TICKETS:
-        assert ticket_filters.filter(
-            pk=ticket_filter.get('pk'),
-            title=ticket_filter.get('title'),
-            query_value=ticket_filter.get('query_value'),
-            url_value=ticket_filter.get('url_value'),
-            annotation=ticket_filter.get('annotation'),
-            color=ticket_filter.get('color'),
-        )
+    for ticket_filter in TICKETS_FILTER_STATE:
+        assert ticket_filter in ticket_filters
 
 
 def test_view_tickets_not_auth_user_redirected(

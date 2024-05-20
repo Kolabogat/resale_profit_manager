@@ -5,20 +5,12 @@ from django.contrib.auth.models import User
 
 from backend.settings import CURRENCY, PAGINATION
 from user.models import UserSettings, UserProfile, CommandCurrency, CommandPagination
-from accounting.models import Ticket, TicketFilter
-from backend.settings import FILTER_TICKETS
+from accounting.models import Ticket
 
 
 TEST_USERNAME = 'user'
 TEST_PASSWORD = 'a9Jd2o9gLe2axs'
 TEST_EMAIL = 'user@user.com'
-
-
-@pytest.fixture
-def add_ticket_filters():
-    for filter_dict in FILTER_TICKETS:
-        filter_model = TicketFilter(**filter_dict)
-        filter_model.save()
 
 
 @pytest.fixture
@@ -28,7 +20,7 @@ def client():
 
 
 @pytest.fixture
-def created_user(add_ticket_filters):
+def created_user():
     user = User.objects.create_user(
         username=TEST_USERNAME,
         email=TEST_EMAIL,
