@@ -7,7 +7,7 @@ from .forms import TicketForm
 from .models import Ticket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from user.models import UserSettings
-from .utils import tickets_filter
+from .utils import tickets_filter, tickets_order, get_filtered_tickets
 
 
 def view_tickets(request):
@@ -23,12 +23,13 @@ def view_tickets(request):
     Show 'login' template if user not authenticated.
     """
     if request.user.is_authenticated:
-        search_filter = request.GET.get('search')
+        search = request.GET.get('search')
         filter_by = request.GET.get('filter_by')
+        order_by = request.GET.get('order_by')
         user_additional = UserSettings.objects.filter(user=request.user).get()
         paginate_by = str(user_additional.paginate_by)
 
-        tickets = tickets_filter(request, search_filter, filter_by)
+        tickets = get_filtered_tickets(request, search, filter_by, order_by)
 
         tickets_quantity = tickets.count()
         page = request.GET.get('page', 1)
@@ -49,6 +50,8 @@ def view_tickets(request):
         }
         if filter_by:
             context['filter_by'] = filter_by
+        if order_by:
+            context['order_by'] = order_by
         return render(request, 'accounting/index.html', context=context)
     else:
         return redirect('login')

@@ -28,50 +28,50 @@
 
 <div class="container p-2 border bg-light themed-container row mb-2 margin-auto">
     <div class="col-4">
-        {% if filter_by == 'title_asc' %}
-        <a href="{% url 'home' %}?filter_by=title_desc" class="no-decoration-line link-black-color">Title ↑</a>
-        {% elif filter_by == 'title_desc' %}
-        <a href="{% url 'home' %}?filter_by=title_asc" class="no-decoration-line link-black-color">Title ↓</a>
+        {% if order_by == 'title_asc' %}
+        <a href="{% url 'home' %}?order_by=title_desc" class="no-decoration-line link-black-color">Title ↑</a>
+        {% elif order_by == 'title_desc' %}
+        <a href="{% url 'home' %}?order_by=title_asc" class="no-decoration-line link-black-color">Title ↓</a>
         {% else %}
-        <a href="{% url 'home' %}?filter_by=title_asc" class="no-decoration-line link-black-color">Title ⇵</a>
+        <a href="{% url 'home' %}?order_by=title_asc" class="no-decoration-line link-black-color">Title ⇵</a>
         {% endif %}
     </div>
     <div class="col-2">
-        {% if filter_by == 'bought_asc' %}
-        <a href="{% url 'home' %}?filter_by=bought_desc" class="no-decoration-line link-black-color">Bought ↑</a>
-        {% elif filter_by == 'bought_desc' %}
-        <a href="{% url 'home' %}?filter_by=bought_asc" class="no-decoration-line link-black-color">Bought ↓</a>
+        {% if order_by == 'bought_asc' %}
+        <a href="{% url 'home' %}?order_by=bought_desc" class="no-decoration-line link-black-color">Bought ↑</a>
+        {% elif order_by == 'bought_desc' %}
+        <a href="{% url 'home' %}?order_by=bought_asc" class="no-decoration-line link-black-color">Bought ↓</a>
         {% else %}
-        <a href="{% url 'home' %}?filter_by=bought_asc" class="no-decoration-line link-black-color">Bought ⇵</a>
-        {% endif %}
-    </div>
-
-    <div class="col-2">
-        {% if filter_by == 'sold_asc' %}
-        <a href="{% url 'home' %}?filter_by=sold_desc" class="no-decoration-line link-black-color">Sold ↑</a>
-        {% elif filter_by == 'sold_desc' %}
-        <a href="{% url 'home' %}?filter_by=sold_asc" class="no-decoration-line link-black-color">Sold ↓</a>
-        {% else %}
-        <a href="{% url 'home' %}?filter_by=sold_asc" class="no-decoration-line link-black-color">Sold ⇵</a>
+        <a href="{% url 'home' %}?order_by=bought_asc" class="no-decoration-line link-black-color">Bought ⇵</a>
         {% endif %}
     </div>
 
     <div class="col-2">
-        {% if filter_by == 'profit_asc' %}
-        <a href="{% url 'home' %}?filter_by=profit_desc" class="no-decoration-line link-black-color">Profit ↑</a>
-        {% elif filter_by == 'profit_desc' %}
-        <a href="{% url 'home' %}?filter_by=profit_asc" class="no-decoration-line link-black-color">Profit ↓</a>
+        {% if order_by == 'sold_asc' %}
+        <a href="{% url 'home' %}?order_by=sold_desc" class="no-decoration-line link-black-color">Sold ↑</a>
+        {% elif order_by == 'sold_desc' %}
+        <a href="{% url 'home' %}?order_by=sold_asc" class="no-decoration-line link-black-color">Sold ↓</a>
         {% else %}
-        <a href="{% url 'home' %}?filter_by=profit_asc" class="no-decoration-line link-black-color">Profit ⇵</a>
+        <a href="{% url 'home' %}?order_by=sold_asc" class="no-decoration-line link-black-color">Sold ⇵</a>
+        {% endif %}
+    </div>
+
+    <div class="col-2">
+        {% if order_by == 'profit_asc' %}
+        <a href="{% url 'home' %}?order_by=profit_desc" class="no-decoration-line link-black-color">Profit ↑</a>
+        {% elif order_by == 'profit_desc' %}
+        <a href="{% url 'home' %}?order_by=profit_asc" class="no-decoration-line link-black-color">Profit ↓</a>
+        {% else %}
+        <a href="{% url 'home' %}?order_by=profit_asc" class="no-decoration-line link-black-color">Profit ⇵</a>
         {% endif %}
     </div>
     <div class="col-2">
-        {% if filter_by == 'date_asc' %}
-        <a href="{% url 'home' %}?filter_by=date_desc" class="no-decoration-line link-black-color">Date ↑</a>
-        {% elif filter_by == 'date_desc' %}
-        <a href="{% url 'home' %}?filter_by=date_asc" class="no-decoration-line link-black-color">Date ↓</a>
+        {% if order_by == 'date_asc' %}
+        <a href="{% url 'home' %}?order_by=date_desc" class="no-decoration-line link-black-color">Date ↑</a>
+        {% elif order_by == 'date_desc' %}
+        <a href="{% url 'home' %}?order_by=date_asc" class="no-decoration-line link-black-color">Date ↓</a>
         {% else %}
-        <a href="{% url 'home' %}?filter_by=date_asc" class="no-decoration-line link-black-color">Date ⇵</a>
+        <a href="{% url 'home' %}?order_by=date_asc" class="no-decoration-line link-black-color">Date ⇵</a>
         {% endif %}
     </div>
 </div>
