@@ -7,7 +7,7 @@ from .forms import TicketForm
 from .models import Ticket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from user.models import UserSettings
-from .utils import tickets_filter, tickets_order, get_filtered_tickets
+from .utils import get_filtered_tickets
 
 
 def view_tickets(request):
@@ -16,9 +16,9 @@ def view_tickets(request):
 
     Pagination value is taken from individual 'UserSettings' settings.
 
-    Show tickets without any filters. If 'filter_by' filters or
-    'search_filter' searches are received then check
-    the filters in the 'tickets_filter' function.
+    Show tickets without any filters. If 'filter_by',
+    'order_by' or 'search_filter' are received then check
+    the filters in the 'get_filtered_tickets' function.
 
     Show 'login' template if user not authenticated.
     """
