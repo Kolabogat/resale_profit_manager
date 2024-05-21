@@ -6,3 +6,10 @@
 /.idea/misc.xml
 /.idea/.gitignore
 /.env
+/backend/static/
+/backend/tests/test_1.py
+/backend/.coverage
+/backend/htmlcov/
+/backend/tests/.coverage
+/backend/tests/htmlcov/
+/_Trash/
