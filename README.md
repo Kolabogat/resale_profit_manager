@@ -98,5 +98,5 @@ Starts the server with `gunicorn`:
 ## Screenshots
 
 <p align="center">
-  <img src="https://github.com/Kolabogat/resale_profit_manager/assets/86200410/a574d9d0-6182-48f7-ab3b-ed74451632a9" alt="drawing" width="1200"/>
+  <img src="https://github.com/Kolabogat/resale_profit_manager/assets/86200410/38d64521-f132-4209-a72a-8dfdd836c158" alt="drawing" width="1200"/>
 </p>
