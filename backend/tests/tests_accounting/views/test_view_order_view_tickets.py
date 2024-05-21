@@ -11,7 +11,7 @@ def test_view_tickets_filter_asc_bought(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=bought_asc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=bought_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
@@ -32,7 +32,7 @@ def test_view_tickets_filter_desc_bought(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=bought_desc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=bought_desc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
@@ -54,7 +54,7 @@ def test_view_tickets_filter_asc_sold(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=sold_asc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=sold_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
@@ -76,7 +76,7 @@ def test_view_tickets_filter_desc_sold(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=sold_desc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=sold_desc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
@@ -98,7 +98,7 @@ def test_view_tickets_filter_asc_profit(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=profit_asc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=profit_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
@@ -120,7 +120,7 @@ def test_view_tickets_filter_desc_profit(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=profit_desc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=profit_desc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
@@ -142,7 +142,7 @@ def test_view_tickets_filter_date(
         client,
         add_all_tickets,
 ):
-    view_tickets_filter_endpoint = reverse('home') + '/?filter_by=date_asc'
+    view_tickets_filter_endpoint = reverse('home') + '/?order_by=date_asc'
     response = client.get(view_tickets_filter_endpoint)
     tickets = response.context.get('tickets')
 
