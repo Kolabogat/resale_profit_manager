@@ -1,15 +1,10 @@
 #!/bin/bash
 
-mkdir ~/.npm-global
-export NPM_CONFIG_PREFIX=~/.npm-global
-export PATH=$PATH:~/.npm-global/bin
-echo -e "export NPM_CONFIG_PREFIX=~/.npm-global\nexport PATH=$PATH:~/.npm-global/bin" >> ~/.bashrc
+pyhton3.9 -m pip install -r requirements.txt
 
-pyhton -m pip install -r requirements.txt
+python3.9 manage.py makemigrations --no-input
+python3.9 manage.py migrate --no-input
 
-python manage.py makemigrations --no-input
-python manage.py migrate --no-input
+python3.9 manage.py collectstatic --no-input
 
-python manage.py collectstatic --no-input
-
-python manage.py command_settings_query
+python3.9 manage.py command_settings_query
