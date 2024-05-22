@@ -1,8 +1,7 @@
 #!/bin/bash
 
-apt-get install python3-pip
 echo "Building the project..."
-pip install --no-cache-dir -r requirements.txt
+python3.9 pip install -r .requirements.txt
 
 echo "Make Migration..."
 python3.9 manage.py makemigrations --no-input
