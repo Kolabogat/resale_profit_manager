@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo "Building the project..."
 pyhton -m pip install -r requirements.txt
 
