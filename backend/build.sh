@@ -1,5 +1,7 @@
 #!/bin/bash
 
+which python
+which python3.9
 
 echo "Building the project..."
 pyhton -m pip install -r requirements.txt
