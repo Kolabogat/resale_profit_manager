@@ -1,5 +1,6 @@
 #!/bin/bash
 
+apt-get install python3-pip
 echo "Building the project..."
 pip install --no-cache-dir -r requirements.txt
 
