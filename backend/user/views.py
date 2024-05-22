@@ -111,7 +111,7 @@ def update_user_data(request):
     highest profit, highest loss.
     """
     q = Q(user=request.user) & Q(deleted=False)
-    tickets = Ticket.objects.filter(q)
+    tickets = Ticket.objects.filter(q & Q(profit__gt=0))
     user_object = get_object_or_404(UserProfile, user=request.user)
 
     if tickets:
@@ -126,7 +126,12 @@ def update_user_data(request):
         user_object.save()
         messages.success(request, 'You successfully updated your data.')
     else:
-        messages.error(request, 'You don\'t have any tickets.')
+        user_object.all_time_profit = 0
+        user_object.tickets_quantity = Ticket.objects.filter(q).count()
+        user_object.highest_profit = 0
+        user_object.highest_loss = 0
+        user_object.save()
+        messages.error(request, 'You don\'t have any completed tickets.')
     return redirect('account_profile')
 
 
