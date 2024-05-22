@@ -1,14 +1,16 @@
 #!/bin/bash
 
+python3.9 -m venv venv
+
 echo "Building the project..."
-python -m pip install -r requirements.txt
+python3.9 -m pip install -r requirements.txt
 
 echo "Make Migration..."
-python manage.py makemigrations --no-input
-python manage.py migrate --no-input
+python3.9 manage.py makemigrations --no-input
+python3.9 manage.py migrate --no-input
 
 echo "Collect Static..."
-python manage.py collectstatic --no-input
+python3.9 manage.py collectstatic --no-input
 
 echo "Add Settings to Model..."
-python manage.py command_settings_query
+python3.9 manage.py command_settings_query
