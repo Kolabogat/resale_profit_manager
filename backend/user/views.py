@@ -113,7 +113,7 @@ def update_user_data(request):
     q = Q(user=request.user) & Q(deleted=False)
     tickets_query = Ticket.objects.filter(q)
     tickets = tickets_query.filter(q & ~Q(profit=None))
-    count_tickets = tickets_query.filter(q).count()
+    count_tickets = tickets_query.count()
     user_object = get_object_or_404(UserProfile, user=request.user)
 
     if tickets:
