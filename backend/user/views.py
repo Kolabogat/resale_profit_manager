@@ -111,12 +111,14 @@ def update_user_data(request):
     highest profit, highest loss.
     """
     q = Q(user=request.user) & Q(deleted=False)
-    tickets = Ticket.objects.filter(q & Q(profit__gt=0))
+    tickets_query = Ticket.objects.filter(q)
+    tickets = tickets_query.filter(q & ~Q(profit=None))
+    count_tickets = tickets_query.filter(q).count()
     user_object = get_object_or_404(UserProfile, user=request.user)
 
     if tickets:
         user_object.all_time_profit = round(tickets.aggregate(Sum('profit')).get('profit__sum'), 2)
-        user_object.tickets_quantity = tickets.count()
+        user_object.tickets_quantity = count_tickets
         highest_profit = round(tickets.aggregate(Max('profit')).get('profit__max'), 2)
         if highest_profit >= 0:
             user_object.highest_profit = highest_profit
@@ -127,7 +129,7 @@ def update_user_data(request):
         messages.success(request, 'You successfully updated your data.')
     else:
         user_object.all_time_profit = 0
-        user_object.tickets_quantity = Ticket.objects.filter(q).count()
+        user_object.tickets_quantity = count_tickets
         user_object.highest_profit = 0
         user_object.highest_loss = 0
         user_object.save()
