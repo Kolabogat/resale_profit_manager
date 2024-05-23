@@ -39,7 +39,7 @@ def test_update_user_data_without_ticket(
 ):
     update_user_data_endpoint = reverse('update_profile')
     response = client.get(update_user_data_endpoint)
-    alert_message = 'You don\'t have any tickets.'
+    alert_message = 'You don\'t have any completed tickets.'
     response_message = str(list(get_messages(response.wsgi_request))[0])
 
     assert response.status_code == 302
