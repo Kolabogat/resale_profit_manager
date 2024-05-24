@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.db.models import Q
-from backend.settings import CURRENCY, PAGINATION
+from backend.const import CURRENCY, PAGINATION
 from ...models import CommandPagination, CommandCurrency
 
 

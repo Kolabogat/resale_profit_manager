@@ -3,7 +3,7 @@ import random
 from django.test import Client
 from django.contrib.auth.models import User
 
-from backend.settings import CURRENCY, PAGINATION
+from backend.const import CURRENCY, PAGINATION
 from user.models import UserSettings, UserProfile, CommandCurrency, CommandPagination
 from accounting.models import Ticket
 

@@ -105,3 +105,59 @@ TICKET_FILTERS_ORDER_BY = (
         'annotation': 'Filter tickets by earliest date',
     },
 )
+
+# Constants for UserSettings model
+CURRENCY = (
+    {
+        'pk': 1,
+        'currency': '$',
+    },
+    {
+        'pk': 2,
+        'currency': '€',
+    },
+    {
+        'pk': 3,
+        'currency': '₽',
+    },
+    {
+        'pk': 4,
+        'currency': '₴',
+    },
+    {
+        'pk': 5,
+        'currency': 'L',
+    },
+)
+
+# Constants for UserSettings model
+PAGINATION = (
+    {
+        'pk': 1,
+        'paginate_by': 5,
+    },
+    {
+        'pk': 2,
+        'paginate_by': 10,
+    },
+    {
+        'pk': 3,
+        'paginate_by': 15,
+    },
+    {
+        'pk': 4,
+        'paginate_by': 25,
+    },
+    {
+        'pk': 5,
+        'paginate_by': 50,
+    },
+    {
+        'pk': 6,
+        'paginate_by': 100,
+    },
+    {
+        'pk': 7,
+        'paginate_by': 200,
+    },
+)
