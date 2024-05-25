@@ -4,6 +4,7 @@
             {% if request.user.is_authenticated %}
                 <li class="nav-item"><a href="{% url 'home'  %}" class="nav-link px-2 link-grey-color">Home</a></li>
                 <li class="nav-item"><a href="{% url 'user_settings' %}" class="nav-link px-2 link-grey-color">Settings</a></li>
+                <li class="nav-item"><a href="{% url 'ticket_interval' %}" class="nav-link px-2 link-grey-color">Intervals</a></li>
             {% else %}
             {% endif %}
         </ul>
