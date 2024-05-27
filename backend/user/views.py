@@ -150,9 +150,6 @@ def user_settings(request):
 
     form = UserSettingsForm(instance=settings_user)
 
-    command_pagination = CommandPagination.objects.filter().only('paginate_by')
-    command_currency = CommandCurrency.objects.all()
-
     if request.method == 'POST':
         form = UserSettingsForm(request.POST or None, instance=settings_user)
         if form.is_valid():
@@ -163,8 +160,6 @@ def user_settings(request):
 
     context = {
         'form': form,
-        'command_pagination': command_pagination,
-        'command_currency': command_currency,
         'title': 'User settings',
     }
     return render(request, 'user/user_settings.html', context)
