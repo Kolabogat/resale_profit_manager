@@ -11,6 +11,7 @@ from django.db.models import (
     ForeignKey,
     PROTECT,
     BooleanField,
+    OneToOneField,
     FloatField,
     CASCADE,
 )
@@ -52,7 +53,7 @@ class UserSettings(Model):
         verbose_name_plural = 'User Settings'
         ordering = ['user']
 
-    user = ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='User', on_delete=PROTECT, related_name='user_settings')
+    user = OneToOneField(to=settings.AUTH_USER_MODEL, verbose_name='User', on_delete=CASCADE, related_name='user_settings')
 
     paginate_by = ForeignKey(to='CommandPagination', verbose_name='Pagination', max_length=50, on_delete=CASCADE, default=CommandPagination.get_default_pk, related_name='command_pagination')
     currency = ForeignKey(to='CommandCurrency', verbose_name='Currency', on_delete=CASCADE, default=CommandCurrency.get_default_pk)
@@ -69,7 +70,7 @@ class UserProfile(Model):
         verbose_name_plural = 'User Profile'
         ordering = ['user']
 
-    user = ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='User', on_delete=PROTECT, related_name='user_profile')
+    user = OneToOneField(to=settings.AUTH_USER_MODEL, verbose_name='User', on_delete=CASCADE, related_name='user_profile')
 
     all_time_profit = FloatField(verbose_name='Profit', default=0)
     tickets_quantity = IntegerField(verbose_name='Quantity', default=0)
