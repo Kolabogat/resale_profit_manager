@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.signals import post_save
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models import (
@@ -79,3 +80,10 @@ class UserProfile(Model):
         return str(self.user)
 
 
+# def create_user_profile(sender, instance, created, *args, **kwargs):
+#     if created:
+#         UserSettings.objects.create(user=instance)
+#         UserProfile.objects.create(user=instance)
+#
+#
+# post_save.connect(create_user_profile, sender=User)
